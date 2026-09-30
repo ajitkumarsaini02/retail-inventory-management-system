@@ -49,4 +49,11 @@ public class UserService {
         user.setEnabled(true);
         return userRepository.save(user);
     }
+
+    public Optional<User> toggleUserStatus(Long id) {
+        return userRepository.findById(id).map(user -> {
+            user.setEnabled(!user.isEnabled());
+            return userRepository.save(user);
+        });
+    }
 }

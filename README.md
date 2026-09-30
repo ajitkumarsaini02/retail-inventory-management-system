@@ -4,11 +4,11 @@
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x%2F4.x-brightgreen.svg?logo=springboot)](https://spring.io/projects/spring-boot)
 [![Spring Security](https://img.shields.io/badge/Security-JWT%20Stateless-blue.svg?logo=springsecurity)](https://spring.io/projects/spring-security)
 [![MySQL](https://img.shields.io/badge/Database-MySQL%208.0-blue.svg?logo=mysql)](https://www.mysql.com/)
-[![React](https://img.shields.io/badge/Frontend-React%2019-61DAFB.svg?logo=react)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Bundler-Vite-646CFF.svg?logo=vite)](https://vitejs.dev/)
-[![TailwindCSS](https://img.shields.io/badge/Styling-TailwindCSS-38B2AC.svg?logo=tailwindcss)](https://tailwindcss.com/)
+[![Angular](https://img.shields.io/badge/Frontend-Angular%2022-DD0031.svg?logo=angular)](https://angular.dev/)
+[![TailwindCSS](https://img.shields.io/badge/Styling-TailwindCSS%20v4-38B2AC.svg?logo=tailwindcss)](https://tailwindcss.com/)
+[![TypeScript](https://img.shields.io/badge/Language-TypeScript-3178C6.svg?logo=typescript)](https://www.typescriptlang.org/)
 
-A modern, enterprise-grade **Retail Inventory and Supply Chain Management ERP System** engineered with a **Spring Boot** REST backend, stateless **JWT-based Spring Security**, a **MySQL** relational database, and a high-performance **React (Vite + TailwindCSS)** dashboard interface.
+A modern, enterprise-grade **Retail Inventory and Supply Chain Management ERP System** engineered with a **Spring Boot** REST backend, stateless **JWT-based Spring Security**, a **MySQL** relational database, and a high-performance **Angular (Standalone Architecture) + TailwindCSS v4** dashboard interface.
 
 ---
 
@@ -16,35 +16,38 @@ A modern, enterprise-grade **Retail Inventory and Supply Chain Management ERP Sy
 
 ### 🏢 Multi-Hub Warehouse & Inventory Control
 * **Real-time Stock Tracking**: View on-hand total quantities, reserved quantities, and available quantities per warehouse.
-* **Low-stock Reorder Triggers**: Automatic alerts and warnings when stock drops to or below threshold levels.
-* **Multi-Warehouse Allocation**: Manage multiple distribution hubs with status tracking, capacity monitoring, and address mapping.
+* **Low-Stock Replenishment Alerts**: Automatic warnings and notifications when stock falls to or below threshold levels.
+* **Multi-Warehouse Allocation**: Manage distribution hubs with capacity limits, operational status, and address details.
 * **CSV Export**: Instantly export inventory logs and warehouse summaries to CSV format.
 
 ### 🛍️ Product Catalog & Category Management
-* Full CRUD for retail products with SKU codes, categories, pricing, unit cost, and reorder levels.
+* Full CRUD operations for retail products with SKU codes, categories, selling prices, unit costs, and reorder levels.
 * Instant search and multi-facet filtering by category, status, and warehouse hub.
 
 ### 📑 Customer Orders & Sales Fulfillment
-* Multi-item order creation tied to customer records.
-* Automated stock availability validation and order status lifecycle (`PENDING` ➔ `CONFIRMED` ➔ `PROCESSING` ➔ `SHIPPED` ➔ `DELIVERED` / `CANCELLED`).
+* Multi-item order creation linked to customer profiles.
+* Automated stock availability checks and real-time status progression (`PENDING` ➔ `CONFIRMED` ➔ `PROCESSING` ➔ `SHIPPED` ➔ `DELIVERED` / `CANCELLED`).
 * Printable and viewable detailed customer invoice summaries.
 
 ### 🚚 Supply Chain & Purchase Orders (Admin Only)
-* **Supplier Directory**: Manage vendor profiles, contacts, payment terms, and active statuses.
-* **Procurement Orders**: Issue, review, and track purchase orders (`PENDING` ➔ `APPROVED` ➔ `ORDERED` ➔ `RECEIVED`).
-* Receiving stock updates directly into warehouse inventory upon PO fulfillment.
+* **Supplier Directory**: Manage vendor profiles, points of contact, payment terms, and status.
+* **Procurement Pipeline**: Issue, review, and advance purchase orders (`PENDING` ➔ `APPROVED` ➔ `ORDERED` ➔ `RECEIVED`).
+* **Direct Stock Replenishment**: Receiving PO stock directly increments warehouse inventory levels.
 
 ### 🛡️ Role-Based Access Control (RBAC) & Security
 * **Stateless JWT Authentication**: Secure HMAC-signed bearer tokens.
-* **Role Segregation**:
-  * `ADMIN`: Full access across all modules, including Procurement, Suppliers, and System Configurations.
-  * `USER` (Operator): Operational access to Inventory, Products, Customers, and Sales Orders.
+* **Role Segregation & Dedicated Workspaces**:
+  * `ADMIN`: Executive Command Center with full access to Procurement, Suppliers, Warehouse Management, and Staff Access Control.
+  * `USER` (Operator): Store Operator Workspace tailored for fast order fulfillment, customer registrations, and SKU availability checks.
+* **Dynamic Role Switcher**: Quick toggle in the navbar to test and experience both Admin and Operator workspaces instantly.
 * **First-User Bootstrap**: The first account registered automatically receives the `ADMIN` role.
 
-### 🎨 State-of-the-Art User Interface
-* **Dual Theme Engine**: Seamless dark and light modes with custom palette tokens.
-* **Quick Access Palette**: Keyboard command shortcuts (`Cmd/Ctrl + K`) for instant navigation.
-* **Responsive Layouts**: Designed for mobile, tablet, and ultra-wide desktop monitors.
+### 🎨 State-of-the-Art User Interface (UI/UX)
+* **Class-Based Dual Theme Engine**: Seamless instant toggle between Dark Mode and Light Mode (via Tailwind v4 `@custom-variant dark`), with user preference saved in `localStorage`.
+* **High Contrast & Accessible Forms**: Native form controls, dropdowns (`select option`), and inputs styled for clear readability in both light and dark environments.
+* **Spacious Modern Dashboard Layout**: Fixed sidebar with desktop offset (`lg:pl-64`), padded navbar with live telemetry clock, and elevated card hover micro-interactions.
+* **Quick Access Command Trigger**: Keyboard shortcut (`Ctrl + K`) for instant module and SKU lookup.
+* **Responsive Design**: Flawlessly adapts across mobile phones, tablets, laptops, and ultra-wide desktop monitors.
 
 ---
 
@@ -52,8 +55,9 @@ A modern, enterprise-grade **Retail Inventory and Supply Chain Management ERP Sy
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                 React Frontend (Vite)                       │
-│    TailwindCSS  •  Lucide Icons  •  Axios Interceptors      │
+│              Angular Frontend (Standalone)                  │
+│   TailwindCSS v4  •  SVG Icons  •  HTTP Client & Signals    │
+│       Executive Admin Console & Operator Workspace          │
 └──────────────────────────────┬──────────────────────────────┘
                                │ JSON / REST APIs (Port 8080)
                                │ Authorization: Bearer <JWT>
@@ -94,14 +98,18 @@ retail-inventory-management-system/
 │
 ├── frontend/
 │   ├── src/
-│   │   ├── assets/          # Images & logos
-│   │   ├── components/      # UI Modular Components (Auth, Inventory, Orders, Table)
-│   │   ├── context/         # React Contexts (AuthContext, ThemeContext)
-│   │   ├── pages/           # View Route Pages (Dashboard, Inventory, Orders, etc.)
-│   │   ├── services/        # Axios API Client service layers
-│   │   └── utils/           # Constants and CSV exporters
-│   ├── package.json         # Node.js dependencies
-│   └── vite.config.js       # Vite configuration
+│   │   ├── app/
+│   │   │   ├── components/  # Layout, Navbar, Sidebar, Icon components
+│   │   │   ├── guards/      # Angular Route Guards (AuthGuard, AdminGuard)
+│   │   │   ├── models/      # TypeScript interfaces and entity types
+│   │   │   ├── pages/       # Route Views (Auth, Dashboards, Products, Orders, Inventory, etc.)
+│   │   │   ├── services/    # Injectable API Services (Auth, Theme, Product, Warehouse, etc.)
+│   │   │   ├── app.config.ts# Application configuration & HTTP providers
+│   │   │   └── app.routes.ts# Angular standalone route definitions
+│   │   ├── styles.css       # TailwindCSS v4 setup, custom dark variant, base tokens
+│   │   └── main.ts          # Angular application bootstrap
+│   ├── package.json         # Frontend dependencies and npm scripts
+│   └── angular.json         # Angular CLI configuration
 │
 ├── .gitignore               # Root git ignore rules
 └── README.md                # Project documentation
@@ -175,7 +183,7 @@ Ensure you have the following installed on your machine:
    npm install
    ```
 
-3. Start the Vite development server:
+3. Start the development server:
    ```bash
    npm run dev
    ```
@@ -184,10 +192,10 @@ Ensure you have the following installed on your machine:
 ---
 
 ### 4️⃣ Creating Your Administrator Account
-1. Open the application at `http://localhost:5173`.
+1. Open the application in your browser at `http://localhost:5173`.
 2. Click on **Create an Account**.
 3. Fill in your name, email, and password.
-4. **Note:** The very first user account created automatically receives full **`ADMIN`** privileges!
+4. **Note:** The very first user account registered automatically receives full **`ADMIN`** privileges!
 
 ---
 
@@ -195,26 +203,41 @@ Ensure you have the following installed on your machine:
 
 | Module | Method | Endpoint | Access | Description |
 |---|---|---|---|---|
-| **Auth** | `POST` | `/api/auth/register` | Public | Register new user account (1st is Admin) |
+| **Auth** | `POST` | `/api/auth/register` | Public | Register new user account (1st user is Admin) |
 | **Auth** | `POST` | `/api/auth/login` | Public | Authenticate user & return JWT token |
-| **Products** | `GET` | `/api/products` | User / Admin | List all products with filtering |
+| **Auth** | `GET` | `/api/auth/me` | Authenticated | Retrieve current user profile |
+| **Products** | `GET` | `/api/products` | User / Admin | List all products with search & category filters |
+| **Products** | `GET` | `/api/products/{id}` | User / Admin | Retrieve product by ID |
 | **Products** | `POST` | `/api/products` | User / Admin | Create new catalog product |
-| **Inventory** | `GET` | `/api/inventory` | User / Admin | Query stock levels across hubs |
-| **Inventory** | `POST` | `/api/inventory` | User / Admin | Add or update stock levels |
-| **Warehouses**| `GET` | `/api/warehouses` | User / Admin | List distribution centers |
-| **Customers** | `GET` | `/api/customers` | User / Admin | Manage client directory |
-| **Orders** | `GET` | `/api/orders` | User / Admin | Fetch sales orders & statuses |
+| **Products** | `PUT` | `/api/products/{id}` | User / Admin | Update existing product details |
+| **Products** | `DELETE` | `/api/products/{id}` | User / Admin | Remove product from catalog |
+| **Inventory** | `GET` | `/api/inventory` | User / Admin | Query stock levels across distribution hubs |
+| **Inventory** | `GET` | `/api/inventory/low-stock` | User / Admin | Fetch items below reorder thresholds |
+| **Inventory** | `POST` | `/api/inventory` | User / Admin | Add or adjust stock levels |
+| **Inventory** | `PUT` | `/api/inventory/{id}` | User / Admin | Update inventory record |
+| **Warehouses**| `GET` | `/api/warehouses` | User / Admin | List all active distribution centers |
+| **Warehouses**| `POST` | `/api/warehouses` | User / Admin | Register new warehouse hub |
+| **Customers** | `GET` | `/api/customers` | User / Admin | Browse and manage customer directory |
+| **Customers** | `POST` | `/api/customers` | User / Admin | Register new customer record |
+| **Orders** | `GET` | `/api/orders` | User / Admin | Fetch sales orders and statuses |
+| **Orders** | `GET` | `/api/orders/{id}` | User / Admin | Get order details with line items |
 | **Orders** | `POST` | `/api/orders` | User / Admin | Place new customer sales order |
-| **Suppliers** | `GET` | `/api/suppliers` | **Admin Only** | Manage supply vendors |
-| **Purchase** | `GET` | `/api/purchase-orders` | **Admin Only** | Procurement & PO lifecycle |
+| **Orders** | `PUT` | `/api/orders/{id}/status` | User / Admin | Update sales order fulfillment status |
+| **Suppliers** | `GET` | `/api/suppliers` | **Admin Only** | Manage supply chain vendor profiles |
+| **Suppliers** | `POST` | `/api/suppliers` | **Admin Only** | Register new supplier |
+| **Purchase** | `GET` | `/api/purchase-orders` | **Admin Only** | Procurement pipeline & PO lifecycle |
+| **Purchase** | `POST` | `/api/purchase-orders` | **Admin Only** | Draft new purchase order |
+| **Purchase** | `PUT` | `/api/purchase-orders/{id}/status` | **Admin Only** | Advance PO status (`PENDING` ➔ `RECEIVED`) |
+| **Users** | `GET` | `/api/users` | **Admin Only** | System staff & access control list |
+| **Health** | `GET` | `/api/health` | Public | System status and health check |
 
 ---
 
 ## 🛠️ Built With
 
-* **Backend**: Spring Boot, Spring Security, Spring Data JPA, Hibernate, JJWT, MySQL Connector/J
-* **Frontend**: React 19, Vite, TailwindCSS, Lucide Icons, Axios, React Router DOM
-* **Tools**: Maven, NPM, Git, VS Code
+* **Backend**: Spring Boot, Spring Security, Spring Data JPA, Hibernate, JJWT (Java JWT), MySQL Connector/J
+* **Frontend**: Angular 22 (Standalone Architecture), TypeScript, TailwindCSS v4, RxJS, Custom SVG Icon System
+* **Build & Dev Tools**: Maven, Angular CLI (`@angular/build`), PostCSS, Prettier
 
 ---
 
