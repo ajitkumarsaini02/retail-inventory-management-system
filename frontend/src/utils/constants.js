@@ -1,0 +1,41 @@
+export const API_BASE_URL = 'http://localhost:8080';
+
+export const ROLES = {
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+};
+
+export const PRODUCT_STATUS = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+};
+
+export const WAREHOUSE_STATUS = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+};
+
+export const SUPPLIER_STATUS = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+};
+
+export const ORDER_STATUS = {
+  PENDING: 'PENDING',
+  CONFIRMED: 'CONFIRMED',
+  PROCESSING: 'PROCESSING',
+  SHIPPED: 'SHIPPED',
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED',
+};
+
+export const PURCHASE_ORDER_STATUS = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  ORDERED: 'ORDERED',
+  RECEIVED: 'RECEIVED',
+  CANCELLED: 'CANCELLED',
+};
+
+export const PURCHASE_ORDER_STATUSES = Object.values(PURCHASE_ORDER_STATUS);
+export const ORDER_STATUSES = Object.values(ORDER_STATUS);
