@@ -1,9 +1,9 @@
 spring.application.name=retail_inventory
 
-# TiDB Cloud MySQL Configuration (Lifetime Free Tier)
-spring.datasource.url=jdbc:mysql://gateway01.ap-southeast-1.prod.aws.tidbcloud.com:4000/retail_inventory?sslMode=REQUIRED&useUnicode=true&characterEncoding=utf8
-spring.datasource.username=3r9YvwrgRVAiQQD.root
-spring.datasource.password=5zYq0yqasy1Vd0Ht
+# Database Configuration (MySQL / TiDB Cloud)
+spring.datasource.url=jdbc:mysql://<HOST>:<PORT>/retail_inventory?sslMode=REQUIRED&useUnicode=true&characterEncoding=utf8
+spring.datasource.username=<USERNAME>
+spring.datasource.password=<PASSWORD>
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 # JPA / Hibernate
