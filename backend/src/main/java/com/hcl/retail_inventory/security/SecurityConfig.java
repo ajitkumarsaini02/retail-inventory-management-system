@@ -47,8 +47,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Public auth endpoints
-                        .requestMatchers("/api/auth/**").permitAll()
+                        // Public health & auth endpoints
+                        .requestMatchers("/", "/health", "/api/health", "/api/auth/**").permitAll()
 
                         // Admin-only modules
                         .requestMatchers("/api/suppliers/**").hasRole("ADMIN")

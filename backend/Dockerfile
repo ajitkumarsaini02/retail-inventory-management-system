@@ -6,6 +6,9 @@ WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 
+# If application.properties is gitignored, use the example template as fallback base
+RUN if [ ! -f src/main/resources/application.properties ]; then cp src/main/resources/application.properties.example src/main/resources/application.properties; fi
+
 # Build production JAR without tests
 RUN mvn clean package -DskipTests
 
@@ -16,8 +19,8 @@ WORKDIR /app
 # Copy the built JAR from the builder stage
 COPY --from=build /app/target/retail_inventory-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose port and run
-EXPOSE 8080
+# Support Render dynamic PORT environment variable (defaults to 8080 if not set)
+EXPOSE 8080 10000
 ENV PORT=8080
 
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
+ENTRYPOINT ["sh", "-c", "java -Dserver.port=${PORT} -Djava.security.egd=file:/dev/./urandom -jar app.jar"]
