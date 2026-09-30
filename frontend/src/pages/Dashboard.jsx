@@ -260,16 +260,6 @@ const Dashboard = () => {
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="max-w-2xl">
-            <div className="flex flex-wrap items-center gap-2 mb-3">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                {adminRole ? 'EXECUTIVE SUITE' : 'OPERATIONS PORTAL'}
-              </span>
-              <span className="text-xs text-slate-400 font-medium">
-                Core ERP • v2.4 Active
-              </span>
-            </div>
-
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
               {getGreeting()}, {user?.name || 'Authorized Operator'}
             </h1>
@@ -297,7 +287,7 @@ const Dashboard = () => {
           </div>
 
           {/* Action buttons */}
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
             <button
               onClick={() => fetchDashboardData(true)}
               disabled={isRefreshing}
@@ -773,7 +763,7 @@ const Dashboard = () => {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs sm:text-sm">
+            <table className="w-full min-w-[540px] text-left border-collapse text-xs sm:text-sm">
               <thead>
                 <tr className="bg-slate-50/70 dark:bg-slate-800/50 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200/80 dark:border-slate-800">
                   <th className="py-3 px-4">Order #</th>

@@ -11,20 +11,24 @@ import {
   FileSpreadsheet,
   LogOut,
   ShieldCheck,
-  User as UserIcon,
   X,
   Plus,
-  Sun,
-  Moon,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { useTheme } from '../../context/ThemeContext';
 import logo from '../../assets/logo.png';
 
 const Sidebar = ({ isOpen, onClose }) => {
-  const { user, isAdmin, logout } = useAuth();
-  const { isDark, toggleTheme } = useTheme();
+  const { isAdmin, logout } = useAuth();
   const navigate = useNavigate();
+
+  const handleLogoClick = () => {
+    if (onClose) onClose();
+    if (window.location.pathname === '/dashboard') {
+      window.location.reload();
+    } else {
+      navigate('/dashboard');
+    }
+  };
 
   const handleLogout = () => {
     logout();
@@ -62,24 +66,29 @@ const Sidebar = ({ isOpen, onClose }) => {
       >
         {/* Brand Header */}
         <div className="h-16 px-5 border-b border-slate-200/80 dark:border-slate-800 flex items-center justify-between bg-white dark:bg-slate-900">
-          <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={handleLogoClick}
+            className="flex items-center gap-3 text-left group cursor-pointer focus:outline-none"
+            title="Reload Dashboard"
+          >
             <img
               src={logo}
               alt="Logo"
-              className="w-10 h-10 rounded-xl object-contain shadow-xs border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-slate-800 p-1 shrink-0"
+              className="w-10 h-10 rounded-xl object-contain shadow-xs border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-slate-800 p-1 shrink-0 group-hover:scale-105 active:scale-95 transition-transform"
             />
             <div>
               <div className="flex items-center gap-1.5">
-                <h1 className="text-sm font-extrabold text-slate-900 dark:text-white tracking-tight leading-none">
+                <h1 className="text-sm font-extrabold text-slate-900 dark:text-white tracking-tight leading-none group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                   Retail Inventory ERP
                 </h1>
               </div>
               <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1 mt-0.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 Enterprise Edition
               </span>
             </div>
-          </div>
+          </button>
           <button
             onClick={onClose}
             className="lg:hidden text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
@@ -206,57 +215,11 @@ const Sidebar = ({ isOpen, onClose }) => {
           )}
         </div>
 
-        {/* Bottom Profile and Sign out card */}
+        {/* Bottom Sign Out */}
         <div className="p-3.5 border-t border-slate-200/80 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/60">
-          <div className="flex items-center gap-3 mb-3 p-2 bg-white dark:bg-slate-800/90 rounded-xl border border-slate-200/80 dark:border-slate-700/80 shadow-2xs">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-indigo-600 to-violet-500 text-white flex items-center justify-center font-bold text-xs shadow-xs shrink-0">
-              {user?.name ? user.name.charAt(0).toUpperCase() : <UserIcon className="w-4 h-4" />}
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
-                {user?.name || 'Operator'}
-              </p>
-              <div className="flex items-center gap-1.5">
-                <span
-                  className={`inline-block px-1.5 py-0.2 rounded text-[10px] font-extrabold tracking-wide uppercase ${
-                    user?.role === 'ADMIN'
-                      ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300'
-                      : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
-                  }`}
-                >
-                  {user?.role || 'USER'}
-                </span>
-                <span className="text-[10px] text-slate-400 dark:text-slate-500">• Online</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Theme Switcher Toggle */}
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className="w-full flex items-center justify-between px-3 py-2 mb-2 text-xs font-semibold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800/90 hover:bg-slate-100 dark:hover:bg-slate-700/70 border border-slate-200/80 dark:border-slate-700/80 rounded-xl transition cursor-pointer"
-          >
-            <div className="flex items-center gap-2">
-              {isDark ? (
-                <Sun className="w-4 h-4 text-amber-400" />
-              ) : (
-                <Moon className="w-4 h-4 text-indigo-600" />
-              )}
-              <span>{isDark ? 'Dark Mode' : 'Light Mode'}</span>
-            </div>
-            <div className="w-8 h-4 bg-slate-200 dark:bg-indigo-600 rounded-full relative transition-colors">
-              <div
-                className={`w-3 h-3 rounded-full bg-white absolute top-0.5 transition-transform ${
-                  isDark ? 'translate-x-4.5' : 'translate-x-0.5'
-                }`}
-              />
-            </div>
-          </button>
-
           <button
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100/80 dark:hover:bg-rose-900/60 rounded-xl transition cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl border border-transparent hover:border-rose-200 dark:hover:border-rose-900/50 transition cursor-pointer"
           >
             <LogOut className="w-3.5 h-3.5" />
             <span>Sign Out</span>

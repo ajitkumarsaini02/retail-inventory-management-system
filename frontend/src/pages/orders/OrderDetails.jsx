@@ -50,7 +50,7 @@ const OrderDetailsPage = () => {
     <div className="max-w-4xl mx-auto space-y-6">
       <button
         onClick={() => navigate('/orders')}
-        className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition"
+        className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 transition cursor-pointer"
       >
         <ArrowLeft className="w-4 h-4" />
         <span>Back to Orders List</span>

@@ -1,9 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import { Eye, Edit, Trash2, Search, Users, Mail, Phone, ArrowUpDown, Download, X, MapPin } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Eye, Edit, Trash2, Search, Users, Mail, Phone, ArrowUpDown, Download, X, MapPin, ShoppingCart } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import TablePagination from '../common/TablePagination';
 
 const CustomerTable = ({ customers = [], onView, onEdit, onDelete, isLoading }) => {
+  const navigate = useNavigate();
   const { isAdmin } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [sortField, setSortField] = useState('name');
@@ -118,7 +120,7 @@ const CustomerTable = ({ customers = [], onView, onEdit, onDelete, isLoading }) 
 
       {/* Table Content */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse text-xs sm:text-sm">
+        <table className="w-full min-w-[620px] text-left border-collapse text-xs sm:text-sm">
           <thead>
             <tr className="bg-slate-50/70 dark:bg-slate-800/50 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200/80 dark:border-slate-800">
               <th
@@ -211,6 +213,13 @@ const CustomerTable = ({ customers = [], onView, onEdit, onDelete, isLoading }) 
                   </td>
                   <td className="py-3 px-4 text-right" onClick={(e) => e.stopPropagation()}>
                     <div className="flex items-center justify-end gap-1">
+                      <button
+                        onClick={() => navigate(`/orders/add?customerId=${cust.id}`)}
+                        title="Create Order for this Customer"
+                        className="p-1.5 text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-slate-800 rounded-lg transition cursor-pointer"
+                      >
+                        <ShoppingCart className="w-4 h-4" />
+                      </button>
                       <button
                         onClick={() => onView(cust)}
                         title="View Details"

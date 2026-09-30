@@ -29,22 +29,51 @@
   .dark input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
   .dark select,
   .dark textarea {
-    background-color: #1e293b;
-    border-color: #334155;
-    color: #f8fafc;
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f8fafc !important;
   }
 
   .dark input::placeholder,
   .dark textarea::placeholder {
-    color: #64748b;
+    color: #94a3b8 !important;
   }
 
   .dark input:focus,
   .dark select:focus,
   .dark textarea:focus {
-    background-color: #0f172a;
-    border-color: #6366f1;
-    color: #ffffff;
+    background-color: #0f172a !important;
+    border-color: #6366f1 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25) !important;
+  }
+
+  .dark select option {
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+  }
+
+  /* Sleek Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: #334155;
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: #475569;
   }
 
   /* Monospace typography for numbers, SKUs, and monetary values */

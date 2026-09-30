@@ -79,10 +79,8 @@ const NotificationDrawer = ({ isOpen, onClose }) => {
   };
 
   return (
-    <>
-      <div className="fixed inset-0 z-40" onClick={onClose} />
-      <div className="absolute right-0 top-12 z-50 w-80 sm:w-96 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
-        {/* Header */}
+    <div className="absolute right-0 top-12 z-50 w-80 sm:w-96 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      {/* Header */}
         <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/40">
           <div className="flex items-center gap-2">
             <span className="font-bold text-sm text-slate-900 dark:text-white">Notifications</span>
@@ -174,7 +172,6 @@ const NotificationDrawer = ({ isOpen, onClose }) => {
           </button>
         </div>
       </div>
-    </>
   );
 };
 

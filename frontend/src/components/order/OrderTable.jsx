@@ -187,7 +187,7 @@ const OrderTable = ({ orders = [], onView, onStatusChange, onDelete, isLoading }
 
       {/* Table Content */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse text-xs sm:text-sm">
+        <table className="w-full min-w-[650px] text-left border-collapse text-xs sm:text-sm">
           <thead>
             <tr className="bg-slate-50/70 dark:bg-slate-800/50 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200/80 dark:border-slate-800">
               <th

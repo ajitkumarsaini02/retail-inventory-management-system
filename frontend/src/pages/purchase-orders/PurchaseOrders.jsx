@@ -69,10 +69,10 @@ const PurchaseOrders = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
             Purchase Orders
           </h2>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             Stock replenishment, supplier procurement orders, and inventory restocking
           </p>
         </div>
@@ -80,13 +80,13 @@ const PurchaseOrders = () => {
           <button
             onClick={fetchPurchaseOrders}
             title="Refresh"
-            className="p-2.5 text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 rounded-lg transition"
+            className="p-2.5 text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition cursor-pointer"
           >
             <RefreshCw className="w-4 h-4" />
           </button>
           <button
             onClick={() => navigate('/purchase-orders/add')}
-            className="flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow-xs shadow-indigo-200 transition"
+            className="flex items-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow-xs shadow-indigo-200 dark:shadow-none transition cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Create Purchase Order</span>

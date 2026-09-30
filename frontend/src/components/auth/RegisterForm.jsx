@@ -51,11 +51,18 @@ const RegisterForm = () => {
   return (
     <div className="w-full max-w-md bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl shadow-xl shadow-slate-200/60 dark:shadow-none border border-slate-200/90 dark:border-slate-800 transition-colors">
       <div className="text-center mb-7">
-        <img
-          src={logo}
-          alt="Logo"
-          className="w-14 h-14 rounded-2xl object-contain mx-auto mb-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700 bg-white p-1.5"
-        />
+        <button
+          type="button"
+          onClick={() => window.location.reload()}
+          title="Reload Portal"
+          className="inline-block transition-transform hover:scale-105 active:scale-95 focus:outline-none cursor-pointer"
+        >
+          <img
+            src={logo}
+            alt="Logo"
+            className="w-14 h-14 rounded-2xl object-contain mx-auto mb-3.5 shadow-sm border border-slate-200/80 dark:border-slate-700 bg-white p-1.5"
+          />
+        </button>
         <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
           Create Operator Account
         </h2>

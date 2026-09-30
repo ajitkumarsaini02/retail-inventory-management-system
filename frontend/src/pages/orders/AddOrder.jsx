@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import OrderForm from '../../components/order/OrderForm';
 import orderService from '../../services/orderService';
 import customerService from '../../services/customerService';
@@ -10,6 +10,8 @@ import ErrorMessage from '../../components/common/ErrorMessage';
 
 const AddOrder = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const initialCustomerId = searchParams.get('customerId') || '';
   const [customers, setCustomers] = useState([]);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -63,6 +65,8 @@ const AddOrder = () => {
       <OrderForm
         customers={customers}
         products={products}
+        initialCustomerId={initialCustomerId}
+        onCustomerCreated={(newCust) => setCustomers((prev) => [...prev, newCust])}
         onSubmit={handleCreateOrder}
         isSubmitting={isSubmitting}
       />
