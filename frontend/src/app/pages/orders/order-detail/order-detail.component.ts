@@ -14,25 +14,25 @@ import { IconComponent } from '../../../components/icon/icon.component';
     @if (order) {
       <div class="max-w-4xl mx-auto space-y-6">
         <!-- Header -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E2E8F0] dark:border-[#252C45]">
           <div class="flex items-center gap-3">
             <button
               (click)="router.navigate(['/orders'])"
-              class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 text-slate-500 cursor-pointer"
+              class="p-2 rounded-xl border border-[#E2E8F0] dark:border-[#252C45] hover:bg-[#F5F3FF] dark:hover:bg-[#1B2140] text-[#475569] dark:text-[#94A3B8] cursor-pointer transition"
             >
               <app-icon name="arrow-right" className="w-4 h-4 rotate-180"></app-icon>
             </button>
             <div>
               <div class="flex items-center gap-2.5">
-                <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white font-mono">{{ order.orderNumber }}</h1>
+                <h1 class="text-2xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] font-mono">{{ order.orderNumber }}</h1>
                 <span
                   class="px-2.5 py-0.5 rounded-full text-xs font-bold"
-                  [ngClass]="order.status === 'DELIVERED' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' : (order.status === 'PENDING' ? 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300' : 'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300')"
+                  [ngClass]="getStatusBadgeClass(order.status)"
                 >
                   {{ order.status }}
                 </span>
               </div>
-              <p class="text-xs text-slate-400 mt-0.5">Placed on {{ (order.orderDate || order.createdAt) | date:'medium' }}</p>
+              <p class="text-xs text-[#475569] dark:text-[#94A3B8] mt-0.5">Placed on {{ (order.orderDate || order.createdAt) | date:'medium' }}</p>
             </div>
           </div>
 
@@ -48,14 +48,14 @@ import { IconComponent } from '../../../components/icon/icon.component';
             } @else if (order.status === 'CONFIRMED') {
               <button
                 (click)="updateStatus('PROCESSING')"
-                class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-xl shadow-xs transition cursor-pointer"
+                class="px-4 py-2 bg-[#6C3BFF] hover:bg-[#7C4DFF] text-white text-xs font-semibold rounded-xl shadow-xs transition cursor-pointer"
               >
                 Start Processing
               </button>
             } @else if (order.status === 'PROCESSING') {
               <button
                 (click)="updateStatus('SHIPPED')"
-                class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold rounded-xl shadow-xs transition cursor-pointer"
+                class="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-semibold rounded-xl shadow-xs transition cursor-pointer"
               >
                 Ship Package
               </button>
@@ -70,7 +70,7 @@ import { IconComponent } from '../../../components/icon/icon.component';
             @if (order.status !== 'DELIVERED' && order.status !== 'CANCELLED') {
               <button
                 (click)="updateStatus('CANCELLED')"
-                class="px-3.5 py-2 border border-rose-300 text-rose-600 hover:bg-rose-50 text-xs font-semibold rounded-xl transition cursor-pointer"
+                class="px-3.5 py-2 border border-red-500/30 text-red-500 hover:bg-red-500/10 text-xs font-semibold rounded-xl transition cursor-pointer"
               >
                 Cancel
               </button>
@@ -80,27 +80,28 @@ import { IconComponent } from '../../../components/icon/icon.component';
 
         <!-- Customer & Shipping Summary -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-5 shadow-2xs">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">Customer Details</span>
-            <div class="text-sm font-bold text-slate-900 dark:text-white">{{ order.customer?.name || 'Walk-in Customer' }}</div>
-            <div class="text-xs text-slate-500 mt-1">{{ order.customer?.email }}</div>
-            <div class="text-xs text-slate-500 mt-0.5">{{ order.customer?.phone }}</div>
+          <div class="bg-white dark:bg-[#141A2E] rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] p-5 shadow-xs">
+            <span class="text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider block mb-2">Customer Details</span>
+            <div class="text-sm font-bold text-[#0F172A] dark:text-[#F8FAFC]">{{ order.customer?.name || 'Walk-in Customer' }}</div>
+            <div class="text-xs text-[#475569] dark:text-[#94A3B8] mt-1">{{ order.customer?.email }}</div>
+            <div class="text-xs text-[#475569] dark:text-[#94A3B8] mt-0.5">{{ order.customer?.phone }}</div>
           </div>
 
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-5 shadow-2xs">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">Shipping Destination</span>
-            <div class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">{{ order.shippingAddress || 'Store Pickup' }}</div>
+          <div class="bg-white dark:bg-[#141A2E] rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] p-5 shadow-xs">
+            <span class="text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider block mb-2">Shipping Destination</span>
+            <div class="text-xs text-[#0F172A] dark:text-[#F8FAFC] leading-relaxed">{{ order.shippingAddress || 'Store Pickup' }}</div>
           </div>
         </div>
 
         <!-- Line Items Table -->
-        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs overflow-hidden">
-          <div class="p-4 border-b border-slate-100 dark:border-slate-800">
-            <h3 class="text-sm font-bold text-slate-900 dark:text-white">Order Line Items</h3>
+        <div class="bg-white dark:bg-[#141A2E] rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] shadow-xs overflow-hidden">
+          <div class="p-4 border-b border-[#E2E8F0] dark:border-[#252C45]">
+            <h3 class="text-sm font-bold text-[#0F172A] dark:text-[#F8FAFC]">Order Line Items</h3>
           </div>
+
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs sm:text-sm">
-              <thead class="bg-slate-50/80 dark:bg-slate-800/60 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200/80 dark:border-slate-800">
+              <thead class="bg-[#F8FAFC]/90 dark:bg-[#10152A]/90 text-[11px] font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider border-b border-[#E2E8F0] dark:border-[#252C45]">
                 <tr>
                   <th class="py-3 px-4">Item SKU</th>
                   <th class="py-3 px-4 text-center">Quantity</th>
@@ -108,16 +109,16 @@ import { IconComponent } from '../../../components/icon/icon.component';
                   <th class="py-3 px-4 text-right">Subtotal</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+              <tbody class="divide-y divide-[#E2E8F0]/70 dark:divide-[#252C45]/70">
                 @for (item of order.orderItems; track item.id) {
                   <tr>
                     <td class="py-3 px-4">
-                      <div class="font-bold text-slate-900 dark:text-white">{{ item.product?.name || 'Product #' + item.productId }}</div>
-                      <div class="text-[11px] text-slate-400 font-mono">SKU: {{ item.product?.sku || 'N/A' }}</div>
+                      <div class="font-bold text-[#0F172A] dark:text-[#F8FAFC]">{{ item.product?.name || 'Product #' + item.productId }}</div>
+                      <div class="text-[11px] text-[#6C3BFF] dark:text-[#A78BFA] font-mono">SKU: {{ item.product?.sku || 'N/A' }}</div>
                     </td>
                     <td class="py-3 px-4 text-center font-mono font-bold">{{ item.quantity }}</td>
-                    <td class="py-3 px-4 text-right font-mono text-slate-600 dark:text-slate-300">\${{ item.unitPrice | number:'1.2-2' }}</td>
-                    <td class="py-3 px-4 text-right font-mono font-bold text-slate-900 dark:text-white">
+                    <td class="py-3 px-4 text-right font-mono text-[#475569] dark:text-[#94A3B8]">\${{ item.unitPrice | number:'1.2-2' }}</td>
+                    <td class="py-3 px-4 text-right font-mono font-bold text-[#0F172A] dark:text-[#F8FAFC]">
                       \${{ (item.quantity * item.unitPrice) | number:'1.2-2' }}
                     </td>
                   </tr>
@@ -126,10 +127,10 @@ import { IconComponent } from '../../../components/icon/icon.component';
             </table>
           </div>
 
-          <div class="p-5 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+          <div class="p-5 border-t border-[#E2E8F0] dark:border-[#252C45] flex justify-end">
             <div class="text-right">
-              <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Gross Total</span>
-              <p class="text-2xl font-extrabold text-slate-900 dark:text-white font-mono mt-0.5">
+              <span class="text-xs text-[#475569] dark:text-[#94A3B8] uppercase font-bold tracking-wider">Gross Total</span>
+              <p class="text-2xl font-extrabold text-[#6C3BFF] dark:text-[#A78BFA] font-mono mt-0.5">
                 \${{ order.totalAmount | number:'1.2-2' }}
               </p>
             </div>
@@ -161,6 +162,25 @@ export class OrderDetailComponent implements OnInit {
         this.cdr.markForCheck();
       }
     });
+  }
+
+  getStatusBadgeClass(status: OrderStatus): string {
+    switch (status) {
+      case 'PENDING':
+        return 'bg-amber-500/15 text-amber-500 border border-amber-500/25';
+      case 'CONFIRMED':
+        return 'bg-blue-500/15 text-blue-500 border border-blue-500/25';
+      case 'PROCESSING':
+        return 'bg-purple-500/15 text-[#6C3BFF] dark:text-[#A78BFA] border border-[#6C3BFF]/25';
+      case 'SHIPPED':
+        return 'bg-cyan-500/15 text-cyan-500 border border-cyan-500/25';
+      case 'DELIVERED':
+        return 'bg-emerald-500/15 text-emerald-500 border border-emerald-500/25';
+      case 'CANCELLED':
+        return 'bg-red-500/15 text-red-500 border border-red-500/25';
+      default:
+        return 'bg-slate-500/15 text-slate-500 border border-slate-500/25';
+    }
   }
 
   updateStatus(newStatus: OrderStatus) {

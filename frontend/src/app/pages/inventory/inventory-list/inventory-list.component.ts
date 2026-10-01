@@ -15,58 +15,95 @@ import { IconComponent } from '../../../components/icon/icon.component';
   imports: [CommonModule, FormsModule, IconComponent],
   template: `
     <div class="space-y-6">
+      <!-- Page Header -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Inventory & Stock Tracking</h1>
-          <p class="text-xs sm:text-sm text-slate-400 mt-1">Multi-warehouse stock allocations, reserved volumes, and threshold monitoring</p>
+          <div class="flex items-center gap-2">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] tracking-tight">Inventory & Stock Tracking</h1>
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#22C55E]/10 text-[#22C55E] border border-[#22C55E]/20">
+              Live Telemetry
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-[#475569] dark:text-[#94A3B8] mt-1">Multi-warehouse stock allocations, reserved volumes, safety thresholds, and replenishment alerts</p>
         </div>
 
         @if (authService.isAdmin()) {
           <button
             (click)="router.navigate(['/purchase-orders/add'])"
-            class="px-4 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 text-slate-950 font-bold text-xs sm:text-sm rounded-xl shadow-md transition flex items-center gap-2 cursor-pointer self-start sm:self-auto"
+            class="px-4 py-2.5 bg-gradient-to-r from-[#6C3BFF] to-[#7C4DFF] hover:from-[#7C4DFF] hover:to-[#6C3BFF] text-white font-semibold text-xs sm:text-sm rounded-xl shadow-md shadow-[#6C3BFF]/25 transition flex items-center gap-2 cursor-pointer self-start sm:self-auto active:scale-98"
           >
-            <app-icon name="file-spreadsheet" className="w-4 h-4"></app-icon>
+            <app-icon name="plus" className="w-4 h-4"></app-icon>
             <span>Replenish Stock (New PO)</span>
           </button>
         }
       </div>
 
-      <!-- Quick Metrics Strip -->
+      <!-- Inventory Overview KPI Cards -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs">
-          <span class="text-slate-400 text-xs font-bold uppercase">Total Units Tracked</span>
-          <p class="text-xl font-extrabold text-slate-900 dark:text-white font-mono mt-1">{{ totalUnits.toLocaleString() }}</p>
+        <!-- Total Stock -->
+        <div class="bg-white dark:bg-[#141A2E] p-4 rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] shadow-xs">
+          <div class="flex items-center justify-between">
+            <span class="text-[#475569] dark:text-[#94A3B8] text-xs font-bold uppercase tracking-wider">Total Stock</span>
+            <div class="w-8 h-8 rounded-lg bg-[#2563EB]/10 text-[#2563EB] flex items-center justify-center">
+              <app-icon name="layers" className="w-4 h-4"></app-icon>
+            </div>
+          </div>
+          <p class="text-2xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] font-mono mt-2">{{ totalUnits.toLocaleString() }}</p>
+          <span class="text-[11px] text-[#64748B] dark:text-[#94A3B8]">Gross units stored</span>
         </div>
-        <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs">
-          <span class="text-slate-400 text-xs font-bold uppercase">Reserved for Orders</span>
-          <p class="text-xl font-extrabold text-violet-600 font-mono mt-1">{{ reservedUnits.toLocaleString() }}</p>
+
+        <!-- Reserved Stock -->
+        <div class="bg-white dark:bg-[#141A2E] p-4 rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] shadow-xs">
+          <div class="flex items-center justify-between">
+            <span class="text-[#475569] dark:text-[#94A3B8] text-xs font-bold uppercase tracking-wider">Reserved Stock</span>
+            <div class="w-8 h-8 rounded-lg bg-[#6C3BFF]/10 text-[#6C3BFF] flex items-center justify-center">
+              <app-icon name="clock" className="w-4 h-4"></app-icon>
+            </div>
+          </div>
+          <p class="text-2xl font-extrabold text-[#6C3BFF] font-mono mt-2">{{ reservedUnits.toLocaleString() }}</p>
+          <span class="text-[11px] text-[#64748B] dark:text-[#94A3B8]">Committed to open orders</span>
         </div>
-        <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs">
-          <span class="text-slate-400 text-xs font-bold uppercase">Net Available</span>
-          <p class="text-xl font-extrabold text-emerald-600 font-mono mt-1">{{ (totalUnits - reservedUnits).toLocaleString() }}</p>
+
+        <!-- Available Stock -->
+        <div class="bg-white dark:bg-[#141A2E] p-4 rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] shadow-xs">
+          <div class="flex items-center justify-between">
+            <span class="text-[#475569] dark:text-[#94A3B8] text-xs font-bold uppercase tracking-wider">Available Stock</span>
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+              <app-icon name="check-circle" className="w-4 h-4"></app-icon>
+            </div>
+          </div>
+          <p class="text-2xl font-extrabold text-emerald-500 font-mono mt-2">{{ (totalUnits - reservedUnits).toLocaleString() }}</p>
+          <span class="text-[11px] text-emerald-500 font-semibold">Immediate fulfillment</span>
         </div>
-        <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs">
-          <span class="text-slate-400 text-xs font-bold uppercase">Low Stock Alerts</span>
-          <p class="text-xl font-extrabold text-amber-600 font-mono mt-1">{{ lowStockCount }}</p>
+
+        <!-- Reorder Alerts -->
+        <div class="bg-white dark:bg-[#141A2E] p-4 rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] shadow-xs">
+          <div class="flex items-center justify-between">
+            <span class="text-[#475569] dark:text-[#94A3B8] text-xs font-bold uppercase tracking-wider">Reorder Alerts</span>
+            <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center">
+              <app-icon name="alert-triangle" className="w-4 h-4"></app-icon>
+            </div>
+          </div>
+          <p class="text-2xl font-extrabold text-amber-500 font-mono mt-2">{{ lowStockCount }}</p>
+          <span class="text-[11px] text-amber-500 font-semibold">Below safety threshold</span>
         </div>
       </div>
 
       <!-- Search & Warehouse Filter -->
-      <div class="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs flex flex-col sm:flex-row gap-3">
+      <div class="bg-white dark:bg-[#141A2E] p-4 rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] shadow-xs flex flex-col sm:flex-row gap-3">
         <div class="relative flex-1">
-          <app-icon name="search" className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></app-icon>
+          <app-icon name="search" className="w-4 h-4 text-[#94A3B8] dark:text-[#64748B] absolute left-3.5 top-1/2 -translate-y-1/2"></app-icon>
           <input
             type="text"
             [(ngModel)]="searchQuery"
             placeholder="Search by product name or SKU..."
-            class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+            class="w-full pl-10 pr-4 py-2 bg-[#F8FAFC] dark:bg-[#11172B] border border-[#E2E8F0] dark:border-[#252C45] rounded-xl text-xs sm:text-sm text-[#0F172A] dark:text-[#F8FAFC] placeholder-[#94A3B8] dark:placeholder-[#64748B] focus:outline-none focus:ring-2 focus:ring-[#6C3BFF]/25 focus:border-[#6C3BFF]"
           />
         </div>
 
         <select
           [(ngModel)]="selectedWarehouseId"
-          class="px-3 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-700 dark:text-slate-300 focus:outline-none"
+          class="px-3 py-2 bg-[#F8FAFC] dark:bg-[#11172B] border border-[#E2E8F0] dark:border-[#252C45] rounded-xl text-xs sm:text-sm text-[#0F172A] dark:text-[#F8FAFC] focus:outline-none focus:border-[#6C3BFF] cursor-pointer"
         >
           <option [value]="0">All Warehouses</option>
           @for (wh of warehouses; track wh.id) {
@@ -76,51 +113,92 @@ import { IconComponent } from '../../../components/icon/icon.component';
       </div>
 
       <!-- Inventory Table -->
-      <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs overflow-hidden">
+      <div class="bg-white dark:bg-[#141A2E] rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] shadow-xs overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs sm:text-sm">
-            <thead class="bg-slate-50/80 dark:bg-slate-800/60 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200/80 dark:border-slate-800">
+            <thead class="bg-[#F8FAFC]/90 dark:bg-[#10152A]/90 text-[11px] font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider border-b border-[#E2E8F0] dark:border-[#252C45]">
               <tr>
                 <th class="py-3.5 px-4">Product</th>
-                <th class="py-3.5 px-4">Warehouse Facility</th>
-                <th class="py-3.5 px-4 text-right">On Hand</th>
+                <th class="py-3.5 px-4 font-mono">SKU</th>
+                <th class="py-3.5 px-4">Warehouse</th>
+                <th class="py-3.5 px-4 text-right">Quantity</th>
                 <th class="py-3.5 px-4 text-right">Reserved</th>
                 <th class="py-3.5 px-4 text-right">Available</th>
+                <th class="py-3.5 px-4 text-center">Reorder Level</th>
                 <th class="py-3.5 px-4 text-center">Status</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            <tbody class="divide-y divide-[#E2E8F0]/70 dark:divide-[#252C45]/70">
               @if (isLoading) {
-                <tr><td colSpan="6" class="py-12 text-center text-slate-400">Loading stock records...</td></tr>
+                <tr><td colSpan="8" class="py-12 text-center text-[#94A3B8] dark:text-[#64748B]">Loading stock records...</td></tr>
               } @else if (filteredInventory.length === 0) {
-                <tr><td colSpan="6" class="py-12 text-center text-slate-400">No inventory entries found.</td></tr>
+                <tr><td colSpan="8" class="py-12 text-center text-[#94A3B8] dark:text-[#64748B]">No inventory entries found.</td></tr>
               } @else {
                 @for (inv of filteredInventory; track inv.id) {
                   @let avail = (inv.quantity || 0) - (inv.reservedQuantity || 0);
-                  <tr class="hover:bg-slate-50/70 dark:hover:bg-slate-800/50 transition">
-                    <td class="py-3.5 px-4">
-                      <div class="font-bold text-slate-900 dark:text-white">{{ inv.product?.name || 'Product #' + inv.productId }}</div>
-                      <div class="text-[11px] text-slate-400 font-mono">SKU: {{ inv.product?.sku || 'N/A' }}</div>
+                  @let threshold = inv.reorderLevel || inv.product?.reorderLevel || 10;
+                  @let isCritical = avail <= 0;
+                  @let isLow = avail > 0 && avail <= threshold;
+
+                  <tr
+                    class="hover:bg-[#F5F3FF]/60 dark:hover:bg-[#1B2140]/60 transition"
+                    [ngClass]="{
+                      'bg-red-500/[0.03] dark:bg-red-500/[0.04]': isCritical,
+                      'bg-amber-500/[0.03] dark:bg-amber-500/[0.04]': isLow
+                    }"
+                  >
+                    <!-- Product -->
+                    <td class="py-3.5 px-4 font-semibold text-[#0F172A] dark:text-[#F8FAFC]">
+                      {{ inv.product?.name || 'Product #' + inv.productId }}
                     </td>
-                    <td class="py-3.5 px-4 font-semibold text-slate-700 dark:text-slate-300">
+
+                    <!-- SKU -->
+                    <td class="py-3.5 px-4 font-mono font-bold text-[#6C3BFF] dark:text-[#A78BFA] whitespace-nowrap">
+                      {{ inv.product?.sku || ('SKU-' + inv.productId) }}
+                    </td>
+
+                    <!-- Warehouse -->
+                    <td class="py-3.5 px-4 font-medium text-[#475569] dark:text-[#94A3B8] whitespace-nowrap">
                       {{ inv.warehouse?.name || 'Hub #' + inv.warehouseId }}
                     </td>
-                    <td class="py-3.5 px-4 text-right font-mono font-bold text-slate-900 dark:text-white">
+
+                    <!-- Quantity -->
+                    <td class="py-3.5 px-4 text-right font-mono font-bold text-[#0F172A] dark:text-[#F8FAFC]">
                       {{ inv.quantity }}
                     </td>
-                    <td class="py-3.5 px-4 text-right font-mono text-violet-600">
+
+                    <!-- Reserved -->
+                    <td class="py-3.5 px-4 text-right font-mono text-[#6C3BFF] font-semibold">
                       {{ inv.reservedQuantity }}
                     </td>
-                    <td class="py-3.5 px-4 text-right font-mono font-bold" [ngClass]="avail <= 0 ? 'text-rose-600' : (avail <= (inv.reorderLevel || 10) ? 'text-amber-600' : 'text-emerald-600')">
+
+                    <!-- Available -->
+                    <td class="py-3.5 px-4 text-right font-mono font-extrabold" [ngClass]="isCritical ? 'text-red-500' : (isLow ? 'text-amber-500' : 'text-emerald-500')">
                       {{ avail }}
                     </td>
-                    <td class="py-3.5 px-4 text-center">
-                      <span
-                        class="px-2.5 py-0.5 rounded-full text-[10px] font-bold"
-                        [ngClass]="avail <= 0 ? 'bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300' : (avail <= (inv.reorderLevel || 10) ? 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300' : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300')"
-                      >
-                        {{ avail <= 0 ? 'OUT OF STOCK' : (avail <= (inv.reorderLevel || 10) ? 'LOW STOCK' : 'IN STOCK') }}
-                      </span>
+
+                    <!-- Reorder Level -->
+                    <td class="py-3.5 px-4 text-center font-mono text-[#475569] dark:text-[#94A3B8]">
+                      {{ threshold }}
+                    </td>
+
+                    <!-- Status with amber/red alerts -->
+                    <td class="py-3.5 px-4 text-center whitespace-nowrap">
+                      @if (isCritical) {
+                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-red-500/15 text-red-500 border border-red-500/25">
+                          <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping"></span>
+                          OUT OF STOCK
+                        </span>
+                      } @else if (isLow) {
+                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-500 border border-amber-500/25">
+                          <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                          LOW STOCK
+                        </span>
+                      } @else {
+                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-500 border border-emerald-500/25">
+                          OPTIMAL
+                        </span>
+                      }
                     </td>
                   </tr>
                 }
@@ -156,7 +234,8 @@ export class InventoryListComponent implements OnInit {
   get lowStockCount(): number {
     return this.inventoryList.filter(i => {
       const avail = (Number(i.quantity) || 0) - (Number(i.reservedQuantity) || 0);
-      return avail <= (i.reorderLevel || 10);
+      const threshold = i.reorderLevel || i.product?.reorderLevel || 10;
+      return avail <= threshold;
     }).length;
   }
 

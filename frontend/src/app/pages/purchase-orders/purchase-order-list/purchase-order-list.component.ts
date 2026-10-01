@@ -15,25 +15,30 @@ import { IconComponent } from '../../../components/icon/icon.component';
       <!-- Header -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            Purchase Orders (Procurement)
-          </h1>
-          <p class="text-xs sm:text-sm text-slate-400 mt-1">
-            Supplier purchase consignments, replenishment orders, and inbound inventory
+          <div class="flex items-center gap-2">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] tracking-tight">
+              Purchase Orders (Procurement)
+            </h1>
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#F97316]/10 text-[#EA580C] dark:text-[#FB923C] border border-[#F97316]/20">
+              {{ filteredOrders.length }} In-Flight POs
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-[#475569] dark:text-[#94A3B8] mt-1">
+            Supplier purchase consignments, replenishment orders, line item pricing, and inbound receipts
           </p>
         </div>
 
         <div class="flex items-center gap-2 self-start sm:self-auto">
           <button
             (click)="loadOrders()"
-            class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer"
+            class="p-2.5 rounded-xl border border-[#E2E8F0] dark:border-[#252C45] bg-white dark:bg-[#141A2E] text-[#475569] dark:text-[#94A3B8] hover:bg-[#F5F3FF] dark:hover:bg-[#1B2140] transition cursor-pointer"
             title="Refresh list"
           >
-            <app-icon name="refresh-cw" className="w-4 h-4"></app-icon>
+            <app-icon name="refresh" className="w-4 h-4"></app-icon>
           </button>
           <button
             (click)="router.navigate(['/purchase-orders/add'])"
-            class="px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-semibold text-xs sm:text-sm rounded-xl shadow-md shadow-indigo-500/25 transition flex items-center gap-2 cursor-pointer"
+            class="px-4 py-2.5 bg-gradient-to-r from-[#6C3BFF] to-[#7C4DFF] hover:from-[#7C4DFF] hover:to-[#6C3BFF] text-white font-semibold text-xs sm:text-sm rounded-xl shadow-md shadow-[#6C3BFF]/25 transition flex items-center gap-2 cursor-pointer active:scale-98"
           >
             <app-icon name="plus" className="w-4 h-4"></app-icon>
             <span>Create Purchase Order</span>
@@ -42,25 +47,25 @@ import { IconComponent } from '../../../components/icon/icon.component';
       </div>
 
       <!-- Filters & Actions Bar -->
-      <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-4 shadow-2xs flex flex-col md:flex-row items-center justify-between gap-3">
+      <div class="bg-white dark:bg-[#141A2E] rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] p-4 shadow-xs flex flex-col md:flex-row items-center justify-between gap-3">
         <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
           <!-- Search -->
           <div class="relative w-full sm:w-72">
-            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94A3B8] dark:text-[#64748B]">
               <app-icon name="search" className="w-4 h-4"></app-icon>
             </span>
             <input
               type="text"
               [(ngModel)]="searchQuery"
               placeholder="Search PO # or supplier..."
-              class="w-full pl-9 pr-4 py-2 rounded-xl text-xs sm:text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
+              class="w-full pl-9 pr-4 py-2 rounded-xl text-xs sm:text-sm border border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC] dark:bg-[#11172B] text-[#0F172A] dark:text-[#F8FAFC] placeholder-[#94A3B8] dark:placeholder-[#64748B] focus:outline-none focus:ring-2 focus:ring-[#6C3BFF]/25 focus:border-[#6C3BFF]"
             />
           </div>
 
           <!-- Status Filter -->
           <select
             [(ngModel)]="statusFilter"
-            class="w-full sm:w-auto px-3.5 py-2 rounded-xl text-xs sm:text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-indigo-600 cursor-pointer"
+            class="w-full sm:w-auto px-3.5 py-2 rounded-xl text-xs sm:text-sm border border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC] dark:bg-[#11172B] text-[#0F172A] dark:text-[#F8FAFC] font-medium focus:outline-none focus:border-[#6C3BFF] cursor-pointer"
           >
             <option value="ALL">All Statuses</option>
             <option value="PENDING">PENDING</option>
@@ -72,13 +77,13 @@ import { IconComponent } from '../../../components/icon/icon.component';
         </div>
 
         <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
-          <span class="text-xs text-slate-400 font-medium">
-            Showing <strong class="text-slate-700 dark:text-slate-200">{{ filteredOrders.length }}</strong> orders
+          <span class="text-xs text-[#64748B] dark:text-[#94A3B8] font-medium">
+            Showing <strong class="text-[#0F172A] dark:text-[#F8FAFC]">{{ filteredOrders.length }}</strong> orders
           </span>
           <button
             (click)="exportCSV()"
             [disabled]="filteredOrders.length === 0"
-            class="px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl transition flex items-center gap-1.5 cursor-pointer disabled:opacity-40"
+            class="px-3.5 py-2 text-xs font-semibold text-[#0F172A] dark:text-[#F8FAFC] bg-[#F8FAFC] dark:bg-[#11172B] hover:bg-[#F5F3FF] dark:hover:bg-[#1B2140] border border-[#E2E8F0] dark:border-[#252C45] rounded-xl transition flex items-center gap-1.5 cursor-pointer disabled:opacity-40"
           >
             <app-icon name="download" className="w-3.5 h-3.5"></app-icon>
             <span>Export CSV</span>
@@ -87,33 +92,33 @@ import { IconComponent } from '../../../components/icon/icon.component';
       </div>
 
       <!-- Orders Table -->
-      <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs overflow-hidden">
+      <div class="bg-white dark:bg-[#141A2E] rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] shadow-xs overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs sm:text-sm">
-            <thead class="bg-slate-50/75 dark:bg-slate-800/50 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200/80 dark:border-slate-800">
+            <thead class="bg-[#F8FAFC]/90 dark:bg-[#10152A]/90 text-[11px] font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider border-b border-[#E2E8F0] dark:border-[#252C45]">
               <tr>
                 <th class="py-3.5 px-4 font-mono">PO Number</th>
-                <th class="py-3.5 px-4">Supplier / Vendor</th>
+                <th class="py-3.5 px-4">Supplier</th>
                 <th class="py-3.5 px-4 text-right">Total Amount</th>
-                <th class="py-3.5 px-4 text-center">Status</th>
                 <th class="py-3.5 px-4">Expected Delivery</th>
+                <th class="py-3.5 px-4 text-center">Status</th>
                 <th class="py-3.5 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            <tbody class="divide-y divide-[#E2E8F0]/70 dark:divide-[#252C45]/70">
               @if (isLoading) {
                 <tr>
-                  <td colspan="6" class="py-12 text-center text-slate-400">Loading purchase orders...</td>
+                  <td colspan="6" class="py-12 text-center text-[#94A3B8] dark:text-[#64748B]">Loading purchase orders...</td>
                 </tr>
               } @else if (filteredOrders.length === 0) {
                 <tr>
-                  <td colspan="6" class="py-12 text-center text-slate-400">
+                  <td colspan="6" class="py-12 text-center text-[#94A3B8] dark:text-[#64748B]">
                     <div class="flex flex-col items-center justify-center">
-                      <div class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-3 text-slate-400">
+                      <div class="w-12 h-12 rounded-2xl bg-[#F8FAFC] dark:bg-[#11172B] border border-[#E2E8F0] dark:border-[#252C45] flex items-center justify-center mb-3 text-[#94A3B8]">
                         <app-icon name="file-spreadsheet" className="w-6 h-6"></app-icon>
                       </div>
-                      <p class="font-bold text-slate-700 dark:text-slate-200">No purchase orders found</p>
-                      <p class="text-xs text-slate-400 mt-0.5">Create a purchase order to initiate replenishment with vendors</p>
+                      <p class="font-bold text-[#0F172A] dark:text-[#F8FAFC]">No purchase orders found</p>
+                      <p class="text-xs text-[#64748B] dark:text-[#94A3B8] mt-0.5">Create a purchase order to initiate replenishment with suppliers</p>
                     </div>
                   </td>
                 </tr>
@@ -121,23 +126,26 @@ import { IconComponent } from '../../../components/icon/icon.component';
                 @for (po of filteredOrders; track po.id) {
                   <tr
                     (click)="router.navigate(['/purchase-orders', po.id])"
-                    class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors cursor-pointer group"
+                    class="hover:bg-[#F5F3FF]/60 dark:hover:bg-[#1B2140]/60 transition-colors cursor-pointer group"
                   >
-                    <td class="py-3.5 px-4 font-mono font-bold text-indigo-600 dark:text-indigo-400">
+                    <td class="py-3.5 px-4 font-mono font-bold text-[#6C3BFF] dark:text-[#A78BFA] whitespace-nowrap">
                       {{ po.purchaseOrderNumber }}
                     </td>
                     <td class="py-3.5 px-4">
-                      <div class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                      <div class="font-bold text-[#0F172A] dark:text-[#F8FAFC] group-hover:text-[#6C3BFF] transition-colors">
                         {{ po.supplier?.name || 'Unknown Supplier' }}
                       </div>
                       @if (po.supplier?.contactPerson) {
-                        <span class="text-[11px] text-slate-400">Attn: {{ po.supplier?.contactPerson }}</span>
+                        <span class="text-[11px] text-[#64748B] dark:text-[#94A3B8]">Attn: {{ po.supplier?.contactPerson }}</span>
                       }
                     </td>
-                    <td class="py-3.5 px-4 text-right font-extrabold text-slate-900 dark:text-white font-mono">
+                    <td class="py-3.5 px-4 text-right font-extrabold text-[#0F172A] dark:text-[#F8FAFC] font-mono whitespace-nowrap">
                       \${{ po.totalAmount | number:'1.2-2' }}
                     </td>
-                    <td class="py-3.5 px-4 text-center">
+                    <td class="py-3.5 px-4 text-[#475569] dark:text-[#94A3B8] text-xs whitespace-nowrap">
+                      {{ po.expectedDeliveryDate ? (po.expectedDeliveryDate | date:'mediumDate') : '—' }}
+                    </td>
+                    <td class="py-3.5 px-4 text-center whitespace-nowrap">
                       <span
                         class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider"
                         [ngClass]="getStatusBadgeClass(po.status)"
@@ -146,22 +154,19 @@ import { IconComponent } from '../../../components/icon/icon.component';
                         {{ po.status }}
                       </span>
                     </td>
-                    <td class="py-3.5 px-4 text-slate-600 dark:text-slate-300 text-xs">
-                      {{ po.expectedDeliveryDate ? (po.expectedDeliveryDate | date:'mediumDate') : '—' }}
-                    </td>
-                    <td class="py-3.5 px-4 text-right" (click)="$event.stopPropagation()">
+                    <td class="py-3.5 px-4 text-right whitespace-nowrap" (click)="$event.stopPropagation()">
                       <div class="flex items-center justify-end gap-1">
                         <button
                           (click)="router.navigate(['/purchase-orders', po.id])"
                           title="View PO Details"
-                          class="p-1.5 text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-slate-800 rounded-lg transition cursor-pointer"
+                          class="p-1.5 text-[#475569] dark:text-[#94A3B8] hover:text-[#6C3BFF] hover:bg-[#6C3BFF]/10 rounded-lg transition cursor-pointer"
                         >
                           <app-icon name="eye" className="w-4 h-4"></app-icon>
                         </button>
                         <button
                           (click)="openDeleteModal(po)"
                           title="Delete PO"
-                          class="p-1.5 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-slate-800 rounded-lg transition cursor-pointer"
+                          class="p-1.5 text-[#475569] dark:text-[#94A3B8] hover:text-red-500 hover:bg-red-500/10 rounded-lg transition cursor-pointer"
                         >
                           <app-icon name="trash" className="w-4 h-4"></app-icon>
                         </button>
@@ -178,34 +183,39 @@ import { IconComponent } from '../../../components/icon/icon.component';
       <!-- Delete Modal -->
       @if (deleteTarget) {
         <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs">
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 max-w-md w-full shadow-2xl space-y-4">
-            <div class="flex items-center gap-3 text-rose-600">
-              <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/50 flex items-center justify-center">
+          <div class="bg-white dark:bg-[#141A2E] rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] p-6 max-w-md w-full shadow-2xl space-y-4">
+            <div class="flex items-center gap-3 text-red-500">
+              <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center">
                 <app-icon name="trash" className="w-5 h-5"></app-icon>
               </div>
               <div>
-                <h3 class="font-bold text-base text-slate-900 dark:text-white">Delete Purchase Order</h3>
-                <p class="text-xs text-slate-400 font-mono">{{ deleteTarget.purchaseOrderNumber }}</p>
+                <h3 class="font-bold text-base text-[#0F172A] dark:text-[#F8FAFC]">Delete Purchase Order</h3>
+                <p class="text-xs text-[#64748B] dark:text-[#94A3B8] font-mono">{{ deleteTarget.purchaseOrderNumber }}</p>
               </div>
             </div>
 
-            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+            <p class="text-xs sm:text-sm text-[#475569] dark:text-[#94A3B8]">
               Are you sure you want to permanently delete this purchase order? This action cannot be reversed.
             </p>
 
             <div class="flex items-center justify-end gap-3 pt-3">
               <button
                 (click)="deleteTarget = null"
-                class="px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition cursor-pointer"
+                class="px-4 py-2 text-xs font-semibold text-[#475569] dark:text-[#94A3B8] hover:bg-[#F5F3FF] dark:hover:bg-[#1B2140] rounded-xl transition cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 (click)="confirmDelete()"
                 [disabled]="isDeleting"
-                class="px-5 py-2 text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-xl transition shadow-xs cursor-pointer disabled:opacity-50"
+                class="px-4 py-2 text-xs font-semibold bg-red-600 hover:bg-red-700 text-white rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
-                {{ isDeleting ? 'Deleting...' : 'Delete Purchase Order' }}
+                @if (isDeleting) {
+                  <app-icon name="refresh" className="w-3.5 h-3.5 animate-spin"></app-icon>
+                  <span>Deleting...</span>
+                } @else {
+                  <span>Delete Order</span>
+                }
               </button>
             </div>
           </div>
@@ -221,11 +231,10 @@ export class PurchaseOrderListComponent implements OnInit {
 
   orders: PurchaseOrder[] = [];
   isLoading = true;
+  isDeleting = false;
   searchQuery = '';
   statusFilter = 'ALL';
-
   deleteTarget: PurchaseOrder | null = null;
-  isDeleting = false;
 
   ngOnInit() {
     this.loadOrders();
@@ -261,17 +270,17 @@ export class PurchaseOrderListComponent implements OnInit {
   getStatusBadgeClass(status: PurchaseOrderStatus): string {
     switch (status) {
       case 'RECEIVED':
-        return 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60';
+        return 'bg-emerald-500/15 text-emerald-500 border border-emerald-500/25';
       case 'ORDERED':
-        return 'bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60';
+        return 'bg-blue-500/15 text-blue-500 border border-blue-500/25';
       case 'APPROVED':
-        return 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60';
+        return 'bg-[#6C3BFF]/15 text-[#6C3BFF] dark:text-[#A78BFA] border border-[#6C3BFF]/25';
       case 'PENDING':
-        return 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60';
+        return 'bg-amber-500/15 text-amber-500 border border-amber-500/25';
       case 'CANCELLED':
-        return 'bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800/60';
+        return 'bg-red-500/15 text-red-500 border border-red-500/25';
       default:
-        return 'bg-slate-100 text-slate-700';
+        return 'bg-slate-500/15 text-slate-500 border border-slate-500/25';
     }
   }
 
@@ -282,11 +291,11 @@ export class PurchaseOrderListComponent implements OnInit {
       case 'ORDERED':
         return 'bg-blue-500';
       case 'APPROVED':
-        return 'bg-indigo-500';
+        return 'bg-[#6C3BFF]';
       case 'PENDING':
         return 'bg-amber-500';
       case 'CANCELLED':
-        return 'bg-rose-500';
+        return 'bg-red-500';
       default:
         return 'bg-slate-400';
     }

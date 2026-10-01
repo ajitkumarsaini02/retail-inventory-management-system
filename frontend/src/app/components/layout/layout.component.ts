@@ -9,7 +9,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
   standalone: true,
   imports: [CommonModule, RouterOutlet, NavbarComponent, SidebarComponent],
   template: `
-    <div class="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-200">
+    <div class="min-h-screen bg-[#F8FAFC] dark:bg-[#070A1A] text-[#0F172A] dark:text-[#F8FAFC] transition-colors duration-200">
       <!-- Sidebar -->
       <app-sidebar [isOpen]="sidebarOpen" (close)="sidebarOpen = false"></app-sidebar>
 

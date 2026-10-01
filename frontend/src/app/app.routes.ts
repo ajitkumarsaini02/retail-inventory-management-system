@@ -21,6 +21,7 @@ import { SupplierFormComponent } from './pages/suppliers/supplier-form/supplier-
 import { PurchaseOrderListComponent } from './pages/purchase-orders/purchase-order-list/purchase-order-list.component';
 import { PurchaseOrderFormComponent } from './pages/purchase-orders/purchase-order-form/purchase-order-form.component';
 import { PurchaseOrderDetailComponent } from './pages/purchase-orders/purchase-order-detail/purchase-order-detail.component';
+import { UserListComponent } from './pages/users/user-list/user-list.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -52,7 +53,8 @@ export const routes: Routes = [
       { path: 'suppliers/edit/:id', component: SupplierFormComponent, canActivate: [adminGuard] },
       { path: 'purchase-orders', component: PurchaseOrderListComponent, canActivate: [adminGuard] },
       { path: 'purchase-orders/add', component: PurchaseOrderFormComponent, canActivate: [adminGuard] },
-      { path: 'purchase-orders/:id', component: PurchaseOrderDetailComponent, canActivate: [adminGuard] }
+      { path: 'purchase-orders/:id', component: PurchaseOrderDetailComponent, canActivate: [adminGuard] },
+      { path: 'users', component: UserListComponent, canActivate: [adminGuard] }
     ]
   },
   { path: '**', redirectTo: 'dashboard' }

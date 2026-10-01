@@ -12,47 +12,47 @@ import { IconComponent } from '../../../components/icon/icon.component';
   imports: [CommonModule, FormsModule, IconComponent],
   template: `
     <div class="max-w-4xl mx-auto space-y-6">
-      <!-- Breadcrumb / Header -->
+      <!-- Header -->
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
           <button
             (click)="router.navigate(['/suppliers'])"
-            class="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
+            class="p-2 rounded-xl text-[#475569] dark:text-[#94A3B8] hover:text-[#0F172A] dark:hover:text-[#F8FAFC] hover:bg-[#F5F3FF] dark:hover:bg-[#1B2140] transition cursor-pointer"
           >
             <app-icon name="arrow-left" className="w-5 h-5"></app-icon>
           </button>
           <div>
-            <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            <h1 class="text-2xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] tracking-tight">
               {{ isEditMode ? 'Edit Supplier Profile' : 'Onboard New Supplier' }}
             </h1>
-            <p class="text-xs sm:text-sm text-slate-400 mt-0.5">
-              {{ isEditMode ? 'Update vendor credentials, contacts, and terms' : 'Register a certified vendor into your procurement supply chain' }}
+            <p class="text-xs sm:text-sm text-[#475569] dark:text-[#94A3B8] mt-0.5">
+              {{ isEditMode ? 'Update vendor credentials, contacts, and terms' : 'Register a certified vendor partner into your procurement supply chain' }}
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Error / Alert Banner -->
+      <!-- Error Banner -->
       @if (errorMessage) {
-        <div class="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-rose-600 dark:text-rose-400 text-sm flex items-center justify-between">
+        <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm flex items-center justify-between">
           <div class="flex items-center gap-2">
             <app-icon name="alert-triangle" className="w-4 h-4 shrink-0"></app-icon>
             <span>{{ errorMessage }}</span>
           </div>
-          <button (click)="errorMessage = ''" class="text-rose-400 hover:text-rose-600 cursor-pointer">
+          <button (click)="errorMessage = ''" class="text-red-400 hover:text-red-600 cursor-pointer">
             <app-icon name="x" className="w-4 h-4"></app-icon>
           </button>
         </div>
       }
 
       <!-- Form Card -->
-      <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 shadow-xs">
+      <div class="bg-white dark:bg-[#141A2E] rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] p-6 sm:p-8 shadow-xs">
         <form (ngSubmit)="onSubmit()" class="space-y-6">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <!-- Company Name -->
             <div class="sm:col-span-2">
-              <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                Company / Vendor Legal Name <span class="text-rose-500">*</span>
+              <label class="block text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider mb-2">
+                Company / Vendor Legal Name <span class="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -60,14 +60,14 @@ import { IconComponent } from '../../../components/icon/icon.component';
                 required
                 [(ngModel)]="formData.name"
                 placeholder="e.g. Apex Tech Logistics Ltd."
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                class="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC] dark:bg-[#11172B] text-[#0F172A] dark:text-[#F8FAFC] text-sm focus:outline-none focus:ring-2 focus:ring-[#6C3BFF]/25 focus:border-[#6C3BFF]"
               />
             </div>
 
             <!-- Contact Person -->
             <div>
-              <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                Primary Contact Person <span class="text-rose-500">*</span>
+              <label class="block text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider mb-2">
+                Primary Contact Person <span class="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -75,14 +75,14 @@ import { IconComponent } from '../../../components/icon/icon.component';
                 required
                 [(ngModel)]="formData.contactPerson"
                 placeholder="e.g. Amit Sharma"
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                class="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC] dark:bg-[#11172B] text-[#0F172A] dark:text-[#F8FAFC] text-sm focus:outline-none focus:ring-2 focus:ring-[#6C3BFF]/25 focus:border-[#6C3BFF]"
               />
             </div>
 
             <!-- Email Address -->
             <div>
-              <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                Work Email <span class="text-rose-500">*</span>
+              <label class="block text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider mb-2">
+                Work Email <span class="text-red-500">*</span>
               </label>
               <input
                 type="email"
@@ -90,14 +90,14 @@ import { IconComponent } from '../../../components/icon/icon.component';
                 required
                 [(ngModel)]="formData.email"
                 placeholder="vendor@company.com"
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                class="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC] dark:bg-[#11172B] text-[#0F172A] dark:text-[#F8FAFC] text-sm focus:outline-none focus:ring-2 focus:ring-[#6C3BFF]/25 focus:border-[#6C3BFF]"
               />
             </div>
 
             <!-- Phone -->
             <div>
-              <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                Contact Phone <span class="text-rose-500">*</span>
+              <label class="block text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider mb-2">
+                Contact Phone <span class="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -105,19 +105,19 @@ import { IconComponent } from '../../../components/icon/icon.component';
                 required
                 [(ngModel)]="formData.phone"
                 placeholder="+91-9876543210"
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                class="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC] dark:bg-[#11172B] text-[#0F172A] dark:text-[#F8FAFC] text-sm focus:outline-none focus:ring-2 focus:ring-[#6C3BFF]/25 focus:border-[#6C3BFF]"
               />
             </div>
 
             <!-- Status -->
             <div>
-              <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
+              <label class="block text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider mb-2">
                 Vendor Status
               </label>
               <select
                 name="status"
                 [(ngModel)]="formData.status"
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                class="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC] dark:bg-[#11172B] text-[#0F172A] dark:text-[#F8FAFC] text-sm focus:outline-none focus:border-[#6C3BFF] cursor-pointer"
               >
                 <option value="ACTIVE">ACTIVE</option>
                 <option value="INACTIVE">INACTIVE</option>
@@ -126,8 +126,8 @@ import { IconComponent } from '../../../components/icon/icon.component';
 
             <!-- Street Address -->
             <div class="sm:col-span-2">
-              <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                Street Address <span class="text-rose-500">*</span>
+              <label class="block text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider mb-2">
+                Street Address <span class="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -135,14 +135,14 @@ import { IconComponent } from '../../../components/icon/icon.component';
                 required
                 [(ngModel)]="formData.address"
                 placeholder="Plot 45, Phase 2, Industrial Hub"
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                class="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC] dark:bg-[#11172B] text-[#0F172A] dark:text-[#F8FAFC] text-sm focus:outline-none focus:ring-2 focus:ring-[#6C3BFF]/25 focus:border-[#6C3BFF]"
               />
             </div>
 
             <!-- City -->
             <div>
-              <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                City <span class="text-rose-500">*</span>
+              <label class="block text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider mb-2">
+                City <span class="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -150,14 +150,14 @@ import { IconComponent } from '../../../components/icon/icon.component';
                 required
                 [(ngModel)]="formData.city"
                 placeholder="Gurgaon"
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                class="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC] dark:bg-[#11172B] text-[#0F172A] dark:text-[#F8FAFC] text-sm focus:outline-none focus:ring-2 focus:ring-[#6C3BFF]/25 focus:border-[#6C3BFF]"
               />
             </div>
 
             <!-- State -->
             <div>
-              <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                State <span class="text-rose-500">*</span>
+              <label class="block text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider mb-2">
+                State <span class="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -165,14 +165,14 @@ import { IconComponent } from '../../../components/icon/icon.component';
                 required
                 [(ngModel)]="formData.state"
                 placeholder="Haryana"
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                class="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC] dark:bg-[#11172B] text-[#0F172A] dark:text-[#F8FAFC] text-sm focus:outline-none focus:ring-2 focus:ring-[#6C3BFF]/25 focus:border-[#6C3BFF]"
               />
             </div>
 
             <!-- Pincode -->
             <div>
-              <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
-                Postal / Pincode <span class="text-rose-500">*</span>
+              <label class="block text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider mb-2">
+                Postal / Pincode <span class="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -180,13 +180,13 @@ import { IconComponent } from '../../../components/icon/icon.component';
                 required
                 [(ngModel)]="formData.pincode"
                 placeholder="122001"
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                class="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC] dark:bg-[#11172B] text-[#0F172A] dark:text-[#F8FAFC] text-sm focus:outline-none focus:ring-2 focus:ring-[#6C3BFF]/25 focus:border-[#6C3BFF]"
               />
             </div>
 
             <!-- Country -->
             <div>
-              <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
+              <label class="block text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider mb-2">
                 Country
               </label>
               <input
@@ -194,24 +194,24 @@ import { IconComponent } from '../../../components/icon/icon.component';
                 name="country"
                 [(ngModel)]="formData.country"
                 placeholder="India"
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                class="w-full px-4 py-2.5 rounded-xl border border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC] dark:bg-[#11172B] text-[#0F172A] dark:text-[#F8FAFC] text-sm focus:outline-none focus:ring-2 focus:ring-[#6C3BFF]/25 focus:border-[#6C3BFF]"
               />
             </div>
           </div>
 
           <!-- Action Buttons -->
-          <div class="flex items-center justify-end gap-3 pt-6 border-t border-slate-100 dark:border-slate-800">
+          <div class="flex items-center justify-end gap-3 pt-6 border-t border-[#E2E8F0] dark:border-[#252C45]">
             <button
               type="button"
               (click)="router.navigate(['/suppliers'])"
-              class="px-5 py-2.5 text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition cursor-pointer"
+              class="px-5 py-2.5 text-xs sm:text-sm font-semibold text-[#475569] dark:text-[#94A3B8] hover:bg-[#F5F3FF] dark:hover:bg-[#1B2140] rounded-xl transition cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               [disabled]="isSubmitting"
-              class="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-semibold text-xs sm:text-sm rounded-xl shadow-md shadow-indigo-500/25 transition flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              class="px-6 py-2.5 bg-gradient-to-r from-[#6C3BFF] to-[#7C4DFF] hover:from-[#7C4DFF] hover:to-[#6C3BFF] text-white font-semibold text-xs sm:text-sm rounded-xl shadow-md shadow-[#6C3BFF]/25 transition flex items-center gap-2 cursor-pointer disabled:opacity-50"
             >
               <app-icon [name]="isEditMode ? 'check' : 'plus'" className="w-4 h-4"></app-icon>
               <span>{{ isSubmitting ? 'Saving...' : isEditMode ? 'Update Supplier' : 'Register Supplier' }}</span>

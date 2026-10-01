@@ -17,41 +17,42 @@ import { IconComponent } from '../../../components/icon/icon.component';
   standalone: true,
   imports: [CommonModule, FormsModule, IconComponent],
   template: `
-    <div class="space-y-8">
-      <!-- Operator Station Banner -->
-      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-emerald-950 to-slate-900 p-6 sm:p-8 xl:p-10 text-white shadow-2xl border border-emerald-900/40">
-        <div class="absolute -right-16 -top-16 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -left-16 -bottom-16 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="space-y-7">
+      <!-- Operator Station Banner (Consistent Purple Gradient) -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#5B2EE6] via-[#6C3BFF] to-[#7C3AED] p-6 sm:p-8 xl:p-10 text-white shadow-xl dark:shadow-2xl border border-white/10">
+        <!-- Ambient decorative shapes -->
+        <div class="absolute -right-16 -top-16 w-80 h-80 bg-white/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-16 -bottom-16 w-80 h-80 bg-[#38BDF8]/20 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div class="max-w-2xl">
             <div class="flex flex-wrap items-center gap-2 mb-2">
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold tracking-wide uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold tracking-wide uppercase bg-white/20 text-white border border-white/20">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 Store Operator Workspace
               </span>
-              <span class="text-slate-400 text-xs">• Station Ready</span>
+              <span class="text-white/80 text-xs">• Station Telemetry Live</span>
             </div>
 
             <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
               {{ getGreeting() }}, {{ authService.currentUser()?.name || 'Store Associate' }}
             </h1>
-            <p class="text-slate-300 text-sm mt-1.5 leading-relaxed">
+            <p class="text-white/80 text-sm mt-1.5 leading-relaxed">
               Order fulfillment station, live SKU stock check, and instant sales order processing.
             </p>
 
             <div class="mt-5 flex flex-wrap items-center gap-3 text-xs">
-              <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/10 border border-white/10">
-                <span class="text-slate-400">Action Queue:</span>
+              <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/15 border border-white/20">
+                <span class="text-white/80">Action Queue:</span>
                 <span class="font-bold text-amber-300 font-mono">{{ pendingOrders.length }} Orders to Fulfill</span>
               </div>
-              <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/10 border border-white/10">
-                <span class="text-slate-400">Completed Deliveries:</span>
+              <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/15 border border-white/20">
+                <span class="text-white/80">Completed Deliveries:</span>
                 <span class="font-bold text-emerald-300">{{ deliveredOrders.length }} Fulfilled</span>
               </div>
-              <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/10 border border-white/10">
-                <span class="text-slate-400">Catalog Ready:</span>
-                <span class="font-bold text-sky-300">{{ products.length }} Products</span>
+              <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/15 border border-white/20">
+                <span class="text-white/80">Catalog Ready:</span>
+                <span class="font-bold text-cyan-200">{{ products.length }} Products</span>
               </div>
             </div>
           </div>
@@ -61,22 +62,23 @@ import { IconComponent } from '../../../components/icon/icon.component';
             <button
               (click)="loadData(true)"
               [disabled]="isRefreshing"
-              class="p-3 bg-white/10 hover:bg-white/15 active:scale-95 text-white rounded-xl border border-white/10 transition cursor-pointer"
+              class="p-3 bg-white/15 hover:bg-white/25 active:scale-95 text-white rounded-xl border border-white/20 transition cursor-pointer"
+              title="Refresh Telemetry"
             >
-              <app-icon name="refresh" [className]="'w-4 h-4 ' + (isRefreshing ? 'animate-spin text-emerald-400' : '')"></app-icon>
+              <app-icon name="refresh" [className]="'w-4 h-4 ' + (isRefreshing ? 'animate-spin text-white' : '')"></app-icon>
             </button>
 
             <button
               (click)="router.navigate(['/customers/add'])"
-              class="px-4 py-3 bg-white/10 hover:bg-white/20 active:scale-95 text-white text-xs sm:text-sm font-semibold rounded-xl border border-white/10 transition flex items-center gap-2 cursor-pointer"
+              class="px-4 py-3 bg-white/15 hover:bg-white/25 active:scale-95 text-white text-xs sm:text-sm font-semibold rounded-xl border border-white/20 transition flex items-center gap-2 cursor-pointer"
             >
-              <app-icon name="users" className="w-4 h-4 text-emerald-300"></app-icon>
+              <app-icon name="users" className="w-4 h-4 text-cyan-200"></app-icon>
               <span>New Customer</span>
             </button>
 
             <button
               (click)="router.navigate(['/orders/add'])"
-              class="px-4 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-lg shadow-emerald-600/30 transition flex items-center gap-2 cursor-pointer"
+              class="px-5 py-3 bg-white text-[#6C3BFF] hover:bg-slate-50 text-xs sm:text-sm font-bold rounded-xl shadow-lg shadow-black/10 transition flex items-center gap-2 cursor-pointer"
             >
               <app-icon name="shopping-cart" className="w-4 h-4"></app-icon>
               <span>Create Customer Order</span>
@@ -86,95 +88,95 @@ import { IconComponent } from '../../../components/icon/icon.component';
       </div>
 
       <!-- Operator KPIs Strip -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <!-- Pending Orders -->
-        <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs card-hover-elevate cursor-pointer">
+        <div class="bg-white dark:bg-[#141A2E] p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] hover:border-[#F59E0B]/50 transition-colors shadow-xs card-hover-elevate cursor-pointer">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Pending Fulfillment</span>
-            <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 flex items-center justify-center">
+            <span class="text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider">Pending Fulfillment</span>
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center">
               <app-icon name="clock" className="w-5 h-5"></app-icon>
             </div>
           </div>
           <div class="mt-3 flex items-baseline justify-between">
-            <span class="text-2xl font-extrabold text-amber-600 font-mono">{{ pendingOrders.length }}</span>
-            <span class="text-xs text-amber-600 font-semibold flex items-center gap-1">Action Required</span>
+            <span class="text-2xl font-extrabold text-amber-500 font-mono">{{ pendingOrders.length }}</span>
+            <span class="text-xs text-amber-500 font-semibold flex items-center gap-1">Action Required</span>
           </div>
-          <div class="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400 flex justify-between">
+          <div class="mt-2 pt-2 border-t border-[#E2E8F0] dark:border-[#252C45] text-[11px] text-[#64748B] dark:text-[#94A3B8] flex justify-between">
             <span>Needs packaging / dispatch</span>
-            <span class="font-bold text-amber-600">Active</span>
+            <span class="font-bold text-amber-500">Active</span>
           </div>
         </div>
 
         <!-- Delivered Orders -->
-        <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs card-hover-elevate cursor-pointer">
+        <div class="bg-white dark:bg-[#141A2E] p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] hover:border-[#22C55E]/50 transition-colors shadow-xs card-hover-elevate cursor-pointer">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Delivered Orders</span>
-            <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center">
+            <span class="text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider">Delivered Orders</span>
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
               <app-icon name="check-circle" className="w-5 h-5"></app-icon>
             </div>
           </div>
           <div class="mt-3 flex items-baseline justify-between">
-            <span class="text-2xl font-extrabold text-slate-900 dark:text-white font-mono">{{ deliveredOrders.length }}</span>
-            <span class="text-xs text-emerald-600 font-semibold">Completed</span>
+            <span class="text-2xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] font-mono">{{ deliveredOrders.length }}</span>
+            <span class="text-xs text-emerald-500 font-semibold">Completed</span>
           </div>
-          <div class="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400 flex justify-between">
+          <div class="mt-2 pt-2 border-t border-[#E2E8F0] dark:border-[#252C45] text-[11px] text-[#64748B] dark:text-[#94A3B8] flex justify-between">
             <span>Total Orders:</span>
-            <span class="font-mono font-bold text-slate-700 dark:text-slate-300">{{ orders.length }}</span>
+            <span class="font-mono font-bold text-[#0F172A] dark:text-[#F8FAFC]">{{ orders.length }}</span>
           </div>
         </div>
 
         <!-- Sellable SKUs -->
-        <div (click)="router.navigate(['/products'])" class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs card-hover-elevate cursor-pointer">
+        <div (click)="router.navigate(['/products'])" class="bg-white dark:bg-[#141A2E] p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] hover:border-[#6C3BFF]/50 transition-colors shadow-xs card-hover-elevate cursor-pointer">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Sellable SKUs</span>
-            <div class="w-10 h-10 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-sky-600 flex items-center justify-center">
+            <span class="text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider">Sellable SKUs</span>
+            <div class="w-10 h-10 rounded-xl bg-[#6C3BFF]/10 text-[#6C3BFF] flex items-center justify-center">
               <app-icon name="package" className="w-5 h-5"></app-icon>
             </div>
           </div>
           <div class="mt-3 flex items-baseline justify-between">
-            <span class="text-2xl font-extrabold text-slate-900 dark:text-white font-mono">{{ products.length }}</span>
-            <span class="text-xs text-sky-600 font-semibold">Browse</span>
+            <span class="text-2xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] font-mono">{{ products.length }}</span>
+            <span class="text-xs text-[#6C3BFF] font-semibold">Browse</span>
           </div>
-          <div class="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400 flex justify-between">
+          <div class="mt-2 pt-2 border-t border-[#E2E8F0] dark:border-[#252C45] text-[11px] text-[#64748B] dark:text-[#94A3B8] flex justify-between">
             <span>Categories active:</span>
-            <span class="font-bold text-slate-700 dark:text-slate-300">{{ categories.length }}</span>
+            <span class="font-bold text-[#0F172A] dark:text-[#F8FAFC]">{{ categories.length }}</span>
           </div>
         </div>
 
         <!-- Customer Directory -->
-        <div (click)="router.navigate(['/customers'])" class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs card-hover-elevate cursor-pointer">
+        <div (click)="router.navigate(['/customers'])" class="bg-white dark:bg-[#141A2E] p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] hover:border-[#2563EB]/50 transition-colors shadow-xs card-hover-elevate cursor-pointer">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Customer Directory</span>
-            <div class="w-10 h-10 rounded-xl bg-violet-50 dark:bg-violet-950/60 text-violet-600 flex items-center justify-center">
+            <span class="text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider">Customer Directory</span>
+            <div class="w-10 h-10 rounded-xl bg-[#2563EB]/10 text-[#2563EB] flex items-center justify-center">
               <app-icon name="users" className="w-5 h-5"></app-icon>
             </div>
           </div>
           <div class="mt-3 flex items-baseline justify-between">
-            <span class="text-2xl font-extrabold text-slate-900 dark:text-white font-mono">{{ customers.length }}</span>
-            <span class="text-xs text-violet-600 font-semibold">Directory</span>
+            <span class="text-2xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] font-mono">{{ customers.length }}</span>
+            <span class="text-xs text-[#2563EB] font-semibold">Directory</span>
           </div>
-          <div class="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400 flex justify-between">
+          <div class="mt-2 pt-2 border-t border-[#E2E8F0] dark:border-[#252C45] text-[11px] text-[#64748B] dark:text-[#94A3B8] flex justify-between">
             <span>Register client:</span>
-            <span class="font-bold text-violet-600">+ New</span>
+            <span class="font-bold text-[#2563EB]">+ New</span>
           </div>
         </div>
       </div>
 
       <!-- Live SKU & Stock Availability Checker -->
-      <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-2xs p-6 sm:p-7">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 gap-3">
+      <div class="bg-white dark:bg-[#141A2E] rounded-3xl border border-[#E2E8F0] dark:border-[#252C45] shadow-xs p-6 sm:p-7">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#E2E8F0] dark:border-[#252C45] gap-3">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-[#6C3BFF]/10 text-[#6C3BFF] flex items-center justify-center">
               <app-icon name="search" className="w-5 h-5"></app-icon>
             </div>
             <div>
-              <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <h3 class="text-sm font-bold text-[#0F172A] dark:text-[#F8FAFC] flex items-center gap-2">
                 Live SKU & Stock Availability Checker
-                <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300">
+                <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-[#6C3BFF]/10 text-[#6C3BFF]">
                   Floor Utility
                 </span>
               </h3>
-              <p class="text-xs text-slate-400">Instantly check prices, available warehouse inventory, and add directly to a customer cart</p>
+              <p class="text-xs text-[#475569] dark:text-[#94A3B8]">Instantly check prices, available warehouse inventory, and add directly to a customer cart</p>
             </div>
           </div>
 
@@ -183,7 +185,7 @@ import { IconComponent } from '../../../components/icon/icon.component';
             <button
               (click)="selectedCategory = 'ALL'"
               class="px-3 py-1 text-xs font-semibold rounded-lg transition cursor-pointer shrink-0"
-              [ngClass]="selectedCategory === 'ALL' ? 'bg-emerald-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900'"
+              [ngClass]="selectedCategory === 'ALL' ? 'bg-[#6C3BFF] text-white shadow-xs' : 'bg-[#F8FAFC] dark:bg-[#11172B] text-[#475569] dark:text-[#94A3B8] hover:text-[#0F172A] dark:hover:text-white border border-[#E2E8F0] dark:border-[#252C45]'"
             >
               All Categories
             </button>
@@ -191,7 +193,7 @@ import { IconComponent } from '../../../components/icon/icon.component';
               <button
                 (click)="selectedCategory = cat"
                 class="px-3 py-1 text-xs font-semibold rounded-lg transition cursor-pointer shrink-0"
-                [ngClass]="selectedCategory === cat ? 'bg-emerald-600 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900'"
+                [ngClass]="selectedCategory === cat ? 'bg-[#6C3BFF] text-white shadow-xs' : 'bg-[#F8FAFC] dark:bg-[#11172B] text-[#475569] dark:text-[#94A3B8] hover:text-[#0F172A] dark:hover:text-white border border-[#E2E8F0] dark:border-[#252C45]'"
               >
                 {{ cat }}
               </button>
@@ -201,56 +203,56 @@ import { IconComponent } from '../../../components/icon/icon.component';
 
         <!-- Search Bar -->
         <div class="relative my-4">
-          <app-icon name="search" className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></app-icon>
+          <app-icon name="search" className="w-4 h-4 text-[#94A3B8] dark:text-[#64748B] absolute left-3.5 top-1/2 -translate-y-1/2"></app-icon>
           <input
             type="text"
             [(ngModel)]="searchQuery"
             placeholder="Type SKU code, product name, or category to check real-time stock..."
-            class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
+            class="w-full pl-10 pr-4 py-2.5 bg-[#F8FAFC] dark:bg-[#11172B] border border-[#E2E8F0] dark:border-[#252C45] rounded-xl text-xs sm:text-sm text-[#0F172A] dark:text-[#F8FAFC] placeholder-[#94A3B8] dark:placeholder-[#64748B] focus:outline-none focus:ring-2 focus:ring-[#6C3BFF]/25 focus:border-[#6C3BFF] transition"
           />
         </div>
 
         <!-- SKU Results Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           @if (filteredProducts.length === 0) {
-            <div class="col-span-full py-8 text-center text-slate-400 text-xs">
+            <div class="col-span-full py-8 text-center text-[#94A3B8] dark:text-[#64748B] text-xs">
               No products found matching your search.
             </div>
           } @else {
             @for (prod of filteredProducts; track prod.id) {
-              <div class="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 flex flex-col justify-between">
+              <div class="p-3.5 rounded-xl border border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC]/50 dark:bg-[#10152A]/50 hover:bg-[#F5F3FF]/40 dark:hover:bg-[#1B2140]/50 transition-colors flex flex-col justify-between">
                 <div>
                   <div class="flex items-start justify-between gap-2">
                     <div class="min-w-0">
-                      <h4 class="font-bold text-xs text-slate-900 dark:text-white truncate">{{ prod.name }}</h4>
-                      <p class="text-[11px] font-mono text-slate-400 truncate">SKU: {{ prod.sku }}</p>
+                      <h4 class="font-bold text-xs text-[#0F172A] dark:text-[#F8FAFC] truncate">{{ prod.name }}</h4>
+                      <p class="text-[11px] font-mono text-[#6C3BFF] dark:text-[#A78BFA] truncate">SKU: {{ prod.sku }}</p>
                     </div>
-                    <span class="font-mono font-extrabold text-sm text-slate-900 dark:text-white shrink-0">
+                    <span class="font-mono font-extrabold text-sm text-[#0F172A] dark:text-[#F8FAFC] shrink-0">
                       \${{ (prod.price || 0) | number:'1.2-2' }}
                     </span>
                   </div>
 
                   <div class="mt-2.5 flex items-center justify-between">
-                    <span class="text-[10px] uppercase font-semibold text-slate-400 bg-slate-200/60 dark:bg-slate-700/60 px-2 py-0.5 rounded">
+                    <span class="text-[10px] uppercase font-semibold text-[#475569] dark:text-[#94A3B8] bg-slate-200/60 dark:bg-slate-700/60 px-2 py-0.5 rounded">
                       {{ prod.category }}
                     </span>
                     <span
                       class="text-[11px] font-bold font-mono px-2 py-0.5 rounded-full"
-                      [ngClass]="getAvailableUnits(prod.id) <= 0 ? 'bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300' : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'"
+                      [ngClass]="getAvailableUnits(prod.id) <= 0 ? 'bg-red-500/15 text-red-500' : 'bg-emerald-500/15 text-emerald-500'"
                     >
                       {{ getAvailableUnits(prod.id) }} Units Available
                     </span>
                   </div>
                 </div>
 
-                <div class="mt-3 pt-2.5 border-t border-slate-200/60 dark:border-slate-700/60 flex items-center justify-between">
-                  <span class="text-[10px] text-slate-400">
+                <div class="mt-3 pt-2.5 border-t border-[#E2E8F0] dark:border-[#252C45] flex items-center justify-between">
+                  <span class="text-[10px] text-[#64748B] dark:text-[#94A3B8]">
                     {{ getAvailableUnits(prod.id) <= 0 ? 'Out of stock' : 'Ready to dispatch' }}
                   </span>
                   <button
                     (click)="router.navigate(['/orders/add'])"
                     [disabled]="getAvailableUnits(prod.id) <= 0"
-                    class="px-2.5 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1 transition cursor-pointer bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 border border-emerald-200 disabled:opacity-40"
+                    class="px-2.5 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1 transition cursor-pointer bg-[#6C3BFF]/10 text-[#6C3BFF] hover:bg-[#6C3BFF]/20 border border-[#6C3BFF]/25 disabled:opacity-40"
                   >
                     <app-icon name="plus" className="w-3 h-3"></app-icon>
                     <span>Add to Order</span>
@@ -263,30 +265,30 @@ import { IconComponent } from '../../../components/icon/icon.component';
       </div>
 
       <!-- Order Fulfillment Queue & Dispatch Pipeline -->
-      <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-2xs p-6 sm:p-7">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 gap-3">
+      <div class="bg-white dark:bg-[#141A2E] rounded-3xl border border-[#E2E8F0] dark:border-[#252C45] shadow-xs p-6 sm:p-7">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#E2E8F0] dark:border-[#252C45] gap-3">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 flex items-center justify-center">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center">
               <app-icon name="shopping-cart" className="w-5 h-5"></app-icon>
             </div>
             <div>
-              <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <h3 class="text-sm font-bold text-[#0F172A] dark:text-[#F8FAFC] flex items-center gap-2">
                 Order Fulfillment Queue & Dispatch Pipeline
-                <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300">
+                <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-500">
                   {{ pendingOrders.length }} In-Queue
                 </span>
               </h3>
-              <p class="text-xs text-slate-400">Advance customer orders step-by-step from confirmed payment to dispatch</p>
+              <p class="text-xs text-[#475569] dark:text-[#94A3B8]">Advance customer orders step-by-step from confirmed payment to dispatch</p>
             </div>
           </div>
 
           <!-- Status Filter -->
-          <div class="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+          <div class="flex items-center gap-1 bg-[#F8FAFC] dark:bg-[#11172B] p-1 rounded-xl border border-[#E2E8F0] dark:border-[#252C45]">
             @for (st of fulfillmentFilters; track st.id) {
               <button
                 (click)="fulfillmentFilter = st.id"
                 class="px-3 py-1 text-xs font-semibold rounded-lg transition cursor-pointer"
-                [ngClass]="fulfillmentFilter === st.id ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-2xs' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'"
+                [ngClass]="fulfillmentFilter === st.id ? 'bg-[#6C3BFF] text-white shadow-xs' : 'text-[#475569] dark:text-[#94A3B8] hover:text-[#0F172A] dark:hover:text-white'"
               >
                 {{ st.label }}
               </button>
@@ -297,42 +299,42 @@ import { IconComponent } from '../../../components/icon/icon.component';
         <!-- Actionable Orders Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mt-6">
           @if (actionableOrders.length === 0) {
-            <div class="col-span-full py-12 text-center text-slate-400">
+            <div class="col-span-full py-12 text-center text-[#94A3B8] dark:text-[#64748B]">
               <app-icon name="check-circle" className="w-10 h-10 text-emerald-500 mx-auto mb-2"></app-icon>
-              <p class="text-sm font-bold text-slate-700 dark:text-slate-300">Fulfillment Queue Clear!</p>
-              <p class="text-xs text-slate-400 mt-1">No orders currently waiting in '{{ fulfillmentFilter }}' state.</p>
+              <p class="text-sm font-bold text-[#0F172A] dark:text-[#F8FAFC]">Fulfillment Queue Clear!</p>
+              <p class="text-xs text-[#475569] dark:text-[#94A3B8] mt-1">No orders currently waiting in '{{ fulfillmentFilter }}' state.</p>
             </div>
           } @else {
             @for (ord of actionableOrders; track ord.id) {
-              <div class="p-4 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-800/30 flex flex-col justify-between gap-3 shadow-2xs">
+              <div class="p-4 rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC]/50 dark:bg-[#10152A]/50 flex flex-col justify-between gap-3 shadow-xs hover:border-[#6C3BFF]/40 transition-colors">
                 <div>
                   <div class="flex items-center justify-between">
-                    <span class="font-mono font-bold text-xs text-indigo-600 dark:text-indigo-400">{{ ord.orderNumber }}</span>
+                    <span class="font-mono font-bold text-xs text-[#6C3BFF] dark:text-[#A78BFA]">{{ ord.orderNumber }}</span>
                     <span
-                      class="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                      [ngClass]="ord.status === 'PENDING' ? 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300' : (ord.status === 'CONFIRMED' ? 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300' : 'bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300')"
+                      class="text-[10px] font-bold px-2.5 py-0.5 rounded-full"
+                      [ngClass]="ord.status === 'PENDING' ? 'bg-amber-500/15 text-amber-500' : (ord.status === 'CONFIRMED' ? 'bg-blue-500/15 text-blue-500' : 'bg-purple-500/15 text-[#6C3BFF]')"
                     >
                       {{ ord.status }}
                     </span>
                   </div>
 
                   <div class="mt-2">
-                    <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200">{{ ord.customer?.name || 'Customer' }}</h4>
-                    <p class="text-xs text-slate-400 mt-0.5">{{ ord.customer?.email || 'Walk-in checkout' }}</p>
+                    <h4 class="font-bold text-sm text-[#0F172A] dark:text-[#F8FAFC]">{{ ord.customer?.name || 'Customer' }}</h4>
+                    <p class="text-xs text-[#475569] dark:text-[#94A3B8] mt-0.5">{{ ord.customer?.email || 'Walk-in checkout' }}</p>
                   </div>
 
-                  <div class="mt-3 flex items-center justify-between text-xs text-slate-500">
+                  <div class="mt-3 flex items-center justify-between text-xs text-[#475569] dark:text-[#94A3B8]">
                     <span>Total Amount:</span>
-                    <span class="font-mono font-extrabold text-sm text-slate-900 dark:text-white">
+                    <span class="font-mono font-extrabold text-sm text-[#0F172A] dark:text-[#F8FAFC]">
                       \${{ (ord.totalAmount || 0) | number:'1.2-2' }}
                     </span>
                   </div>
                 </div>
 
-                <div class="pt-3 border-t border-slate-200/70 dark:border-slate-700/70 flex items-center justify-between gap-2">
+                <div class="pt-3 border-t border-[#E2E8F0] dark:border-[#252C45] flex items-center justify-between gap-2">
                   <button
                     (click)="router.navigate(['/orders', ord.id])"
-                    class="px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 rounded-lg transition flex items-center gap-1 cursor-pointer"
+                    class="px-3 py-1.5 text-xs font-semibold text-[#475569] dark:text-[#94A3B8] hover:bg-[#F5F3FF] dark:hover:bg-[#1B2140] rounded-lg transition flex items-center gap-1 cursor-pointer"
                   >
                     <app-icon name="eye" className="w-3.5 h-3.5"></app-icon>
                     <span>Details</span>
@@ -340,7 +342,7 @@ import { IconComponent } from '../../../components/icon/icon.component';
 
                   <button
                     (click)="advanceOrderStatus(ord)"
-                    class="px-3 py-1.5 rounded-xl text-xs font-semibold shadow-xs transition flex items-center gap-1.5 cursor-pointer active:scale-95 bg-indigo-600 hover:bg-indigo-700 text-white"
+                    class="px-3 py-1.5 rounded-xl text-xs font-semibold shadow-xs transition flex items-center gap-1.5 cursor-pointer active:scale-95 bg-gradient-to-r from-[#6C3BFF] to-[#7C4DFF] hover:from-[#7C4DFF] hover:to-[#6C3BFF] text-white"
                   >
                     <app-icon name="check" className="w-3.5 h-3.5"></app-icon>
                     <span>{{ getNextActionLabel(ord.status) }}</span>
@@ -448,7 +450,6 @@ export class UserDashboardComponent implements OnInit {
         if (hasLiveOrds) this.orders = res.ords;
         if (Array.isArray(res.custs) && res.custs.length > 0) this.customers = res.custs;
 
-        // If backend returned nothing (e.g. cold start / offline), apply realistic seed records
         if (this.products.length === 0 || this.orders.length === 0) {
           this.applyDefaultSeedData();
         }
