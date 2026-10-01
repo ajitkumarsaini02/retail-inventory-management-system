@@ -114,7 +114,7 @@ export class NotificationService {
               list.push({
                 id: notifId,
                 type: 'po',
-                title: `PO #${po.poNumber}: ${po.status}`,
+                title: `PO #${po.purchaseOrderNumber || po.id}: ${po.status}`,
                 message: `Supplier ${po.supplier?.name || 'Vendor'} ($${(po.totalAmount || 0).toLocaleString()})`,
                 time: 'Procurement',
                 read: readIds.has(notifId),
