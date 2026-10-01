@@ -53,9 +53,6 @@ import { IconComponent } from '../../../components/icon/icon.component';
               <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-[#6C3BFF]/10 text-[#6C3BFF] border border-[#6C3BFF]/20">
                 ENTERPRISE EDITION
               </span>
-              <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/20">
-                HCL Project P_022
-              </span>
             </div>
 
             <h2 class="text-2xl sm:text-3xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] tracking-tight">

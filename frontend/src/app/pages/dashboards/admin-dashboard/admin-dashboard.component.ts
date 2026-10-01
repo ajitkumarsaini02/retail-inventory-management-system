@@ -32,7 +32,6 @@ import { IconComponent } from '../../../components/icon/icon.component';
                 <span class="w-1.5 h-1.5 rounded-full bg-[#38BDF8] animate-pulse"></span>
                 Executive Command Center
               </span>
-              <span class="text-white/80 text-xs font-mono">HCL Project P_022</span>
             </div>
 
             <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
@@ -854,8 +853,8 @@ export class AdminDashboardComponent implements OnInit {
     ];
 
     this.usersList = [
-      { id: 1, name: 'Ajit Kumar', email: 'ajit@hcl.com', role: 'ADMIN', enabled: true },
-      { id: 2, name: 'Akash', email: 'akash@hcl.com', role: 'ADMIN', enabled: true }
+      { id: 1, name: 'Ajit Kumar', email: 'ajit@retailerp.com', role: 'ADMIN', enabled: true },
+      { id: 2, name: 'Akash', email: 'akash@retailerp.com', role: 'ADMIN', enabled: true }
     ];
   }
 

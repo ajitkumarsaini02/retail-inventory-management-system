@@ -37,9 +37,6 @@ import { IconComponent } from '../icon/icon.component';
                 ENTERPRISE EDITION
               </span>
             </div>
-            <span class="text-[9px] font-bold text-slate-400 font-mono tracking-tight">
-              HCL Project P_022
-            </span>
           </div>
         </div>
 

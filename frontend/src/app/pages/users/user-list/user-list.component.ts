@@ -20,7 +20,6 @@ import { IconComponent } from '../../../components/icon/icon.component';
               <span class="w-1.5 h-1.5 rounded-full bg-[#6C3BFF] dark:bg-[#38BDF8] animate-pulse"></span>
               Admin Security Console
             </span>
-            <span class="text-[10px] font-mono text-slate-400">HCL Project P_022</span>
           </div>
           <h1 class="text-2xl sm:text-3xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] tracking-tight">
             User Management & RBAC
