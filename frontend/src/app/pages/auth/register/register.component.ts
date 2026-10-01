@@ -195,19 +195,8 @@ export class RegisterComponent {
 
     this.authService.register(registerPayload).subscribe({
       next: () => {
-        this.successMessage = 'Account created successfully! Signing into dashboard...';
-        // Auto-login to obtain fresh JWT token immediately
-        this.authService.login({ email: registerPayload.email, password: registerPayload.password }).subscribe({
-          next: () => {
-            this.router.navigate(['/dashboard']);
-          },
-          error: () => {
-            // Fallback to login screen if automatic login fails
-            setTimeout(() => {
-              this.router.navigate(['/login']);
-            }, 800);
-          }
-        });
+        this.successMessage = 'Account created successfully! Redirecting...';
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         this.isLoading = false;

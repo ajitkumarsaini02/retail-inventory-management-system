@@ -42,13 +42,16 @@ public class AuthController {
         newUser.setEmail(request.getEmail());
         newUser.setPassword(request.getPassword());
         User savedUser;
-        if (userService.getAllUsers().isEmpty()) {
+        if (userService.countUsers() == 0) {
             savedUser = userService.createAdmin(newUser);
         } else {
             savedUser = userService.createUser(newUser);
         }
 
-        UserResponse response = new UserResponse(
+        String token = jwtService.generateToken(savedUser.getEmail());
+
+        LoginResponse response = new LoginResponse(
+                token,
                 savedUser.getId(),
                 savedUser.getName(),
                 savedUser.getEmail(),
@@ -152,13 +155,21 @@ public class AuthController {
         private String name;
         private String email;
         private String role;
+        private boolean enabled = true;
+        private LocalDateTime createdAt;
 
         public LoginResponse(String token, Long id, String name, String email, String role) {
+            this(token, id, name, email, role, true, LocalDateTime.now());
+        }
+
+        public LoginResponse(String token, Long id, String name, String email, String role, boolean enabled, LocalDateTime createdAt) {
             this.token = token;
             this.id = id;
             this.name = name;
             this.email = email;
             this.role = role;
+            this.enabled = enabled;
+            this.createdAt = createdAt;
         }
 
         public String getToken() { return token; }
@@ -166,6 +177,8 @@ public class AuthController {
         public String getName() { return name; }
         public String setEmail() { return email; }
         public String getRole() { return role; }
+        public boolean isEnabled() { return enabled; }
+        public LocalDateTime getCreatedAt() { return createdAt; }
     }
 
     public static class UserResponse {

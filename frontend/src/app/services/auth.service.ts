@@ -54,8 +54,22 @@ export class AuthService {
     );
   }
 
-  register(userData: { name: string; email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, userData);
+  register(userData: { name: string; email: string; password: string }): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, userData).pipe(
+      tap((res) => {
+        this.token.set(res.token);
+        const userData: User = {
+          id: res.id,
+          name: res.name,
+          email: res.email,
+          role: res.role,
+          enabled: true,
+        };
+        this.currentUser.set(userData);
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('user', JSON.stringify(userData));
+      })
+    );
   }
 
   toggleRole() {
