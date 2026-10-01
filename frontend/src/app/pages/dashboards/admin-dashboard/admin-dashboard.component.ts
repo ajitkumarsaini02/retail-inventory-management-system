@@ -12,6 +12,15 @@ import { PurchaseOrderService } from '../../../services/purchase-order.service';
 import { UserService } from '../../../services/user.service';
 import { Product, Warehouse, Inventory, Order, Supplier, PurchaseOrder, User } from '../../../models';
 import { IconComponent } from '../../../components/icon/icon.component';
+import {
+  INITIAL_PRODUCTS,
+  INITIAL_WAREHOUSES,
+  INITIAL_INVENTORIES,
+  INITIAL_ORDERS,
+  INITIAL_SUPPLIERS,
+  INITIAL_PURCHASE_ORDERS,
+  INITIAL_USERS
+} from '../../../constants/initial-data';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -61,7 +70,7 @@ import { IconComponent } from '../../../components/icon/icon.component';
           </div>
 
           <!-- Action buttons -->
-          <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+          <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
             <button
               (click)="loadData(true)"
               [disabled]="isRefreshing"
@@ -77,14 +86,6 @@ import { IconComponent } from '../../../components/icon/icon.component';
             >
               <app-icon name="shopping-cart" className="w-4 h-4"></app-icon>
               <span>Create Order</span>
-            </button>
-
-            <button
-              (click)="router.navigate(['/products/add'])"
-              class="px-4 py-3 bg-white/15 hover:bg-white/25 text-white text-xs sm:text-sm font-semibold rounded-xl border border-white/20 transition flex items-center gap-2 cursor-pointer active:scale-95"
-            >
-              <app-icon name="plus" className="w-4 h-4"></app-icon>
-              <span>Add SKU</span>
             </button>
           </div>
         </div>
@@ -128,26 +129,35 @@ import { IconComponent } from '../../../components/icon/icon.component';
         <!-- Product Catalog (Purple Accent) -->
         <div
           (click)="router.navigate(['/products'])"
-          class="bg-white dark:bg-[#141A2E] p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] hover:border-[#6C3BFF]/40 shadow-2xs card-hover-elevate cursor-pointer group transition-colors"
+          class="bg-white dark:bg-[#141A2E] p-5 rounded-2xl border border-[#E2E8F0] dark:border-[#252C45] hover:border-[#6C3BFF]/40 shadow-2xs card-hover-elevate cursor-pointer group transition-colors flex flex-col justify-between"
         >
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider">
-              Product Catalog
-            </span>
-            <div class="w-10 h-10 rounded-xl bg-[#6C3BFF]/10 text-[#6C3BFF] flex items-center justify-center group-hover:scale-110 transition-transform">
-              <app-icon name="package" className="w-5 h-5"></app-icon>
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider">
+                Product Catalog
+              </span>
+              <div class="w-10 h-10 rounded-xl bg-[#6C3BFF]/10 text-[#6C3BFF] flex items-center justify-center group-hover:scale-110 transition-transform">
+                <app-icon name="package" className="w-5 h-5"></app-icon>
+              </div>
+            </div>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="text-2xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] font-mono">
+                {{ products.length }}
+              </span>
+              <button
+                (click)="$event.stopPropagation(); router.navigate(['/products/add'])"
+                class="px-2.5 py-1.5 bg-[#6C3BFF]/10 hover:bg-[#6C3BFF] text-[#6C3BFF] hover:text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer active:scale-95 shadow-2xs"
+                title="Add New SKU to Catalog"
+              >
+                <app-icon name="plus" className="w-3.5 h-3.5"></app-icon>
+                <span>Add SKU</span>
+              </button>
             </div>
           </div>
-          <div class="mt-3 flex items-baseline justify-between">
-            <span class="text-2xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] font-mono">
-              {{ products.length }}
+          <div class="mt-3 pt-2.5 border-t border-[#E2E8F0] dark:border-[#252C45] flex items-center justify-between text-[11px] text-slate-400">
+            <span class="hover:text-[#6C3BFF] transition flex items-center gap-1">
+              Active SKUs <app-icon name="arrow-up-right" className="w-3 h-3"></app-icon>
             </span>
-            <span class="text-xs text-[#6C3BFF] dark:text-[#7C4DFF] font-semibold flex items-center gap-1">
-              Active SKUs <app-icon name="arrow-up-right" className="w-3.5 h-3.5"></app-icon>
-            </span>
-          </div>
-          <div class="mt-2 pt-2 border-t border-[#E2E8F0] dark:border-[#252C45] flex items-center justify-between text-[11px] text-slate-400">
-            <span>Standardized pricing</span>
             <span class="text-[#22C55E] font-medium">100% cataloged</span>
           </div>
         </div>
@@ -664,16 +674,16 @@ export class AdminDashboardComponent implements OnInit {
 
   protected readonly Math = Math;
 
-  isLoading = true;
+  isLoading = false;
   isRefreshing = false;
 
-  products: Product[] = [];
-  warehouses: Warehouse[] = [];
-  inventoryList: Inventory[] = [];
-  orders: Order[] = [];
-  suppliers: Supplier[] = [];
-  purchaseOrders: PurchaseOrder[] = [];
-  usersList: User[] = [];
+  products: Product[] = [...INITIAL_PRODUCTS];
+  warehouses: Warehouse[] = [...INITIAL_WAREHOUSES];
+  inventoryList: Inventory[] = [...INITIAL_INVENTORIES];
+  orders: Order[] = [...INITIAL_ORDERS];
+  suppliers: Supplier[] = [...INITIAL_SUPPLIERS];
+  purchaseOrders: PurchaseOrder[] = [...INITIAL_PURCHASE_ORDERS];
+  usersList: User[] = [...INITIAL_USERS];
 
   // Metrics
   totalRevenue = 0;
@@ -712,7 +722,12 @@ export class AdminDashboardComponent implements OnInit {
     return this.orders.filter(o => o.status === 'PENDING').length;
   }
 
+  constructor() {
+    this.calculateMetrics();
+  }
+
   ngOnInit() {
+    this.calculateMetrics();
     this.loadData();
   }
 
@@ -726,8 +741,8 @@ export class AdminDashboardComponent implements OnInit {
   retryCount = 0;
 
   loadData(silent = false) {
-    if (!silent) this.isLoading = true;
-    else this.isRefreshing = true;
+    if (!silent && this.products.length === 0) this.isLoading = true;
+    else if (silent) this.isRefreshing = true;
 
     forkJoin({
       prods: this.productService.getAllProducts().pipe(catchError((err) => { console.warn('Prods fetch err:', err); return of([]); })),

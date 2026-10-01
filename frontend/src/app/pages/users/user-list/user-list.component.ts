@@ -5,6 +5,7 @@ import { UserService, UserStats } from '../../../services/user.service';
 import { AuthService } from '../../../services/auth.service';
 import { User, Role } from '../../../models';
 import { IconComponent } from '../../../components/icon/icon.component';
+import { INITIAL_USERS } from '../../../constants/initial-data';
 
 @Component({
   selector: 'app-user-list',
@@ -250,8 +251,13 @@ export class UserListComponent implements OnInit {
   authService = inject(AuthService);
   private cdr = inject(ChangeDetectorRef);
 
-  users: User[] = [];
-  stats: UserStats | null = null;
+  users: User[] = [...INITIAL_USERS];
+  stats: UserStats | null = {
+    totalUsers: INITIAL_USERS.length,
+    adminCount: INITIAL_USERS.filter((u) => u.role === 'ADMIN').length,
+    operatorCount: INITIAL_USERS.filter((u) => u.role === 'USER').length,
+    activeCount: INITIAL_USERS.filter((u) => u.enabled).length
+  };
   isLoading = false;
   isToggling: number | null = null;
 
@@ -264,7 +270,9 @@ export class UserListComponent implements OnInit {
   }
 
   loadUsers() {
-    this.isLoading = true;
+    if (this.users.length === 0) {
+      this.isLoading = true;
+    }
     this.userService.getAllUsers().subscribe({
       next: (data) => {
         this.users = data;

@@ -7,6 +7,7 @@ import { InventoryService } from '../../../services/inventory.service';
 import { AuthService } from '../../../services/auth.service';
 import { Warehouse, Inventory } from '../../../models';
 import { IconComponent } from '../../../components/icon/icon.component';
+import { INITIAL_WAREHOUSES, INITIAL_INVENTORIES } from '../../../constants/initial-data';
 
 @Component({
   selector: 'app-warehouse-list',
@@ -140,12 +141,15 @@ export class WarehouseListComponent implements OnInit {
   private inventoryService = inject(InventoryService);
   private cdr = inject(ChangeDetectorRef);
 
-  warehouses: Warehouse[] = [];
-  inventoryList: Inventory[] = [];
-  isLoading = true;
+  warehouses: Warehouse[] = [...INITIAL_WAREHOUSES];
+  inventoryList: Inventory[] = [...INITIAL_INVENTORIES];
+  isLoading = false;
   mathRound = Math.round;
 
   ngOnInit() {
+    if (this.warehouses.length === 0) {
+      this.isLoading = true;
+    }
     forkJoin({
       whs: this.warehouseService.getAllWarehouses().pipe(catchError(() => of([]))),
       invs: this.inventoryService.getAllInventory().pipe(catchError(() => of([])))

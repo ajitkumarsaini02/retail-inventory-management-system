@@ -8,6 +8,7 @@ import { WarehouseService } from '../../../services/warehouse.service';
 import { AuthService } from '../../../services/auth.service';
 import { Inventory, Warehouse } from '../../../models';
 import { IconComponent } from '../../../components/icon/icon.component';
+import { INITIAL_INVENTORIES, INITIAL_WAREHOUSES } from '../../../constants/initial-data';
 
 @Component({
   selector: 'app-inventory-list',
@@ -217,9 +218,9 @@ export class InventoryListComponent implements OnInit {
   private warehouseService = inject(WarehouseService);
   private cdr = inject(ChangeDetectorRef);
 
-  inventoryList: Inventory[] = [];
-  warehouses: Warehouse[] = [];
-  isLoading = true;
+  inventoryList: Inventory[] = [...INITIAL_INVENTORIES];
+  warehouses: Warehouse[] = [...INITIAL_WAREHOUSES];
+  isLoading = false;
   searchQuery = '';
   selectedWarehouseId = 0;
 
@@ -251,6 +252,9 @@ export class InventoryListComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.inventoryList.length === 0) {
+      this.isLoading = true;
+    }
     forkJoin({
       invs: this.inventoryService.getAllInventory(),
       whs: this.warehouseService.getAllWarehouses()

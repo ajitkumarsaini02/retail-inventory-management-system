@@ -7,6 +7,7 @@ import { SupplierService } from '../../../services/supplier.service';
 import { ProductService } from '../../../services/product.service';
 import { Supplier, Product, PurchaseOrderStatus } from '../../../models';
 import { IconComponent } from '../../../components/icon/icon.component';
+import { INITIAL_SUPPLIERS, INITIAL_PRODUCTS } from '../../../constants/initial-data';
 
 interface LineItemDraft {
   product: Product;
@@ -278,8 +279,8 @@ export class PurchaseOrderFormComponent implements OnInit {
   private productService = inject(ProductService);
   private cdr = inject(ChangeDetectorRef);
 
-  suppliers: Supplier[] = [];
-  products: Product[] = [];
+  suppliers: Supplier[] = [...INITIAL_SUPPLIERS];
+  products: Product[] = [...INITIAL_PRODUCTS];
   items: LineItemDraft[] = [];
 
   poNumber = `PO-${Date.now()}`;

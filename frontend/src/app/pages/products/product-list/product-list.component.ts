@@ -6,6 +6,7 @@ import { ProductService } from '../../../services/product.service';
 import { AuthService } from '../../../services/auth.service';
 import { Product } from '../../../models';
 import { IconComponent } from '../../../components/icon/icon.component';
+import { INITIAL_PRODUCTS } from '../../../constants/initial-data';
 
 @Component({
   selector: 'app-product-list',
@@ -150,8 +151,8 @@ export class ProductListComponent implements OnInit {
   private productService = inject(ProductService);
   private cdr = inject(ChangeDetectorRef);
 
-  products: Product[] = [];
-  isLoading = true;
+  products: Product[] = [...INITIAL_PRODUCTS];
+  isLoading = false;
   searchQuery = '';
   selectedCategory = 'ALL';
   selectedStatus = 'ALL';
@@ -182,7 +183,9 @@ export class ProductListComponent implements OnInit {
   }
 
   loadProducts() {
-    this.isLoading = true;
+    if (this.products.length === 0) {
+      this.isLoading = true;
+    }
     this.productService.getAllProducts().subscribe({
       next: (data) => {
         this.products = data || [];

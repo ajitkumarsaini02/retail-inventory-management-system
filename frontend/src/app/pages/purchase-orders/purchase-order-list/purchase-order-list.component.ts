@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { PurchaseOrderService } from '../../../services/purchase-order.service';
 import { PurchaseOrder, PurchaseOrderStatus } from '../../../models';
 import { IconComponent } from '../../../components/icon/icon.component';
+import { INITIAL_PURCHASE_ORDERS } from '../../../constants/initial-data';
 
 @Component({
   selector: 'app-purchase-order-list',
@@ -229,8 +230,8 @@ export class PurchaseOrderListComponent implements OnInit {
   private poService = inject(PurchaseOrderService);
   private cdr = inject(ChangeDetectorRef);
 
-  orders: PurchaseOrder[] = [];
-  isLoading = true;
+  orders: PurchaseOrder[] = [...INITIAL_PURCHASE_ORDERS];
+  isLoading = false;
   isDeleting = false;
   searchQuery = '';
   statusFilter = 'ALL';
@@ -241,7 +242,9 @@ export class PurchaseOrderListComponent implements OnInit {
   }
 
   loadOrders() {
-    this.isLoading = true;
+    if (this.orders.length === 0) {
+      this.isLoading = true;
+    }
     this.poService.getAllPurchaseOrders().subscribe({
       next: (data) => {
         this.orders = data || [];

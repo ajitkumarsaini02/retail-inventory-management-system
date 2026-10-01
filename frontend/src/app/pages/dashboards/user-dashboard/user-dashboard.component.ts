@@ -11,6 +11,13 @@ import { OrderService } from '../../../services/order.service';
 import { CustomerService } from '../../../services/customer.service';
 import { Product, Warehouse, Inventory, Order, Customer, OrderStatus } from '../../../models';
 import { IconComponent } from '../../../components/icon/icon.component';
+import {
+  INITIAL_PRODUCTS,
+  INITIAL_WAREHOUSES,
+  INITIAL_INVENTORIES,
+  INITIAL_ORDERS,
+  INITIAL_CUSTOMERS
+} from '../../../constants/initial-data';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -366,17 +373,17 @@ export class UserDashboardComponent implements OnInit {
   private orderService = inject(OrderService);
   private customerService = inject(CustomerService);
 
-  isLoading = true;
+  isLoading = false;
   isRefreshing = false;
   searchQuery = '';
   selectedCategory = 'ALL';
   fulfillmentFilter: string = 'PENDING';
 
-  products: Product[] = [];
-  warehouses: Warehouse[] = [];
-  inventoryList: Inventory[] = [];
-  orders: Order[] = [];
-  customers: Customer[] = [];
+  products: Product[] = [...INITIAL_PRODUCTS];
+  warehouses: Warehouse[] = [...INITIAL_WAREHOUSES];
+  inventoryList: Inventory[] = [...INITIAL_INVENTORIES];
+  orders: Order[] = [...INITIAL_ORDERS];
+  customers: Customer[] = [...INITIAL_CUSTOMERS];
   stockMap = new Map<number, number>();
 
   fulfillmentFilters = [
@@ -418,7 +425,23 @@ export class UserDashboardComponent implements OnInit {
     return this.pendingOrders.filter(o => o.status === this.fulfillmentFilter);
   }
 
+  constructor() {
+    this.recomputeStockMap();
+  }
+
+  private recomputeStockMap() {
+    this.stockMap.clear();
+    this.inventoryList.forEach(item => {
+      const pId = item.product?.id || item.productId;
+      if (pId) {
+        const cur = this.stockMap.get(pId) || 0;
+        this.stockMap.set(pId, cur + (item.quantity - (item.reservedQuantity || 0)));
+      }
+    });
+  }
+
   ngOnInit() {
+    this.recomputeStockMap();
     this.loadData();
   }
 
@@ -430,8 +453,8 @@ export class UserDashboardComponent implements OnInit {
   }
 
   loadData(silent = false) {
-    if (!silent) this.isLoading = true;
-    else this.isRefreshing = true;
+    if (!silent && this.products.length === 0) this.isLoading = true;
+    else if (silent) this.isRefreshing = true;
 
     forkJoin({
       prods: this.productService.getAllProducts().pipe(catchError(() => of([]))),

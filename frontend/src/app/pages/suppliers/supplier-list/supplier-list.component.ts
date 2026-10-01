@@ -6,6 +6,7 @@ import { SupplierService } from '../../../services/supplier.service';
 import { AuthService } from '../../../services/auth.service';
 import { Supplier } from '../../../models';
 import { IconComponent } from '../../../components/icon/icon.component';
+import { INITIAL_SUPPLIERS } from '../../../constants/initial-data';
 
 @Component({
   selector: 'app-supplier-list',
@@ -149,8 +150,8 @@ export class SupplierListComponent implements OnInit {
   private supplierService = inject(SupplierService);
   private cdr = inject(ChangeDetectorRef);
 
-  suppliers: Supplier[] = [];
-  isLoading = true;
+  suppliers: Supplier[] = [...INITIAL_SUPPLIERS];
+  isLoading = false;
   searchQuery = '';
   selectedStatus = 'ALL';
 
@@ -169,6 +170,9 @@ export class SupplierListComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.suppliers.length === 0) {
+      this.isLoading = true;
+    }
     this.supplierService.getAllSuppliers().subscribe({
       next: (data) => {
         this.suppliers = data || [];

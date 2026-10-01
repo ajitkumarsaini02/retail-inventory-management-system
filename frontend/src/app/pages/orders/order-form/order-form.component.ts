@@ -8,6 +8,7 @@ import { CustomerService } from '../../../services/customer.service';
 import { ProductService } from '../../../services/product.service';
 import { Customer, Product, Order, OrderItem } from '../../../models';
 import { IconComponent } from '../../../components/icon/icon.component';
+import { INITIAL_CUSTOMERS, INITIAL_PRODUCTS } from '../../../constants/initial-data';
 
 @Component({
   selector: 'app-order-form',
@@ -187,8 +188,8 @@ export class OrderFormComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   router = inject(Router);
 
-  customers: Customer[] = [];
-  products: Product[] = [];
+  customers: Customer[] = [...INITIAL_CUSTOMERS];
+  products: Product[] = [...INITIAL_PRODUCTS];
   selectedCustomerId = 0;
   shippingAddress = '';
   totalAmount = 0;

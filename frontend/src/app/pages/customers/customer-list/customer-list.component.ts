@@ -8,6 +8,7 @@ import { OrderService } from '../../../services/order.service';
 import { AuthService } from '../../../services/auth.service';
 import { Customer, Order } from '../../../models';
 import { IconComponent } from '../../../components/icon/icon.component';
+import { INITIAL_CUSTOMERS, INITIAL_ORDERS } from '../../../constants/initial-data';
 
 @Component({
   selector: 'app-customer-list',
@@ -144,9 +145,9 @@ export class CustomerListComponent implements OnInit {
   private orderService = inject(OrderService);
   private cdr = inject(ChangeDetectorRef);
 
-  customers: Customer[] = [];
-  orders: Order[] = [];
-  isLoading = true;
+  customers: Customer[] = [...INITIAL_CUSTOMERS];
+  orders: Order[] = [...INITIAL_ORDERS];
+  isLoading = false;
   searchQuery = '';
 
   get filteredCustomers(): Customer[] {
@@ -161,6 +162,9 @@ export class CustomerListComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.customers.length === 0) {
+      this.isLoading = true;
+    }
     forkJoin({
       custs: this.customerService.getAllCustomers().pipe(catchError(() => of([]))),
       ords: this.orderService.getAllOrders().pipe(catchError(() => of([])))

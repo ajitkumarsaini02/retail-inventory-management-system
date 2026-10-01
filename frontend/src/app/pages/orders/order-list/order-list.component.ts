@@ -6,6 +6,7 @@ import { OrderService } from '../../../services/order.service';
 import { AuthService } from '../../../services/auth.service';
 import { Order, OrderStatus } from '../../../models';
 import { IconComponent } from '../../../components/icon/icon.component';
+import { INITIAL_ORDERS } from '../../../constants/initial-data';
 
 @Component({
   selector: 'app-order-list',
@@ -146,8 +147,8 @@ export class OrderListComponent implements OnInit {
   private orderService = inject(OrderService);
   private cdr = inject(ChangeDetectorRef);
 
-  orders: Order[] = [];
-  isLoading = true;
+  orders: Order[] = [...INITIAL_ORDERS];
+  isLoading = false;
   searchQuery = '';
   selectedStatus = 'ALL';
 
@@ -163,6 +164,9 @@ export class OrderListComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.orders.length === 0) {
+      this.isLoading = true;
+    }
     this.orderService.getAllOrders().subscribe({
       next: (data) => {
         this.orders = data || [];

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PurchaseOrderService } from '../../../services/purchase-order.service';
 import { PurchaseOrder, PurchaseOrderStatus } from '../../../models';
 import { IconComponent } from '../../../components/icon/icon.component';
+import { INITIAL_PURCHASE_ORDERS } from '../../../constants/initial-data';
 
 @Component({
   selector: 'app-purchase-order-detail',
@@ -213,12 +214,21 @@ export class PurchaseOrderDetailComponent implements OnInit {
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.loadPO(Number(id));
+      const numId = Number(id);
+      const initialPo = INITIAL_PURCHASE_ORDERS.find((p) => p.id === numId);
+      if (initialPo) {
+        this.po = initialPo;
+        this.selectedStatus = initialPo.status;
+        this.isLoading = false;
+      }
+      this.loadPO(numId);
     }
   }
 
   loadPO(id: number) {
-    this.isLoading = true;
+    if (!this.po) {
+      this.isLoading = true;
+    }
     this.poService.getPurchaseOrderById(id).subscribe({
       next: (data) => {
         this.po = data;
