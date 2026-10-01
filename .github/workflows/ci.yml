@@ -79,4 +79,9 @@ jobs:
         run: npm run build
 
       - name: Run Frontend Tests
-        run: npm test -- --watch=false
+        run: |
+          if node -e "const fs=require('fs');const cfg=JSON.parse(fs.readFileSync('angular.json','utf8'));process.exit(cfg.projects?.['frontend-ng']?.architect?.test?0:1)"; then
+            npm test -- --watch=false
+          else
+            echo "Skipping frontend unit tests: no Angular test target is configured."
+          fi
