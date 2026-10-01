@@ -32,9 +32,9 @@ import { IconComponent } from '../icon/icon.component';
               Retail Inventory ERP
             </h1>
             <div class="flex items-center gap-1.5 mt-0.5">
-              <span class="text-[9px] font-extrabold uppercase tracking-wider text-[#6C3BFF] dark:text-[#38BDF8] flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-[#6C3BFF] dark:bg-[#38BDF8] animate-pulse"></span>
-                ENTERPRISE EDITION
+              <span class="text-[9px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                System Online
               </span>
             </div>
           </div>

@@ -48,25 +48,12 @@ import { IconComponent } from '../../../components/icon/icon.component';
               <img src="logo.png" alt="Retail Inventory ERP" class="w-11 h-11 object-contain" />
             </div>
 
-            <!-- Badges -->
-            <div class="flex items-center justify-center gap-2 mb-2">
-              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-[#6C3BFF]/10 text-[#6C3BFF] border border-[#6C3BFF]/20">
-                ENTERPRISE EDITION
-              </span>
-            </div>
-
             <h2 class="text-2xl sm:text-3xl font-extrabold text-[#0F172A] dark:text-[#F8FAFC] tracking-tight">
               Retail Inventory ERP
             </h2>
             <p class="text-[#475569] dark:text-[#94A3B8] text-xs sm:text-sm mt-1.5 leading-relaxed">
-              Enterprise supply chain telemetry, inventory control & sales fulfillment
+              Supply chain telemetry, inventory control & sales fulfillment
             </p>
-          </div>
-
-          <!-- Secure JWT Authentication Badge -->
-          <div class="mb-5 flex items-center justify-center gap-2 py-1.5 px-3 rounded-xl bg-[#6C3BFF]/5 dark:bg-[#6C3BFF]/10 border border-[#6C3BFF]/20 text-xs font-semibold text-[#6C3BFF] dark:text-[#A78BFA]">
-            <app-icon name="shield-check" className="w-4 h-4 shrink-0"></app-icon>
-            <span>Secure JWT Authentication</span>
           </div>
 
           @if (errorMessage) {
@@ -162,7 +149,7 @@ import { IconComponent } from '../../../components/icon/icon.component';
             >
               @if (isLoading) {
                 <app-icon name="refresh" className="w-4 h-4 animate-spin"></app-icon>
-                <span>Authenticating JWT...</span>
+                <span>Signing in...</span>
               } @else {
                 <span>Sign In to Dashboard</span>
                 <app-icon name="arrow-right" className="w-4 h-4"></app-icon>
@@ -173,7 +160,7 @@ import { IconComponent } from '../../../components/icon/icon.component';
           <!-- Footer -->
           <div class="mt-6 pt-5 border-t border-[#E2E8F0] dark:border-[#252C45] text-center">
             <p class="text-xs text-[#475569] dark:text-[#94A3B8]">
-              Don't have an enterprise account?
+              Don't have an account?
               <a routerLink="/register" class="text-[#6C3BFF] hover:text-[#7C4DFF] font-semibold ml-1 cursor-pointer">
                 Create Account
               </a>
