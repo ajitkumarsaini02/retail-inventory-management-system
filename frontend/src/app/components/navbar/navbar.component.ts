@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ThemeService } from '../../services/theme.service';
+import { NotificationService, AppNotification } from '../../services/notification.service';
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
@@ -75,14 +76,161 @@ import { IconComponent } from '../icon/icon.component';
           </span>
         </button>
 
-        <!-- Notification Bell -->
-        <button
-          class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-xl hover:bg-[#F5F3FF] dark:hover:bg-[#1B2140] transition cursor-pointer relative"
-          title="Notifications"
-        >
-          <app-icon name="bell" className="w-4 h-4"></app-icon>
-          <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#6C3BFF] animate-pulse"></span>
-        </button>
+        <!-- Notification Bell Dropdown -->
+        <div class="relative">
+          @if (notifMenuOpen) {
+            <div (click)="notifMenuOpen = false" class="fixed inset-0 z-40 bg-transparent cursor-default"></div>
+          }
+
+          <button
+            (click)="toggleNotifications()"
+            [title]="'Notifications (' + notifService.unreadCount() + ' unread)'"
+            class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-xl hover:bg-[#F5F3FF] dark:hover:bg-[#1B2140] transition cursor-pointer relative"
+          >
+            <app-icon name="bell" className="w-4 h-4"></app-icon>
+            @if (notifService.unreadCount() > 0) {
+              <span class="absolute top-1 right-1 min-w-[16px] h-4 px-1 rounded-full bg-[#6C3BFF] text-white text-[9px] font-bold flex items-center justify-center animate-pulse shadow-sm">
+                {{ notifService.unreadCount() > 9 ? '9+' : notifService.unreadCount() }}
+              </span>
+            }
+          </button>
+
+          <!-- Notification Panel -->
+          @if (notifMenuOpen) {
+            <div class="absolute right-0 top-12 z-50 w-80 sm:w-96 bg-white dark:bg-[#141A2E] rounded-2xl shadow-2xl border border-[#E2E8F0] dark:border-[#252C45] overflow-hidden flex flex-col max-h-[85vh]">
+              <!-- Header -->
+              <div class="p-3.5 sm:p-4 border-b border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC]/80 dark:bg-[#11172B]/80 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <div class="p-1.5 rounded-lg bg-[#6C3BFF]/10 text-[#6C3BFF]">
+                    <app-icon name="bell" className="w-4 h-4"></app-icon>
+                  </div>
+                  <div>
+                    <h3 class="text-xs sm:text-sm font-bold text-[#0F172A] dark:text-[#F8FAFC]">Live ERP Alerts</h3>
+                    <p class="text-[10px] text-slate-400">
+                      {{ notifService.unreadCount() }} unread alert{{ notifService.unreadCount() === 1 ? '' : 's' }}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-1">
+                  @if (notifService.unreadCount() > 0) {
+                    <button
+                      (click)="markAllAsRead()"
+                      class="px-2 py-1 text-[11px] font-semibold text-[#6C3BFF] hover:bg-[#6C3BFF]/10 rounded-lg transition flex items-center gap-1 cursor-pointer"
+                      title="Mark all as read"
+                    >
+                      <app-icon name="check-check" className="w-3.5 h-3.5"></app-icon>
+                      <span class="hidden sm:inline">Mark read</span>
+                    </button>
+                  }
+                  <button
+                    (click)="refreshNotifications()"
+                    class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#1B2140] rounded-lg transition cursor-pointer"
+                    [class.animate-spin]="notifService.isLoading()"
+                    title="Refresh alerts"
+                  >
+                    <app-icon name="refresh" className="w-3.5 h-3.5"></app-icon>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Filter Tabs -->
+              <div class="flex items-center gap-1 px-3 py-2 border-b border-[#E2E8F0] dark:border-[#252C45] bg-white dark:bg-[#141A2E] text-[11px] font-semibold">
+                <button
+                  (click)="filterType = 'all'"
+                  [class]="filterType === 'all' ? 'bg-[#6C3BFF] text-white shadow-xs' : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-[#1B2140] dark:text-slate-400'"
+                  class="px-2.5 py-1 rounded-lg transition cursor-pointer"
+                >
+                  All ({{ notifService.notifications().length }})
+                </button>
+                <button
+                  (click)="filterType = 'stock'"
+                  [class]="filterType === 'stock' ? 'bg-[#6C3BFF] text-white shadow-xs' : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-[#1B2140] dark:text-slate-400'"
+                  class="px-2.5 py-1 rounded-lg transition cursor-pointer"
+                >
+                  Stock Alerts
+                </button>
+                <button
+                  (click)="filterType = 'order'"
+                  [class]="filterType === 'order' ? 'bg-[#6C3BFF] text-white shadow-xs' : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-[#1B2140] dark:text-slate-400'"
+                  class="px-2.5 py-1 rounded-lg transition cursor-pointer"
+                >
+                  Orders
+                </button>
+              </div>
+
+              <!-- Items List -->
+              <div class="overflow-y-auto divide-y divide-[#E2E8F0] dark:divide-[#252C45] max-h-72">
+                @for (item of filteredNotifications; track item.id) {
+                  <div
+                    (click)="onNotificationClick(item)"
+                    class="p-3 sm:p-3.5 flex items-start gap-3 hover:bg-[#F5F3FF] dark:hover:bg-[#1B2140] transition cursor-pointer relative group"
+                    [class.bg-[#6C3BFF]/5]="!item.read"
+                  >
+                    <!-- Severity Icon Badge -->
+                    <div
+                      class="mt-0.5 p-2 rounded-xl shrink-0 flex items-center justify-center"
+                      [ngClass]="{
+                        'bg-rose-500/10 text-rose-500': item.severity === 'critical',
+                        'bg-amber-500/10 text-amber-500': item.severity === 'warning',
+                        'bg-blue-500/10 text-blue-500': item.severity === 'info',
+                        'bg-emerald-500/10 text-emerald-500': item.severity === 'success'
+                      }"
+                    >
+                      @if (item.type === 'stock') {
+                        <app-icon name="alert-triangle" className="w-4 h-4"></app-icon>
+                      } @else if (item.type === 'order') {
+                        <app-icon name="shopping-cart" className="w-4 h-4"></app-icon>
+                      } @else if (item.type === 'po') {
+                        <app-icon name="truck" className="w-4 h-4"></app-icon>
+                      } @else {
+                        <app-icon name="check-circle" className="w-4 h-4"></app-icon>
+                      }
+                    </div>
+
+                    <!-- Notification Body -->
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center justify-between gap-1 mb-0.5">
+                        <p class="text-xs font-bold text-[#0F172A] dark:text-[#F8FAFC] truncate">
+                          {{ item.title }}
+                        </p>
+                        @if (!item.read) {
+                          <span class="w-2 h-2 rounded-full bg-[#6C3BFF] shrink-0"></span>
+                        }
+                      </div>
+                      <p class="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                        {{ item.message }}
+                      </p>
+                      <div class="flex items-center gap-2 mt-1.5">
+                        <span class="text-[10px] font-semibold text-slate-400">{{ item.time }}</span>
+                        <span class="text-slate-300 dark:text-slate-600">•</span>
+                        <span class="text-[10px] font-bold text-[#6C3BFF] group-hover:underline">View Details →</span>
+                      </div>
+                    </div>
+                  </div>
+                } @empty {
+                  <div class="p-8 text-center">
+                    <div class="w-10 h-10 mx-auto mb-2 rounded-full bg-slate-100 dark:bg-[#1B2140] flex items-center justify-center text-slate-400">
+                      <app-icon name="check-circle" className="w-5 h-5 text-[#22C55E]"></app-icon>
+                    </div>
+                    <p class="text-xs font-semibold text-[#0F172A] dark:text-[#F8FAFC]">No alerts in this category</p>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Everything is up to date and healthy.</p>
+                  </div>
+                }
+              </div>
+
+              <!-- Footer Action -->
+              <div class="p-2.5 border-t border-[#E2E8F0] dark:border-[#252C45] bg-[#F8FAFC] dark:bg-[#11172B] text-center">
+                <button
+                  (click)="goToInventory()"
+                  class="text-xs font-bold text-[#6C3BFF] hover:text-[#5827e8] transition cursor-pointer"
+                >
+                  Manage Real-Time Stock Inventory &rarr;
+                </button>
+              </div>
+            </div>
+          }
+        </div>
 
         <!-- User Profile Dropdown Trigger -->
         <div class="relative">
@@ -180,27 +328,67 @@ export class NavbarComponent {
 
   authService = inject(AuthService);
   themeService = inject(ThemeService);
+  notifService = inject(NotificationService);
   private router = inject(Router);
   private elementRef = inject(ElementRef);
 
   userMenuOpen = false;
+  notifMenuOpen = false;
+  filterType: 'all' | 'stock' | 'order' = 'all';
   currentTime = '';
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    if (this.userMenuOpen && !this.elementRef.nativeElement.contains(event.target)) {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
       this.userMenuOpen = false;
+      this.notifMenuOpen = false;
     }
   }
 
   @HostListener('document:keydown.escape')
   onEscape() {
     this.userMenuOpen = false;
+    this.notifMenuOpen = false;
   }
 
   constructor() {
     this.updateClock();
     setInterval(() => this.updateClock(), 30000);
+  }
+
+  get filteredNotifications(): AppNotification[] {
+    const list = this.notifService.notifications();
+    if (this.filterType === 'all') return list;
+    if (this.filterType === 'stock') return list.filter((n) => n.type === 'stock');
+    if (this.filterType === 'order') return list.filter((n) => n.type === 'order' || n.type === 'po');
+    return list;
+  }
+
+  toggleNotifications() {
+    this.notifMenuOpen = !this.notifMenuOpen;
+    if (this.notifMenuOpen) {
+      this.userMenuOpen = false;
+      this.notifService.refresh();
+    }
+  }
+
+  onNotificationClick(item: AppNotification) {
+    this.notifService.markAsRead(item.id);
+    this.notifMenuOpen = false;
+    this.router.navigateByUrl(item.link);
+  }
+
+  markAllAsRead() {
+    this.notifService.markAllAsRead();
+  }
+
+  refreshNotifications() {
+    this.notifService.refresh();
+  }
+
+  goToInventory() {
+    this.notifMenuOpen = false;
+    this.router.navigateByUrl('/inventory');
   }
 
   private updateClock() {
@@ -218,11 +406,13 @@ export class NavbarComponent {
 
   goTo(path: string) {
     this.userMenuOpen = false;
+    this.notifMenuOpen = false;
     this.router.navigateByUrl(path);
   }
 
   logout() {
     this.userMenuOpen = false;
+    this.notifMenuOpen = false;
     this.authService.logout();
   }
 }

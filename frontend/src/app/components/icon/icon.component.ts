@@ -154,6 +154,15 @@ import { CommonModule } from '@angular/common';
         @case ('check') {
           <polyline points="20 6 9 17 4 12" />
         }
+        @case ('check-check') {
+          <path d="M18 6 7 17l-5-5" />
+          <path d="m22 10-7.5 7.5L13 16" />
+        }
+        @case ('info') {
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 16v-4" />
+          <path d="M12 8h.01" />
+        }
         @case ('arrow-right') {
           <path d="M5 12h14" />
           <path d="m12 5 7 7-7 7" />
@@ -198,6 +207,10 @@ import { CommonModule } from '@angular/common';
         @case ('trending-up') {
           <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
           <polyline points="16 7 22 7 22 13" />
+        }
+        @case ('bell') {
+          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+          <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
         }
         @default {
           <circle cx="12" cy="12" r="10" />
