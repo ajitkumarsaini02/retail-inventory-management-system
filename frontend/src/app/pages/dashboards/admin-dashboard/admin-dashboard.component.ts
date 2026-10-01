@@ -795,9 +795,6 @@ export class AdminDashboardComponent implements OnInit {
 
   private applyDefaultSeedData() {
     this.products = [
-      { id: 5, name: 'Dell Inspiron 15 Laptop', sku: 'PROD-ELEC-001', category: 'Electronics', price: 749.99, unitCost: 620, reorderLevel: 10, status: 'ACTIVE' },
-      { id: 6, name: 'Logitech MX Master 3S Mouse', sku: 'PROD-ELEC-002', category: 'Accessories', price: 99.99, unitCost: 72, reorderLevel: 20, status: 'ACTIVE' },
-    this.products = [
       { id: 5, name: 'Dell Inspiron 15 Laptop', sku: 'PROD-ELEC-001', category: 'Electronics', brand: 'Dell', price: 749.99, unitCost: 620, reorderLevel: 10, status: 'ACTIVE' },
       { id: 6, name: 'Logitech MX Master 3S Mouse', sku: 'PROD-ELEC-002', category: 'Accessories', brand: 'Logitech', price: 99.99, unitCost: 72, reorderLevel: 20, status: 'ACTIVE' },
       { id: 7, name: 'Sony WH-1000XM5 Headphones', sku: 'PROD-ELEC-003', category: 'Audio', brand: 'Sony', price: 399.99, unitCost: 310, reorderLevel: 10, status: 'ACTIVE' },
@@ -820,16 +817,6 @@ export class AdminDashboardComponent implements OnInit {
     ];
 
     // 419 Total Units, 44 Reserved, 4 items below reorder threshold
-    this.inventoryList = [
-      { id: 2, productId: 5, warehouseId: 2, quantity: 120, reservedQuantity: 15, reorderLevel: 20 },
-      { id: 3, productId: 6, warehouseId: 3, quantity: 95, reservedQuantity: 10, reorderLevel: 15 },
-      { id: 4, productId: 7, warehouseId: 4, quantity: 70, reservedQuantity: 8, reorderLevel: 10 },
-      { id: 5, productId: 8, warehouseId: 2, quantity: 54, reservedQuantity: 5, reorderLevel: 60 }, // Low stock: 49 <= 60 (Alert 1)
-      { id: 6, productId: 9, warehouseId: 3, quantity: 45, reservedQuantity: 4, reorderLevel: 50 }, // Low stock: 41 <= 50 (Alert 2)
-      { id: 7, productId: 10, warehouseId: 4, quantity: 35, reservedQuantity: 2, reorderLevel: 40 } // Low stock: 33 <= 40 (Alert 3)
-    ];
-    // Add 4th low stock alert item:
-    // Adjust quantities: 120 + 95 + 60 + 54 + 45 + 35 + 10 = 419, reserved: 15 + 10 + 8 + 5 + 4 + 2 = 44
     this.inventoryList = [
       { id: 2, productId: 5, warehouseId: 2, quantity: 120, reservedQuantity: 15, reorderLevel: 20 },
       { id: 3, productId: 6, warehouseId: 3, quantity: 95, reservedQuantity: 10, reorderLevel: 15 },
