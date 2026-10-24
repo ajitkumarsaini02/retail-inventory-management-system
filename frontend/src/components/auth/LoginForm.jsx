@@ -35,7 +35,7 @@ const LoginForm = () => {
           ? 'Invalid email or password.'
           : err.response?.status === 403
           ? 'Your account is disabled.'
-          : 'Could not connect to the backend server. Please ensure Spring Boot is running on port 8080.');
+          : 'Could not connect to the backend server. Please ensure Spring Boot is running on port 8081.');
       setError(msg);
     } finally {
       setLoading(false);
@@ -66,6 +66,28 @@ const LoginForm = () => {
       </div>
 
       <ErrorMessage message={error} onDismiss={() => setError('')} />
+
+      {/* Demo Credentials Quick Fill */}
+      <div className="mb-5 p-3 rounded-2xl bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/60 text-xs">
+        <div className="flex items-center justify-between gap-2">
+          <div className="text-slate-600 dark:text-slate-300">
+            <span className="font-semibold text-indigo-700 dark:text-indigo-400">Admin Login:</span>{' '}
+            <span className="font-mono text-slate-800 dark:text-slate-200">admin@hcl.com</span>
+          </div>
+          <button
+            type="button"
+            id="auto-fill-admin-btn"
+            onClick={() => {
+              setEmail('admin@hcl.com');
+              setPassword('password123');
+              setError('');
+            }}
+            className="px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-[11px] transition cursor-pointer shrink-0 shadow-xs active:scale-95"
+          >
+            Auto Fill
+          </button>
+        </div>
+      </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
