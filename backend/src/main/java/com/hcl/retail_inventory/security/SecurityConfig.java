@@ -91,7 +91,10 @@ public class SecurityConfig {
                 "http://127.0.0.1:3000",
                 "http://127.0.0.1:4200"
         ));
-        configuration.setAllowedOriginPatterns(List.of("https://*.vercel.app"));
+        configuration.setAllowedOriginPatterns(List.of(
+                "https://*.vercel.app",
+                "https://*.onrender.com"
+        ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With", "Origin"));
         configuration.setAllowCredentials(true);
