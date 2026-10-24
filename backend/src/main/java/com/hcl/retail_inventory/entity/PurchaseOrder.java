@@ -38,7 +38,7 @@ public class PurchaseOrder {
 
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<PurchaseOrderItem> purchaseOrderItems = new ArrayList<>();
 
     public PurchaseOrder() {
@@ -62,6 +62,10 @@ public class PurchaseOrder {
 
         if (status == null) {
             status = PurchaseOrderStatus.PENDING;
+        }
+
+        if (purchaseOrderNumber == null || purchaseOrderNumber.trim().isEmpty()) {
+            purchaseOrderNumber = "PO-" + System.currentTimeMillis();
         }
     }
 

@@ -107,6 +107,7 @@ public class AuthController {
         private String email;
 
         @NotBlank(message = "Password is required")
+        @jakarta.validation.constraints.Size(min = 6, message = "Password must be at least 6 characters")
         private String password;
 
         public RegisterRequest() {}
@@ -175,7 +176,8 @@ public class AuthController {
         public String getToken() { return token; }
         public Long getId() { return id; }
         public String getName() { return name; }
-        public String setEmail() { return email; }
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
         public String getRole() { return role; }
         public boolean isEnabled() { return enabled; }
         public LocalDateTime getCreatedAt() { return createdAt; }

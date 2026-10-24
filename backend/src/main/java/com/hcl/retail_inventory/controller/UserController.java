@@ -67,6 +67,14 @@ public class UserController {
 
     @PatchMapping("/{id}/toggle-status")
     public ResponseEntity<?> toggleUserStatus(@PathVariable Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            String currentEmail = auth.getName();
+            Optional<User> currentUser = userService.getUserByEmail(currentEmail);
+            if (currentUser.isPresent() && currentUser.get().getId().equals(id)) {
+                return ResponseEntity.badRequest().body(Map.of("message", "Cannot deactivate your own administrator account"));
+            }
+        }
         Optional<User> updated = userService.toggleUserStatus(id);
         if (updated.isPresent()) {
             return ResponseEntity.ok(updated.get());

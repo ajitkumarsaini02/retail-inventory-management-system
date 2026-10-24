@@ -44,8 +44,7 @@ public class Order {
 
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     public Order() {
@@ -72,6 +71,10 @@ public class Order {
 
         if (status == null) {
             status = OrderStatus.PENDING;
+        }
+
+        if (orderNumber == null || orderNumber.trim().isEmpty()) {
+            orderNumber = "ORD-" + System.currentTimeMillis();
         }
     }
 
