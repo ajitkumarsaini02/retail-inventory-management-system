@@ -2,10 +2,77 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  /* Aurora Blue (Light Mode Brand Tokens) */
+  --color-aurora-primary: #6366f1;
+  --color-aurora-primary-light: #8b5cf6;
+  --color-aurora-secondary: #06b6d4;
+  --color-aurora-accent: #f59e0b;
+
+  /* Royal Indigo (Dark Mode Brand Tokens) */
+  --color-royal-primary: #7c3aed;
+  --color-royal-primary-light: #a855f7;
+  --color-royal-secondary: #22d3ee;
+  --color-royal-accent: #f59e0b;
+
+  /* Exact Neutral Palette Tokens */
+  --color-bg-light: #f8fafc;
+  --color-surface-light: #ffffff;
+  --color-elevated-light: #f1f5f9;
+  --color-border-light: #e2e8f0;
+  --color-muted-light: #64748b;
+  --color-text-light: #0f172a;
+
+  --color-bg-dark: #0a0f1f;
+  --color-surface-dark: #111827;
+  --color-elevated-dark: #1e293b;
+  --color-border-dark: #334155;
+  --color-muted-dark: #94a3b8;
+  --color-text-dark: #f8fafc;
+}
+
 @layer base {
   :root {
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    /* Light Mode Active Tokens (Aurora Blue) */
+    --app-bg: #f8fafc;
+    --app-surface: #ffffff;
+    --app-elevated: #f1f5f9;
+    --app-border: #e2e8f0;
+    --app-muted: #64748b;
+    --app-text: #0f172a;
+
+    --brand-primary: #6366f1;
+    --brand-primary-light: #8b5cf6;
+    --brand-secondary: #06b6d4;
+    --brand-accent: #f59e0b;
+
+    --grad-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    --grad-soft-bg: linear-gradient(180deg, #f1f5f9 0%, #e0e7ff 100%);
+    --grad-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+    --grad-warning: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+  }
+
+  .dark {
+    /* Dark Mode Active Tokens (Royal Indigo) */
+    --app-bg: #0a0f1f;
+    --app-surface: #111827;
+    --app-elevated: #1e293b;
+    --app-border: #334155;
+    --app-muted: #94a3b8;
+    --app-text: #f8fafc;
+
+    --brand-primary: #7c3aed;
+    --brand-primary-light: #a855f7;
+    --brand-secondary: #22d3ee;
+    --brand-accent: #f59e0b;
+
+    --grad-primary: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    --grad-dark-surface: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    --grad-accent: linear-gradient(135deg, #22d3ee 0%, #3b82f6 100%);
+    --grad-purple-glow: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
   }
 
   body {
@@ -17,15 +84,15 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: -0.011em;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 
   .dark body {
-    background-color: #0b0f19;
-    color: #f8fafc;
+    background-color: #0a0f1f !important;
+    color: #f8fafc !important;
   }
 
-  /* Universal Dark Mode Input & Control Enhancements */
+  /* Universal Dark Mode Input & Form Control Styling matching Royal Indigo */
   .dark input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
   .dark select,
   .dark textarea {
@@ -42,24 +109,24 @@
   .dark input:focus,
   .dark select:focus,
   .dark textarea:focus {
-    background-color: #0f172a !important;
-    border-color: #6366f1 !important;
+    background-color: #111827 !important;
+    border-color: #7c3aed !important;
     color: #ffffff !important;
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25) !important;
+    box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3) !important;
   }
 
   .dark select option {
-    background-color: #0f172a !important;
+    background-color: #111827 !important;
     color: #f8fafc !important;
   }
 
-  /* Sleek Scrollbar */
+  /* Sleek Scrollbars configured with Palette Colors */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: transparent;
+    background: #f1f5f9;
   }
   ::-webkit-scrollbar-thumb {
     background: #cbd5e1;
@@ -69,8 +136,12 @@
     background: #94a3b8;
   }
 
+  .dark ::-webkit-scrollbar-track {
+    background: #0a0f1f;
+  }
   .dark ::-webkit-scrollbar-thumb {
     background: #334155;
+    border-radius: 9999px;
   }
   .dark ::-webkit-scrollbar-thumb:hover {
     background: #475569;
@@ -92,10 +163,10 @@
 }
 
 .glass-panel-dark {
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(17, 24, 39, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(51, 65, 85, 0.8);
 }
 
 .glass-dropdown {
@@ -128,37 +199,6 @@
   background: linear-gradient(90deg, rgba(241, 245, 249, 0.8) 25%, rgba(226, 232, 240, 0.9) 50%, rgba(241, 245, 249, 0.8) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.8s infinite;
-}
-
-/* Custom Scrollbars */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-
-.dark ::-webkit-scrollbar-track {
-  background: #0f172a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 9999px;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #334155;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
 }
 
 /* Pulse Glow Effects */
@@ -213,5 +253,3 @@
     box-shadow: none !important;
   }
 }
-
-

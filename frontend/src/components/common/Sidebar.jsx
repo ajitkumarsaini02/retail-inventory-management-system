@@ -39,15 +39,15 @@ const Sidebar = ({ isOpen, onClose }) => {
   const navItemClass = ({ isActive }) =>
     `group flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all ${
       isActive
-        ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/25 font-semibold'
-        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-slate-800/80'
+        ? 'bg-[#6366f1] dark:bg-[#7c3aed] text-white shadow-md shadow-indigo-500/25 dark:shadow-purple-900/40 font-semibold'
+        : 'text-[#64748b] dark:text-[#94a3b8] hover:text-[#0f172a] dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-[#1e293b]/80'
     }`;
 
   const navIconClass = (isActive) =>
     `w-4 h-4 shrink-0 transition-transform group-hover:scale-110 ${
       isActive
         ? 'text-white'
-        : 'text-slate-400 dark:text-slate-500 group-hover:text-indigo-600 dark:group-hover:text-indigo-400'
+        : 'text-slate-400 dark:text-slate-500 group-hover:text-[#6366f1] dark:group-hover:text-[#22d3ee]'
     }`;
 
   return (
@@ -61,30 +61,30 @@ const Sidebar = ({ isOpen, onClose }) => {
       )}
 
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-40 w-64 bg-white dark:bg-slate-900 border-r border-slate-200/90 dark:border-slate-800 flex flex-col transition-all duration-200 ease-in-out lg:translate-x-0 ${
+        className={`fixed top-0 bottom-0 left-0 z-40 w-64 bg-white dark:bg-[#111827] border-r border-[#e2e8f0] dark:border-r dark:border-[#1e293b] flex flex-col transition-all duration-200 ease-in-out lg:translate-x-0 ${
           isOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'
         }`}
       >
         {/* Brand Header */}
-        <div className="h-16 px-5 border-b border-slate-200/80 dark:border-slate-800 flex items-center justify-between bg-white dark:bg-slate-900">
+        <div className="h-16 px-5 border-b border-[#e2e8f0] dark:border-b dark:border-[#1e293b] flex items-center justify-between bg-white dark:bg-[#111827]">
           <button
             type="button"
             onClick={handleLogoClick}
-            className="flex items-center gap-3 text-left group cursor-pointer focus:outline-none"
+            className="flex items-center gap-2.5 text-left group cursor-pointer focus:outline-none"
             title="Reload Dashboard"
           >
             <img
               src={logo}
               alt="Logo"
-              className="w-10 h-10 rounded-xl object-contain shadow-xs border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-slate-800 p-1 shrink-0 group-hover:scale-105 active:scale-95 transition-transform"
+              className="w-9 h-9 rounded-xl object-contain shadow-xs border border-slate-200/80 dark:border-slate-700 bg-white dark:bg-slate-800 p-1 shrink-0 group-hover:scale-105 active:scale-95 transition-transform"
             />
             <div>
               <div className="flex items-center gap-1.5">
-                <h1 className="text-sm font-extrabold text-slate-900 dark:text-white tracking-tight leading-none group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                <h1 className="text-sm font-extrabold text-slate-900 dark:text-white tracking-tight leading-none group-hover:text-[#6366f1] dark:group-hover:text-[#a855f7] transition-colors">
                   Retail Inventory ERP
                 </h1>
               </div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1 mt-0.5">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#6366f1] dark:text-[#22d3ee] flex items-center gap-1 mt-0.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 Enterprise Edition
               </span>
@@ -98,14 +98,14 @@ const Sidebar = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        {/* Quick Order shortcut button */}
+        {/* Quick Order shortcut button matching palette gradient */}
         <div className="p-3.5 pb-0">
           <button
             onClick={() => {
               onClose();
               navigate('/orders/add');
             }}
-            className="w-full py-2.5 px-3 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 active:scale-98 text-white rounded-xl font-semibold text-xs flex items-center justify-center gap-2 shadow-sm shadow-indigo-500/25 transition cursor-pointer"
+            className="w-full py-2.5 px-3 bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] hover:from-[#5558e6] hover:to-[#7c3aed] dark:from-[#7c3aed] dark:to-[#a855f7] dark:hover:from-[#6d28d9] dark:hover:to-[#9333ea] active:scale-98 text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-indigo-500/20 dark:shadow-purple-900/30 transition cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Create New Order</span>

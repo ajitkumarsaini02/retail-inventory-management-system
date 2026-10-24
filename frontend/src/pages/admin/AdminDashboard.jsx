@@ -301,47 +301,47 @@ const AdminDashboard = ({ onSwitchToUserView }) => {
 
   return (
     <div className="space-y-6" id="admin-dashboard-root">
-      {/* Executive Command Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-900 p-6 sm:p-8 text-white shadow-2xl border border-indigo-900/40">
-        {/* Ambient Glows */}
-        <div className="absolute -right-20 -top-20 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -left-20 -bottom-20 w-96 h-96 bg-violet-600/15 rounded-full blur-3xl pointer-events-none" />
+      {/* Executive Command Banner matching Aurora Blue / Royal Indigo palette */}
+      <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-[#111827] p-6 sm:p-8 text-[#0f172a] dark:text-white shadow-sm border border-[#e2e8f0] dark:border-[#1e293b] transition-colors">
+        {/* Ambient Subtle Wave/Glow matching mockup */}
+        <div className="absolute right-0 top-0 bottom-0 w-2/5 bg-gradient-to-l from-indigo-100/50 via-purple-50/30 to-transparent dark:from-indigo-950/40 dark:via-purple-950/20 dark:to-transparent pointer-events-none rounded-r-3xl" />
+        <div className="absolute -right-16 -top-16 w-80 h-80 bg-indigo-500/10 dark:bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-6">
           <div className="max-w-3xl">
-            <div className="flex flex-wrap items-center gap-2.5 mb-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold tracking-wide uppercase bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 backdrop-blur-sm">
-                <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" />
+            <div className="flex flex-wrap items-center gap-2.5 mb-2.5">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold tracking-wide uppercase bg-indigo-50 dark:bg-indigo-950/60 text-[#6366f1] dark:text-[#a855f7] border border-indigo-200 dark:border-indigo-800/80">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#6366f1] dark:text-[#a855f7]" />
                 Executive Admin Console
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 dark:bg-teal-950/50 text-[#059669] dark:text-[#22d3ee] border border-emerald-200 dark:border-teal-800/60">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 Live Multi-Hub Telemetry
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#0f172a] dark:text-white">
               {getGreeting()}, {user?.name || 'Administrator'}
             </h1>
-            <p className="text-slate-300 text-sm mt-1.5 leading-relaxed">
+            <p className="text-[#64748b] dark:text-[#94a3b8] text-sm mt-1.5 leading-relaxed">
               Complete oversight of supply chain procurement, warehouse capacity distribution, gross revenue, and operator access controls.
             </p>
 
             {/* Quick Metrics Bar inside Hero */}
             <div className="mt-5 flex flex-wrap items-center gap-3 text-xs">
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/10 border border-white/10 backdrop-blur-xs">
-                <span className="text-slate-400">Total Asset Value:</span>
-                <span className="font-bold text-emerald-300 font-mono">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-[#1e293b] border border-slate-200/80 dark:border-[#334155]">
+                <span className="text-[#64748b] dark:text-[#94a3b8]">Total Asset Value:</span>
+                <span className="font-bold text-[#10b981] font-mono">
                   ${totalInventoryAssetValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
               </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/10 border border-white/10 backdrop-blur-xs">
-                <span className="text-slate-400">Fulfillment Rate:</span>
-                <span className="font-bold text-indigo-300">{fulfillmentRate}%</span>
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-[#1e293b] border border-slate-200/80 dark:border-[#334155]">
+                <span className="text-[#64748b] dark:text-[#94a3b8]">Fulfillment Rate:</span>
+                <span className="font-bold text-[#06b6d4] dark:text-[#22d3ee]">{fulfillmentRate}%</span>
               </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/10 border border-white/10 backdrop-blur-xs">
-                <span className="text-slate-400">Open POs:</span>
-                <span className="font-bold text-amber-300">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-[#1e293b] border border-slate-200/80 dark:border-[#334155]">
+                <span className="text-[#64748b] dark:text-[#94a3b8]">Open POs:</span>
+                <span className="font-bold text-[#f59e0b]">
                   {purchaseOrders.filter((po) => po.status !== 'RECEIVED' && po.status !== 'CANCELLED').length} In Flight
                 </span>
               </div>
@@ -353,11 +353,11 @@ const AdminDashboard = ({ onSwitchToUserView }) => {
             {/* View As Operator Toggle */}
             <button
               onClick={onSwitchToUserView || (() => navigate('/dashboard/user'))}
-              className="px-4 py-3 bg-white/10 hover:bg-white/20 active:scale-95 text-white text-xs sm:text-sm font-semibold rounded-xl border border-white/15 backdrop-blur-xs transition flex items-center gap-2 cursor-pointer shadow-sm group"
+              className="px-4 py-2.5 bg-white hover:bg-slate-50 dark:bg-[#1e293b] dark:hover:bg-slate-700/80 active:scale-95 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-semibold rounded-xl border border-[#e2e8f0] dark:border-[#334155] shadow-2xs transition flex items-center gap-2 cursor-pointer"
               title="Preview Operator / Store Associate Workspace"
               id="admin-switch-to-user-btn"
             >
-              <UserCheck className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
+              <UserCheck className="w-4 h-4 text-emerald-500" />
               <span>Operator View</span>
             </button>
 
@@ -365,28 +365,29 @@ const AdminDashboard = ({ onSwitchToUserView }) => {
             <button
               onClick={() => fetchAdminData(true)}
               disabled={isRefreshing}
-              className="p-3 bg-white/10 hover:bg-white/15 active:scale-95 text-white rounded-xl backdrop-blur-xs border border-white/10 transition cursor-pointer"
+              className="p-2.5 bg-white hover:bg-slate-50 dark:bg-[#1e293b] dark:hover:bg-slate-700/80 active:scale-95 text-slate-700 dark:text-slate-200 rounded-xl border border-[#e2e8f0] dark:border-[#334155] shadow-2xs transition cursor-pointer"
               title="Refresh Analytics"
               id="admin-refresh-btn"
             >
               <RefreshCw
-                className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-indigo-400' : ''}`}
+                className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-[#6366f1] dark:text-[#a855f7]' : ''}`}
               />
             </button>
 
-            {/* Quick Actions */}
+            {/* Issue PO (Accent Amber #F59E0B) */}
             <button
               onClick={() => navigate('/purchase-orders/add')}
-              className="px-4 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 text-xs sm:text-sm font-bold rounded-xl shadow-lg shadow-amber-500/25 transition flex items-center gap-2 cursor-pointer active:scale-95"
+              className="px-4 py-2.5 bg-[#f59e0b] hover:bg-[#d97706] text-white text-xs sm:text-sm font-bold rounded-xl shadow-md shadow-amber-500/20 transition flex items-center gap-2 cursor-pointer active:scale-95"
               id="admin-create-po-btn"
             >
               <FileSpreadsheet className="w-4 h-4" />
               <span>Issue PO</span>
             </button>
 
+            {/* Add SKU (Primary Button #6366F1 / #7C3AED) */}
             <button
               onClick={() => navigate('/products/add')}
-              className="px-4 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white text-xs sm:text-sm font-semibold rounded-xl shadow-lg shadow-indigo-600/30 transition flex items-center gap-2 cursor-pointer active:scale-95"
+              className="px-4 py-2.5 bg-[#6366f1] hover:bg-[#4f46e5] dark:bg-[#7c3aed] dark:hover:bg-[#6d28d9] text-white text-xs sm:text-sm font-bold rounded-xl shadow-md shadow-indigo-500/25 dark:shadow-purple-900/30 transition flex items-center gap-2 cursor-pointer active:scale-95"
               id="admin-add-product-btn"
             >
               <Plus className="w-4 h-4" />
@@ -445,7 +446,7 @@ const AdminDashboard = ({ onSwitchToUserView }) => {
           <span className="text-xs text-slate-400">({filteredOrders.length} orders analyzed)</span>
         </div>
 
-        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800/80 p-1 rounded-xl border border-slate-200 dark:border-slate-700/80 self-start sm:self-auto">
+        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-[#1e293b] p-1 rounded-xl border border-slate-200 dark:border-[#334155] self-start sm:self-auto">
           {[
             { id: 'ALL', label: 'All Time' },
             { id: '30D', label: 'Last 30 Days' },
@@ -457,8 +458,8 @@ const AdminDashboard = ({ onSwitchToUserView }) => {
               onClick={() => setTimeRange(t.id)}
               className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition cursor-pointer ${
                 timeRange === t.id
-                  ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-300 shadow-2xs'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  ? 'bg-[#6366f1] dark:bg-[#7c3aed] text-white shadow-xs'
+                  : 'text-[#64748b] dark:text-[#94a3b8] hover:text-[#0f172a] dark:hover:text-white'
               }`}
             >
               {t.label}
@@ -472,25 +473,25 @@ const AdminDashboard = ({ onSwitchToUserView }) => {
         {/* Gross Revenue */}
         <div
           onClick={() => navigate('/orders')}
-          className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs card-hover-elevate cursor-pointer group transition-colors"
+          className="bg-white dark:bg-[#111827] p-5 rounded-2xl border border-[#e2e8f0] dark:border-[#1e293b] shadow-2xs card-hover-elevate cursor-pointer group transition-colors"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#64748b] dark:text-[#94a3b8] uppercase tracking-wider">
               Gross Sales Revenue
             </span>
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-[#10b981] dark:text-[#34d399] flex items-center justify-center group-hover:scale-110 transition-transform">
               <DollarSign className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline justify-between">
-            <span className="text-2xl font-extrabold text-slate-900 dark:text-white font-mono">
+            <span className="text-2xl font-extrabold text-[#0f172a] dark:text-white font-mono">
               ${totalRevenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
-            <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+            <span className="text-xs text-[#10b981] dark:text-[#34d399] font-semibold flex items-center gap-1">
               Sales <ArrowUpRight className="w-3.5 h-3.5" />
             </span>
           </div>
-          <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500">
+          <div className="mt-2 pt-2 border-t border-slate-100 dark:border-[#1e293b] flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500">
             <span>Avg Order Value:</span>
             <span className="font-mono font-bold text-slate-700 dark:text-slate-300">
               ${averageOrderValue.toFixed(2)}
@@ -501,25 +502,25 @@ const AdminDashboard = ({ onSwitchToUserView }) => {
         {/* Inventory Asset Valuation */}
         <div
           onClick={() => navigate('/inventory')}
-          className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs card-hover-elevate cursor-pointer group transition-colors"
+          className="bg-white dark:bg-[#111827] p-5 rounded-2xl border border-[#e2e8f0] dark:border-[#1e293b] shadow-2xs card-hover-elevate cursor-pointer group transition-colors"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#64748b] dark:text-[#94a3b8] uppercase tracking-wider">
               Inventory Asset Valuation
             </span>
-            <div className="w-10 h-10 rounded-xl bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-[#8b5cf6] dark:text-[#a855f7] flex items-center justify-center group-hover:scale-110 transition-transform">
               <Boxes className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline justify-between">
-            <span className="text-2xl font-extrabold text-slate-900 dark:text-white font-mono">
+            <span className="text-2xl font-extrabold text-[#0f172a] dark:text-white font-mono">
               ${totalInventoryAssetValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
-            <span className="text-xs text-violet-600 dark:text-violet-400 font-semibold flex items-center gap-1">
+            <span className="text-xs text-[#8b5cf6] dark:text-[#a855f7] font-semibold flex items-center gap-1">
               Asset Value <ArrowUpRight className="w-3.5 h-3.5" />
             </span>
           </div>
-          <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500">
+          <div className="mt-2 pt-2 border-t border-slate-100 dark:border-[#1e293b] flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500">
             <span>Units on hand:</span>
             <span className="font-mono font-bold text-slate-700 dark:text-slate-300">
               {totalStockUnits.toLocaleString()} units
@@ -530,25 +531,25 @@ const AdminDashboard = ({ onSwitchToUserView }) => {
         {/* Warehouses & Network */}
         <div
           onClick={() => navigate('/warehouses')}
-          className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs card-hover-elevate cursor-pointer group transition-colors"
+          className="bg-white dark:bg-[#111827] p-5 rounded-2xl border border-[#e2e8f0] dark:border-[#1e293b] shadow-2xs card-hover-elevate cursor-pointer group transition-colors"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#64748b] dark:text-[#94a3b8] uppercase tracking-wider">
               Distribution Hubs
             </span>
-            <div className="w-10 h-10 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-cyan-50 dark:bg-cyan-950/60 text-[#06b6d4] dark:text-[#22d3ee] flex items-center justify-center group-hover:scale-110 transition-transform">
               <Warehouse className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3 flex items-baseline justify-between">
-            <span className="text-2xl font-extrabold text-slate-900 dark:text-white font-mono">
+            <span className="text-2xl font-extrabold text-[#0f172a] dark:text-white font-mono">
               {warehouses.length} Hubs
             </span>
-            <span className="text-xs text-sky-600 dark:text-sky-400 font-semibold flex items-center gap-1">
+            <span className="text-xs text-[#06b6d4] dark:text-[#22d3ee] font-semibold flex items-center gap-1">
               Operational <ArrowUpRight className="w-3.5 h-3.5" />
             </span>
           </div>
-          <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500">
+          <div className="mt-2 pt-2 border-t border-slate-100 dark:border-[#1e293b] flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500">
             <span>Reserved Volume:</span>
             <span className="font-mono font-bold text-slate-700 dark:text-slate-300">
               {reservedStockUnits} reserved
@@ -559,13 +560,13 @@ const AdminDashboard = ({ onSwitchToUserView }) => {
         {/* Suppliers & Procurement */}
         <div
           onClick={() => navigate('/purchase-orders')}
-          className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-2xs card-hover-elevate cursor-pointer group transition-colors"
+          className="bg-white dark:bg-[#111827] p-5 rounded-2xl border border-[#e2e8f0] dark:border-[#1e293b] shadow-2xs card-hover-elevate cursor-pointer group transition-colors"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#64748b] dark:text-[#94a3b8] uppercase tracking-wider">
               Procurement & Vendors
             </span>
-            <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-[#f59e0b] dark:text-[#f59e0b] flex items-center justify-center group-hover:scale-110 transition-transform">
               <Truck className="w-5 h-5" />
             </div>
           </div>

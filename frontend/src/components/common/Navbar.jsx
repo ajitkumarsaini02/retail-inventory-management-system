@@ -115,7 +115,7 @@ const Navbar = ({ onToggleSidebar }) => {
 
   return (
     <>
-      <header className="h-16 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200/90 dark:border-slate-800/90 sticky top-0 z-30 flex items-center justify-between px-3 sm:px-6 transition-colors duration-200">
+      <header className="h-16 bg-white/95 dark:bg-[#111827]/95 backdrop-blur-md border-b border-[#e2e8f0] dark:border-b dark:border-[#1e293b] sticky top-0 z-30 flex items-center justify-between px-3 sm:px-6 transition-colors duration-200">
         {/* Left Section: Mobile Menu + Branding info */}
         <div className="flex items-center gap-1.5 sm:gap-4">
           <button

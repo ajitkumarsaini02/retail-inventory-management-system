@@ -7,7 +7,7 @@ const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-50/80 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col selection:bg-indigo-500 selection:text-white transition-colors duration-200">
+    <div className="min-h-screen bg-[#f8fafc] dark:bg-[#0a0f1f] text-[#0f172a] dark:text-[#f8fafc] flex flex-col selection:bg-indigo-500 selection:text-white transition-colors duration-200">
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
