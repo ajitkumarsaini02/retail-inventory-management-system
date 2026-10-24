@@ -4,11 +4,11 @@
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x%2F4.x-brightgreen.svg?logo=springboot)](https://spring.io/projects/spring-boot)
 [![Spring Security](https://img.shields.io/badge/Security-JWT%20Stateless-blue.svg?logo=springsecurity)](https://spring.io/projects/spring-security)
 [![MySQL](https://img.shields.io/badge/Database-MySQL%208.0-blue.svg?logo=mysql)](https://www.mysql.com/)
-[![Angular](https://img.shields.io/badge/Frontend-Angular%2022-DD0031.svg?logo=angular)](https://angular.dev/)
+[![React](https://img.shields.io/badge/Frontend-React%2019-61DAFB.svg?logo=react)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Build-Vite-646CFF.svg?logo=vite)](https://vitejs.dev/)
 [![TailwindCSS](https://img.shields.io/badge/Styling-TailwindCSS%20v4-38B2AC.svg?logo=tailwindcss)](https://tailwindcss.com/)
-[![TypeScript](https://img.shields.io/badge/Language-TypeScript-3178C6.svg?logo=typescript)](https://www.typescriptlang.org/)
 
-A modern, enterprise-grade **Retail Inventory and Supply Chain Management ERP System** engineered with a **Spring Boot** REST backend, stateless **JWT-based Spring Security**, a **MySQL** relational database, and a high-performance **Angular (Standalone Architecture) + TailwindCSS v4** dashboard interface.
+A modern, enterprise-grade **Retail Inventory and Supply Chain Management ERP System** engineered with a **Spring Boot** REST backend, stateless **JWT-based Spring Security**, a **MySQL** relational database, and a high-performance **React 19 + Vite + TailwindCSS v4** dashboard interface.
 
 ---
 
@@ -49,9 +49,9 @@ A modern, enterprise-grade **Retail Inventory and Supply Chain Management ERP Sy
 
 ### 🎨 State-of-the-Art User Interface (UI/UX)
 
-- **Class-Based Dual Theme Engine**: Seamless instant toggle between Dark Mode and Light Mode (via Tailwind v4 `@custom-variant dark`), with user preference saved in `localStorage`.
-- **High Contrast & Accessible Forms**: Native form controls, dropdowns (`select option`), and inputs styled for clear readability in both light and dark environments.
-- **Spacious Modern Dashboard Layout**: Fixed sidebar with desktop offset (`lg:pl-64`), padded navbar with live telemetry clock, and elevated card hover micro-interactions.
+- **Class-Based Dual Theme Engine**: Seamless instant toggle between Dark Mode and Light Mode, with user preference saved in `localStorage`.
+- **High Contrast & Accessible Forms**: Native form controls, dropdowns, and inputs styled for clear readability in both light and dark environments.
+- **Spacious Modern Dashboard Layout**: Responsive sidebar with auto-collapse, notification drawer, telemetry status, and elevated card hover micro-interactions.
 - **Quick Access Command Trigger**: Keyboard shortcut (`Ctrl + K`) for instant module and SKU lookup.
 - **Responsive Design**: Flawlessly adapts across mobile phones, tablets, laptops, and ultra-wide desktop monitors.
 
@@ -61,11 +61,11 @@ A modern, enterprise-grade **Retail Inventory and Supply Chain Management ERP Sy
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│              Angular Frontend (Standalone)                  │
-│   TailwindCSS v4  •  SVG Icons  •  HTTP Client & Signals    │
+│                 React 19 Frontend (Vite)                    │
+│   TailwindCSS v4  •  Lucide Icons  •  Axios  •  Context API │
 │       Executive Admin Console & Operator Workspace          │
 └──────────────────────────────┬──────────────────────────────┘
-                               │ JSON / REST APIs (Port 8080)
+                               │ JSON / REST APIs (Port 8081)
                                │ Authorization: Bearer <JWT>
 ┌──────────────────────────────▼──────────────────────────────┐
 │                Spring Boot REST Backend                     │
@@ -77,9 +77,9 @@ A modern, enterprise-grade **Retail Inventory and Supply Chain Management ERP Sy
 │  │            Spring Data JPA / Hibernate ORM             │ │
 │  └────────────────────────────────────────────────────────┘ │
 └──────────────────────────────┬──────────────────────────────┘
-                               │ JDBC (Port 3306)
+                               │ JDBC (Port 3306 / 4000)
 ┌──────────────────────────────▼──────────────────────────────┐
-│                    MySQL Database                           │
+│                MySQL / TiDB Cloud Database                  │
 │  `retail_inventory` Schema • Users, Products, Orders, POs   │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -98,24 +98,25 @@ retail-inventory-management-system/
 │   │   ├── security/        # JWT Filter, SecurityConfig, Token Provider
 │   │   └── services/        # Business Logic Services
 │   ├── src/main/resources/
-│   │   └── application.properties # Server port, MySQL credentials, JWT secret
+│   │   ├── application.properties         # Server port (8081), MySQL credentials, JWT secret
+│   │   └── application.properties.example # Environment variable template
+│   ├── src/test/java/       # Comprehensive MockMvc Integration Test Suites
 │   ├── retail_inventory_dataset.sql # Initial database schema & sample dataset
 │   └── pom.xml              # Maven dependencies & build plugins
 │
 ├── frontend/
 │   ├── src/
-│   │   ├── app/
-│   │   │   ├── components/  # Layout, Navbar, Sidebar, Icon components
-│   │   │   ├── guards/      # Angular Route Guards (AuthGuard, AdminGuard)
-│   │   │   ├── models/      # TypeScript interfaces and entity types
-│   │   │   ├── pages/       # Route Views (Auth, Dashboards, Products, Orders, Inventory, etc.)
-│   │   │   ├── services/    # Injectable API Services (Auth, Theme, Product, Warehouse, etc.)
-│   │   │   ├── app.config.ts# Application configuration & HTTP providers
-│   │   │   └── app.routes.ts# Angular standalone route definitions
-│   │   ├── styles.css       # TailwindCSS v4 setup, custom dark variant, base tokens
-│   │   └── main.ts          # Angular application bootstrap
+│   │   ├── components/      # Common, Auth, Product, Order, Warehouse, Supplier components
+│   │   ├── context/         # AuthContext and ThemeContext state management
+│   │   ├── pages/           # Route Views (Auth, Dashboards, Products, Orders, Inventory, etc.)
+│   │   ├── services/        # Axios API clients & interceptors
+│   │   ├── utils/           # Global constants (API_BASE_URL: 8081) & CSV exporter
+│   │   ├── App.jsx          # Protected route definitions and Layout hierarchy
+│   │   └── main.jsx         # React application bootstrap
+│   ├── .env.example         # Template with VITE_API_BASE_URL=http://localhost:8081
+│   ├── .env                 # Local environment config
 │   ├── package.json         # Frontend dependencies and npm scripts
-│   └── angular.json         # Angular CLI configuration
+│   └── vite.config.js       # Vite dev server (port 5173) and /api proxy configuration
 │
 ├── .gitignore               # Root git ignore rules
 └── README.md                # Project documentation
@@ -132,18 +133,18 @@ Ensure you have the following installed on your machine:
 - **Java Development Kit (JDK)**: Version 17 or higher
 - **Apache Maven**: Version 3.8+
 - **Node.js**: Version 18+ and **npm**
-- **MySQL Server**: Version 8.0+
+- **MySQL Server**: Version 8.0+ (or TiDB Cloud MySQL cluster)
 
 ---
 
 ### 1️⃣ Database Setup
 
-1. Start your local MySQL service.
+1. Start your local MySQL service or use TiDB Cloud.
 2. Open your MySQL client or terminal and run the sample dump script provided in the backend folder:
    ```bash
    mysql -u root -p < backend/retail_inventory_dataset.sql
    ```
-   _(Alternatively, create the database manually: `CREATE DATABASE retail_inventory;`)_
+   *(Alternatively, create the database manually: `CREATE DATABASE retail_inventory;`)*
 
 ---
 
@@ -155,16 +156,17 @@ Ensure you have the following installed on your machine:
    spring.application.name=retail_inventory
 
    # MySQL Database Configuration
-   spring.datasource.url=jdbc:mysql://localhost:3306/retail_inventory
+   spring.datasource.url=jdbc:mysql://localhost:3306/retail_inventory?sslMode=PREFERRED&useUnicode=true&characterEncoding=utf8
    spring.datasource.username=root
    spring.datasource.password=YOUR_MYSQL_PASSWORD
 
    # Server Port
-   server.port=8080
+   server.port=8081
 
    # Hibernate
    spring.jpa.hibernate.ddl-auto=update
-   spring.jpa.show-sql=true
+   spring.jpa.show-sql=false
+   spring.jpa.open-in-view=false
 
    # JWT Configuration
    jwt.secret=defaultDevelopmentSecretKeyChangeThisImmediately123456789
@@ -174,9 +176,9 @@ Ensure you have the following installed on your machine:
 2. Navigate to the backend directory and run the application:
    ```bash
    cd backend
-   mvn clean spring-boot:run
+   mvn spring-boot:run
    ```
-   The backend API will start and listen on **`http://localhost:8080`**.
+   The backend API will start and listen on **`http://localhost:8081`**.
 
 ---
 
@@ -188,13 +190,19 @@ Ensure you have the following installed on your machine:
    cd frontend
    ```
 
-2. Install dependencies:
+2. Copy the example environment file or verify `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+   *(Ensure `VITE_API_BASE_URL=http://localhost:8081` is specified).*
+
+3. Install dependencies:
 
    ```bash
    npm install
    ```
 
-3. Start the development server:
+4. Start the Vite development server:
    ```bash
    npm run dev
    ```
@@ -202,12 +210,13 @@ Ensure you have the following installed on your machine:
 
 ---
 
-### 4️⃣ Creating Your Administrator Account
+### 4️⃣ Logging In or Creating an Administrator Account
 
 1. Open the application in your browser at `http://localhost:5173`.
-2. Click on **Create an Account**.
-3. Fill in your name, email, and password.
-4. **Note:** The very first user account registered automatically receives full **`ADMIN`** privileges!
+2. **Quick Login**: Use the pre-configured administrator account or click the **Auto Fill** button on the login form:
+   - **Email**: `admin@hcl.com`
+   - **Password**: `password123`
+3. **Register New Account**: Click **Create an Account**. If the database has no users, the very first user account registered automatically receives full **`ADMIN`** privileges!
 
 ---
 
@@ -222,19 +231,22 @@ Ensure you have the following installed on your machine:
 | **Products**   | `GET`    | `/api/products/{id}`               | User / Admin   | Retrieve product by ID                           |
 | **Products**   | `POST`   | `/api/products`                    | User / Admin   | Create new catalog product                       |
 | **Products**   | `PUT`    | `/api/products/{id}`               | User / Admin   | Update existing product details                  |
-| **Products**   | `DELETE` | `/api/products/{id}`               | User / Admin   | Remove product from catalog                      |
+| **Products**   | `DELETE` | `/api/products/{id}`               | **Admin Only** | Remove product from catalog                      |
 | **Inventory**  | `GET`    | `/api/inventory`                   | User / Admin   | Query stock levels across distribution hubs      |
 | **Inventory**  | `GET`    | `/api/inventory/low-stock`         | User / Admin   | Fetch items below reorder thresholds             |
 | **Inventory**  | `POST`   | `/api/inventory`                   | User / Admin   | Add or adjust stock levels                       |
 | **Inventory**  | `PUT`    | `/api/inventory/{id}`              | User / Admin   | Update inventory record                          |
 | **Warehouses** | `GET`    | `/api/warehouses`                  | User / Admin   | List all active distribution centers             |
-| **Warehouses** | `POST`   | `/api/warehouses`                  | User / Admin   | Register new warehouse hub                       |
+| **Warehouses** | `POST`   | `/api/warehouses`                  | **Admin Only** | Register new warehouse hub                       |
+| **Warehouses** | `DELETE` | `/api/warehouses/{id}`             | **Admin Only** | Remove warehouse hub                             |
 | **Customers**  | `GET`    | `/api/customers`                   | User / Admin   | Browse and manage customer directory             |
 | **Customers**  | `POST`   | `/api/customers`                   | User / Admin   | Register new customer record                     |
+| **Customers**  | `DELETE` | `/api/customers/{id}`              | **Admin Only** | Remove customer record                           |
 | **Orders**     | `GET`    | `/api/orders`                      | User / Admin   | Fetch sales orders and statuses                  |
 | **Orders**     | `GET`    | `/api/orders/{id}`                 | User / Admin   | Get order details with line items                |
 | **Orders**     | `POST`   | `/api/orders`                      | User / Admin   | Place new customer sales order                   |
 | **Orders**     | `PUT`    | `/api/orders/{id}/status`          | User / Admin   | Update sales order fulfillment status            |
+| **Orders**     | `DELETE` | `/api/orders/{id}`                 | **Admin Only** | Remove sales order                               |
 | **Suppliers**  | `GET`    | `/api/suppliers`                   | **Admin Only** | Manage supply chain vendor profiles              |
 | **Suppliers**  | `POST`   | `/api/suppliers`                   | **Admin Only** | Register new supplier                            |
 | **Purchase**   | `GET`    | `/api/purchase-orders`             | **Admin Only** | Procurement pipeline & PO lifecycle              |
@@ -247,9 +259,9 @@ Ensure you have the following installed on your machine:
 
 ## 🛠️ Built With
 
-- **Backend**: Spring Boot, Spring Security, Spring Data JPA, Hibernate, JJWT (Java JWT), MySQL Connector/J
-- **Frontend**: Angular 22 (Standalone Architecture), TypeScript, TailwindCSS v4, RxJS, Custom SVG Icon System
-- **Build & Dev Tools**: Maven, Angular CLI (`@angular/build`), PostCSS, Prettier
+- **Backend**: Spring Boot 3.x/4.x, Spring Security, Spring Data JPA, Hibernate 7, JJWT (Java JWT), MySQL Connector/J
+- **Frontend**: React 19, Vite, TailwindCSS v4, Lucide React, Axios
+- **Build & Dev Tools**: Apache Maven, Vite, ESLint flat config
 
 ---
 

@@ -1,16 +1,66 @@
-# React + Vite
+# 📦 Retail Inventory & ERP Portal — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A high-performance modern Single-Page Application (SPA) built with **React 19**, **Vite**, and **TailwindCSS v4**, providing complete logistics, inventory control, and supply chain management interfaces.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Key Modules
 
-## React Compiler
+- **Executive Admin Command Center**: High-level KPIs, inventory valuation, active orders, and quick access to management tools.
+- **Store Associate / Operator Workspace**: Tailored workspace for fast order fulfillment, stock checks, and customer operations.
+- **Role Switcher**: Real-time preview mode in the navigation bar to test both Administrator and Operator views seamlessly.
+- **Products & Catalog**: Full product listings with category filtering, instant search, and stock level visibility.
+- **Multi-Hub Warehouses**: Capacity monitoring, operational status, and address details.
+- **Customer Orders & Invoicing**: Order processing workflow (`PENDING` ➔ `DELIVERED`), line-item breakdowns, and printable invoices.
+- **Procurement & POs (Admin)**: Vendor directory and purchase order lifecycle management (`PENDING` ➔ `RECEIVED`).
+- **Dark / Light Dual Theme Engine**: Seamless toggle with persistent user preference in `localStorage`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Environment Configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Copy `.env.example` to `.env`:
+
+```bash
+cp .env.example .env
+```
+
+Ensure the backend API URL matches the Spring Boot server port (default: `8081`):
+
+```properties
+VITE_API_BASE_URL=http://localhost:8081
+```
+
+---
+
+## 💻 Development & Build Scripts
+
+- **Start Dev Server**:
+  ```bash
+  npm run dev
+  ```
+  Runs Vite dev server on `http://localhost:5173` with HMR and `/api` proxy to `http://localhost:8081`.
+
+- **Lint Codebase**:
+  ```bash
+  npm run lint
+  ```
+
+- **Build Production Bundle**:
+  ```bash
+  npm run build
+  ```
+  Generates production-optimized assets in `dist/`.
+
+- **Preview Production Build**:
+  ```bash
+  npm run preview
+  ```
+
+---
+
+## 🔐 Demo Credentials
+
+- **Admin Account**: `admin@hcl.com`
+- **Password**: `password123`
+*(Or use the 1-click **Auto Fill** button directly on the login form)*

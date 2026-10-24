@@ -19,8 +19,8 @@ WORKDIR /app
 # Copy the built JAR from the builder stage
 COPY --from=build /app/target/retail_inventory-0.0.1-SNAPSHOT.jar app.jar
 
-# Support Render dynamic PORT environment variable (defaults to 8080 if not set)
-EXPOSE 8080 10000
-ENV PORT=8080
+# Support Render dynamic PORT environment variable (defaults to 8081 if not set)
+EXPOSE 8081 10000
+ENV PORT=8081
 
 ENTRYPOINT ["sh", "-c", "java -Dserver.port=${PORT} -Djava.security.egd=file:/dev/./urandom -jar app.jar"]
