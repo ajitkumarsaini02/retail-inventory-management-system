@@ -63,4 +63,3 @@ VITE_API_BASE_URL=http://localhost:8081
 
 - **Admin Account**: `admin@hcl.com`
 - **Password**: `password123`
-*(Or use the 1-click **Auto Fill** button directly on the login form)*

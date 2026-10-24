@@ -213,7 +213,7 @@ Ensure you have the following installed on your machine:
 ### 4️⃣ Logging In or Creating an Administrator Account
 
 1. Open the application in your browser at `http://localhost:5173`.
-2. **Quick Login**: Use the pre-configured administrator account or click the **Auto Fill** button on the login form:
+2. **Login Credentials**: Enter your administrator account credentials:
    - **Email**: `admin@hcl.com`
    - **Password**: `password123`
 3. **Register New Account**: Click **Create an Account**. If the database has no users, the very first user account registered automatically receives full **`ADMIN`** privileges!
