@@ -17,7 +17,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import CommandPalette from './CommandPalette';
-import NotificationDrawer from './NotificationDrawer';
+import NotificationDrawer, { defaultNotifications } from './NotificationDrawer';
 import ChangePasswordModal from './ChangePasswordModal';
 import logo from '../../assets/logo.png';
 
@@ -32,6 +32,27 @@ const Navbar = ({ onToggleSidebar }) => {
   const [passwordModalOpen, setPasswordModalOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const [notifications, setNotifications] = useState(() => {
+    try {
+      const saved = localStorage.getItem('erp_notifications');
+      return saved ? JSON.parse(saved) : defaultNotifications;
+    } catch {
+      return defaultNotifications;
+    }
+  });
+
+  const updateNotifications = (updater) => {
+    setNotifications((prev) => {
+      const next = typeof updater === 'function' ? updater(prev) : updater;
+      try {
+        localStorage.setItem('erp_notifications', JSON.stringify(next));
+      } catch {}
+      return next;
+    });
+  };
+
+  const unreadCount = notifications.filter((n) => n.unread).length;
 
   const userDropdownRef = useRef(null);
   const notificationRef = useRef(null);
@@ -206,14 +227,19 @@ const Navbar = ({ onToggleSidebar }) => {
             <button
               onClick={() => setNotificationOpen((prev) => !prev)}
               className="p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition relative cursor-pointer"
-              title="Notifications"
+              title={unreadCount > 0 ? `${unreadCount} unread notification(s)` : 'Notifications (All read)'}
+              aria-label="Notifications"
             >
               <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-indigo-600 ring-2 ring-white dark:ring-slate-900" />
+              {unreadCount > 0 && (
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-indigo-600 ring-2 ring-white dark:ring-slate-900 animate-pulse" />
+              )}
             </button>
             <NotificationDrawer
               isOpen={notificationOpen}
               onClose={() => setNotificationOpen(false)}
+              notifications={notifications}
+              setNotifications={updateNotifications}
             />
           </div>
 
