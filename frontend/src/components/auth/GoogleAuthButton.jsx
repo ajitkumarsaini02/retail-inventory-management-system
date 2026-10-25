@@ -100,15 +100,14 @@ const GoogleAuthButton = ({ onError, onLoading, disabled, text = 'Continue with 
   };
 
   const handleButtonClick = () => {
-    if (clientId && window.google?.accounts?.id) {
-      window.google.accounts.id.prompt((notification) => {
-        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          setShowChooser(true);
-        }
-      });
-    } else {
-      setShowChooser(true);
+    // If native Google button is ready inside the container, trigger it immediately
+    const nativeBtn = googleBtnContainerRef.current?.querySelector('div[role=button]');
+    if (nativeBtn) {
+      nativeBtn.click();
+      return;
     }
+    // Instant open with zero delay
+    setShowChooser(true);
   };
 
   const selectAccount = async (account) => {
