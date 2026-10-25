@@ -31,8 +31,10 @@ const GoogleAuthButton = ({ onError, onLoading, disabled, text = 'Continue with 
     },
   ];
 
+  const [googleReady, setGoogleReady] = useState(false);
+
   useEffect(() => {
-    const envClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const envClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '869680673341-f785ev5es8d4j0jkgj266tq2b38tg6t2.apps.googleusercontent.com';
     if (envClientId) {
       setClientId(envClientId);
 
@@ -56,6 +58,7 @@ const GoogleAuthButton = ({ onError, onLoading, disabled, text = 'Continue with 
       window.google.accounts.id.initialize({
         client_id: cId,
         callback: handleGoogleCredentialResponse,
+        auto_select: false,
       });
 
       if (googleBtnContainerRef.current) {
@@ -64,12 +67,16 @@ const GoogleAuthButton = ({ onError, onLoading, disabled, text = 'Continue with 
           type: 'standard',
           theme: 'outline',
           size: 'large',
-          text: 'continue_with',
+          text: text.includes('Sign up') ? 'signup_with' : 'continue_with',
           shape: 'rectangular',
-          width: '100%',
+          width: 380,
           logo_alignment: 'left',
         });
+        setGoogleReady(true);
       }
+
+      // Prompt One Tap to show browser accounts
+      window.google.accounts.id.prompt();
     } catch (e) {
       console.warn('Google GSI Init error:', e);
     }
@@ -155,11 +162,14 @@ const GoogleAuthButton = ({ onError, onLoading, disabled, text = 'Continue with 
 
   return (
     <div className="w-full">
-      {/* If real client ID exists and rendered */}
-      {clientId && <div ref={googleBtnContainerRef} className="w-full flex justify-center mb-1" />}
+      {/* Google's official rendered button */}
+      <div
+        ref={googleBtnContainerRef}
+        className={`w-full flex justify-center ${googleReady ? 'block' : 'hidden'}`}
+      />
 
-      {/* Branded Google Button */}
-      {(!clientId || !googleBtnContainerRef.current?.hasChildNodes()) && (
+      {/* Branded Google Button displayed while loading */}
+      {!googleReady && (
         <button
           type="button"
           onClick={handleButtonClick}
