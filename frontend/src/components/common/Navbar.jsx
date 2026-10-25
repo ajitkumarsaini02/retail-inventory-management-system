@@ -11,12 +11,14 @@ import {
   Sun,
   Moon,
   RefreshCw,
+  KeyRound,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import CommandPalette from './CommandPalette';
 import NotificationDrawer from './NotificationDrawer';
+import ChangePasswordModal from './ChangePasswordModal';
 import logo from '../../assets/logo.png';
 
 const Navbar = ({ onToggleSidebar }) => {
@@ -27,6 +29,7 @@ const Navbar = ({ onToggleSidebar }) => {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [passwordModalOpen, setPasswordModalOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -316,6 +319,16 @@ const Navbar = ({ onToggleSidebar }) => {
                         {isDark ? 'Dark' : 'Light'}
                       </span>
                     </button>
+                    <button
+                      onClick={() => {
+                        setUserDropdownOpen(false);
+                        setPasswordModalOpen(true);
+                      }}
+                      className="w-full text-left px-4 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 font-medium flex items-center gap-2 cursor-pointer transition"
+                    >
+                      <KeyRound className="w-4 h-4 text-amber-500" />
+                      <span>Set / Update Password</span>
+                    </button>
                   </div>
 
                   <div className="border-t border-slate-100 dark:border-slate-800 pt-1">
@@ -337,6 +350,12 @@ const Navbar = ({ onToggleSidebar }) => {
       <CommandPalette
         isOpen={commandPaletteOpen}
         onClose={() => setCommandPaletteOpen(false)}
+      />
+
+      {/* Set / Update Password Modal */}
+      <ChangePasswordModal
+        isOpen={passwordModalOpen}
+        onClose={() => setPasswordModalOpen(false)}
       />
     </>
   );

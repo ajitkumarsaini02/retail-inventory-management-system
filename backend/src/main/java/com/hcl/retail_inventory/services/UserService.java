@@ -69,4 +69,13 @@ public class UserService {
             return userRepository.save(user);
         });
     }
+
+    @Transactional
+    public void updatePassword(Long userId, String newRawPassword) {
+        userRepository.findById(userId).ifPresent(user -> {
+            user.setPassword(passwordEncoder.encode(newRawPassword));
+            userRepository.save(user);
+        });
+    }
 }
+
