@@ -1,14 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
-import { User, Plus, X, ArrowLeft } from 'lucide-react';
+import { User, X, ArrowLeft } from 'lucide-react';
 
 const GoogleAuthButton = ({ onError, onLoading, disabled, text = 'Continue with Google' }) => {
   const { googleLogin } = useAuth();
   const { isDark } = useTheme();
   const navigate = useNavigate();
-  const googleBtnContainerRef = useRef(null);
   const [clientId, setClientId] = useState(import.meta.env.VITE_GOOGLE_CLIENT_ID || '');
   const [showChooser, setShowChooser] = useState(false);
   const [signingInAccount, setSigningInAccount] = useState(null);
@@ -63,20 +62,7 @@ const GoogleAuthButton = ({ onError, onLoading, disabled, text = 'Continue with 
         auto_select: false,
       });
 
-      if (googleBtnContainerRef.current) {
-        googleBtnContainerRef.current.innerHTML = '';
-        window.google.accounts.id.renderButton(googleBtnContainerRef.current, {
-          type: 'standard',
-          theme: isDark ? 'filled_black' : 'outline',
-          size: 'large',
-          text: text.includes('Sign up') ? 'signup_with' : 'continue_with',
-          shape: 'rectangular',
-          width: 380,
-          logo_alignment: 'left',
-        });
-        setGoogleReady(true);
-      }
-
+      setGoogleReady(true);
       window.google.accounts.id.prompt();
     } catch (e) {
       console.warn('Google GSI Init error:', e);
@@ -100,14 +86,23 @@ const GoogleAuthButton = ({ onError, onLoading, disabled, text = 'Continue with 
     }
   };
 
-  const handleButtonClick = () => {
-    // If native Google button is ready inside the container, trigger it immediately
-    const nativeBtn = googleBtnContainerRef.current?.querySelector('div[role=button]');
-    if (nativeBtn) {
-      nativeBtn.click();
-      return;
+  const handleButtonClick = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
     }
-    // Instant open with zero delay
+    if (disabled || signingInAccount !== null) return;
+
+    // Trigger Google One-Tap prompt if available in background
+    if (window.google?.accounts?.id) {
+      try {
+        window.google.accounts.id.prompt();
+      } catch (err) {
+        // silent catch
+      }
+    }
+
+    // Open authentic account chooser modal immediately
     setShowChooser(true);
   };
 
@@ -162,12 +157,13 @@ const GoogleAuthButton = ({ onError, onLoading, disabled, text = 'Continue with 
 
   return (
     <div className="relative w-full">
-      {/* 1. Custom Button with exact matching rounded-xl border and theme */}
+      {/* Custom Google Sign-In Button */}
       <button
         type="button"
+        id="google-auth-button"
         onClick={handleButtonClick}
         disabled={disabled || signingInAccount !== null}
-        className="w-full py-2.5 px-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 font-semibold text-sm rounded-xl border border-slate-300 dark:border-slate-700 shadow-xs hover:shadow-sm active:scale-98 transition flex items-center justify-center gap-3 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+        className="w-full py-2.5 px-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-200 font-semibold text-sm rounded-xl border border-slate-300 dark:border-slate-700 shadow-xs hover:shadow-sm active:scale-98 transition flex items-center justify-center gap-3 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed select-none"
       >
         {/* Official Google G Logo */}
         <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
@@ -190,12 +186,6 @@ const GoogleAuthButton = ({ onError, onLoading, disabled, text = 'Continue with 
         </svg>
         <span>{text}</span>
       </button>
-
-      {/* 2. Official Google GSI button overlayed seamlessly with matching rounded corners */}
-      <div
-        ref={googleBtnContainerRef}
-        className="absolute inset-0 w-full h-full opacity-0 overflow-hidden cursor-pointer z-10 rounded-xl [&>div]:!w-full [&>div]:!h-full [&_iframe]:!w-full [&_iframe]:!h-full [&_iframe]:!scale-110"
-      />
 
       {/* Authentic Google Account Chooser Modal */}
       {showChooser && (
