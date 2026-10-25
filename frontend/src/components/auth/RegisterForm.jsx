@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Lock, Mail, User as UserIcon, CheckCircle2, ArrowRight } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import ErrorMessage from '../common/ErrorMessage';
+import GoogleAuthButton from './GoogleAuthButton';
 import logo from '../../assets/logo.png';
 
 const RegisterForm = () => {
@@ -162,6 +163,24 @@ const RegisterForm = () => {
           <span>{loading ? 'Creating Account...' : 'Complete Registration'}</span>
         </button>
       </form>
+
+      <div className="relative my-5">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-slate-200 dark:border-slate-800" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-white dark:bg-slate-900 px-3 text-slate-400 dark:text-slate-500 font-semibold tracking-wider">
+            Or register with
+          </span>
+        </div>
+      </div>
+
+      <GoogleAuthButton
+        onError={setError}
+        onLoading={setLoading}
+        disabled={loading || success}
+        text="Sign up with Google"
+      />
 
       <div className="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800 text-center">
         <p className="text-xs text-slate-500 dark:text-slate-400">

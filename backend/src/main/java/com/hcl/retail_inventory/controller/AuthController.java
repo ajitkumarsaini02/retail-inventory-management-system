@@ -12,9 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -23,6 +26,9 @@ public class AuthController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+
+    @Value("${google.client.id:}")
+    private String googleClientId;
 
     public AuthController(UserService userService, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userService = userService;
@@ -97,7 +103,135 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/google")
+    public ResponseEntity<?> googleLogin(@Valid @RequestBody GoogleAuthRequest request) {
+        String idToken = request.getIdToken();
+        if (idToken == null || idToken.isBlank()) {
+            return ResponseEntity.badRequest().body(Map.of("message", "ID token is required"));
+        }
+
+        String email;
+        String name;
+
+        // Support mock/demo token for local testing without external Google OAuth credentials
+        if (idToken.startsWith("mock_google_") || idToken.startsWith("demo_google_")) {
+            String payloadStr = idToken.replace("mock_google_", "").replace("demo_google_", "").trim();
+            if (payloadStr.contains(":::")) {
+                String[] parts = payloadStr.split(":::", 2);
+                name = parts[0].trim();
+                email = parts[1].trim();
+            } else {
+                email = payloadStr;
+                if (!email.contains("@")) {
+                    email = "ajit.kumar@gmail.com";
+                }
+                String rawName = email.split("@")[0].replace(".", " ");
+                String[] words = rawName.split(" ");
+                StringBuilder sb = new StringBuilder();
+                for (String w : words) {
+                    if (!w.isEmpty()) {
+                        sb.append(Character.toUpperCase(w.charAt(0))).append(w.substring(1)).append(" ");
+                    }
+                }
+                name = sb.toString().trim();
+            }
+        } else {
+            try {
+                RestTemplate restTemplate = new RestTemplate();
+                String url = "https://oauth2.googleapis.com/tokeninfo?id_token=" + idToken;
+                @SuppressWarnings("unchecked")
+                Map<String, Object> payload = restTemplate.getForObject(url, Map.class);
+
+                if (payload == null || !payload.containsKey("email")) {
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                            .body(Map.of("message", "Invalid Google ID token"));
+                }
+
+                // Verify client ID if configured
+                if (googleClientId != null && !googleClientId.isBlank()) {
+                    String aud = (String) payload.get("aud");
+                    if (!googleClientId.equals(aud)) {
+                        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                                .body(Map.of("message", "Google Client ID mismatch"));
+                    }
+                }
+
+                Object emailVerified = payload.get("email_verified");
+                boolean isEmailVerified = false;
+                if (emailVerified instanceof Boolean b) {
+                    isEmailVerified = b;
+                } else if (emailVerified instanceof String s) {
+                    isEmailVerified = Boolean.parseBoolean(s);
+                }
+
+                if (!isEmailVerified) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                            .body(Map.of("message", "Google email is not verified"));
+                }
+
+                email = (String) payload.get("email");
+                name = (String) payload.get("name");
+                if (name == null || name.isBlank()) {
+                    name = email.split("@")[0];
+                }
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("message", "Failed to verify Google token: " + e.getMessage()));
+            }
+        }
+
+        if (email == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", "Unable to retrieve email from Google token"));
+        }
+
+        Optional<User> existingUserOpt = userService.getUserByEmail(email);
+        User user;
+        if (existingUserOpt.isPresent()) {
+            user = existingUserOpt.get();
+            if (!user.isEnabled()) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(Map.of("message", "User account is disabled"));
+            }
+        } else {
+            // Auto-register new Google user
+            User newUser = new User();
+            newUser.setName(name);
+            newUser.setEmail(email);
+            newUser.setPassword(UUID.randomUUID().toString());
+            if (userService.countUsers() == 0) {
+                user = userService.createAdmin(newUser);
+            } else {
+                user = userService.createUser(newUser);
+            }
+        }
+
+        String token = jwtService.generateToken(user.getEmail());
+        LoginResponse response = new LoginResponse(
+                token,
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getRole().name(),
+                user.isEnabled(),
+                user.getCreatedAt()
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
     // Static helper request and response models
+    public static class GoogleAuthRequest {
+        @NotBlank(message = "Google ID token is required")
+        private String idToken;
+
+        public GoogleAuthRequest() {}
+        public GoogleAuthRequest(String idToken) { this.idToken = idToken; }
+
+        public String getIdToken() { return idToken; }
+        public void setIdToken(String idToken) { this.idToken = idToken; }
+    }
+
     public static class RegisterRequest {
         @NotBlank(message = "Name is required")
         private String name;

@@ -144,7 +144,7 @@ Ensure you have the following installed on your machine:
    ```bash
    mysql -u root -p < backend/retail_inventory_dataset.sql
    ```
-   *(Alternatively, create the database manually: `CREATE DATABASE retail_inventory;`)*
+   _(Alternatively, create the database manually: `CREATE DATABASE retail_inventory;`)_
 
 ---
 
@@ -171,6 +171,9 @@ Ensure you have the following installed on your machine:
    # JWT Configuration
    jwt.secret=defaultDevelopmentSecretKeyChangeThisImmediately123456789
    jwt.expiration=86400000
+
+   # Google OAuth Configuration (Optional: for real Google Cloud OAuth)
+   google.client.id=YOUR_GOOGLE_CLIENT_ID
    ```
 
 2. Navigate to the backend directory and run the application:
@@ -191,10 +194,12 @@ Ensure you have the following installed on your machine:
    ```
 
 2. Copy the example environment file or verify `.env`:
+
    ```bash
    cp .env.example .env
    ```
-   *(Ensure `VITE_API_BASE_URL=http://localhost:8081` is specified).*
+
+   _(Ensure `VITE_API_BASE_URL=http://localhost:8081` is specified. Set `VITE_GOOGLE_CLIENT_ID` for real Google Cloud sign-in)._
 
 3. Install dependencies:
 

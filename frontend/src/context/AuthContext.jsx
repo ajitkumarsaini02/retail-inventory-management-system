@@ -39,6 +39,21 @@ export const AuthProvider = ({ children }) => {
     return await authService.register({ name, email, password });
   };
 
+  const googleLogin = async (idToken) => {
+    const data = await authService.googleLogin({ idToken });
+    localStorage.setItem('token', data.token);
+    const userData = {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      role: data.role,
+    };
+    localStorage.setItem('user', JSON.stringify(userData));
+    setToken(data.token);
+    setUser(userData);
+    return userData;
+  };
+
   const logout = () => {
     authService.logout();
     setToken(null);
@@ -64,6 +79,7 @@ export const AuthProvider = ({ children }) => {
         token,
         loading,
         login,
+        googleLogin,
         register,
         logout,
         isAuthenticated,
